@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'sinatra/base'
+require 'json'
 
 class EventReciever < Sinatra::Base
 	# recieve requests from the nexus and send them to callbacks for the apps
@@ -14,6 +15,7 @@ class EventReciever < Sinatra::Base
 		type = event['type']
 		uuid = event['uuid']
 		data = event['data']
+		puts type, uuid, data
 		if type == "ModuleReport"
 			#settings.db.execute "DROP TABLE ?;" [uuid]
 			#modules = JSON.parse data
@@ -51,5 +53,4 @@ class Controller < Sinatra::Base
 	end
 	
 end
-
 
