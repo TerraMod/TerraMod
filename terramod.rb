@@ -2,12 +2,23 @@
 
 require 'sinatra/base'
 require 'json'
+require 'sqlite3'
 
-class EventReciever < Sinatra::Base
-	# recieve requests from the nexus and send them to callbacks for the apps
+class TerraMod < Sinatra::Base
 	
 	configure do
-		# access database
+		
+		db_file = "./terramod.db"
+		File.delete db_file if File.exists? db_file
+		db = SQLite3::Database.new db_file
+		db.execute "CREATE TABLE Nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
+		db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
+		db.execute "CREATE TABLE Callbacks(uuid TEXT, method TEXT);"
+		
+		set :db, db
+		set :port, 80
+		set :bind, "0.0.0.0"
+		
 	end
 	
 	post '/event_reciever' do
@@ -15,42 +26,30 @@ class EventReciever < Sinatra::Base
 		type = event['type']
 		uuid = event['uuid']
 		data = event['data']
-		puts type, uuid, data
 		if type == "ModuleReport"
-			#settings.db.execute "DROP TABLE ?;" [uuid]
-			#modules = JSON.parse data
-			#settings.db.execute "CREATE TABLE ?(uuid TEXT, name TEXT, class TEXT, room TEXT, UNIQUE(uuid));" [uuid]
-			##settings.db.execute "INSERT INTO nexus VALUES(?,?);" [uuid, request.ip]
-			#modules.each do |k, v|
-				#module_uuid = k
-				#name = v['name']
-				#type = v['type']
-				#room = v['room']
-				#settings.db.execute "INSERT INTO ? VALUES(?,?,?,?);", [uuid, name, type, room]
-			#end
+			settings.db.execute "INSERT OR IGNORE INTO Nexus VALUES(?,?);", [uuid, request.ip]
+			settings.db.execute "UPDATE Nexus SET ip=? WHERE uuid=?;", [request.ip, uuid]
+			data.each do |k, v|
+				module_uuid = k
+				name = v['name']
+				type = v['type']
+				room = v['room']
+				settings.db.execute "INSERT OR IGNORE INTO Modules VALUES(?,?,?,?,?);", [module_uuid, uuid, name, room, type]
+			end
 		elsif type == "EventReport"
-			#callbacks = settings.db.execute "SELECT method FROM callbacks WHERE module_uuid = ?;" [uuid]
-			#callbacks.each do |callback|
-				#method = Module.const_get(callback[0])
-				#method(data)
-			#end
+			callbacks = settings.db.execute "SELECT method FROM Callbacks WHERE uuid=?;", [uuid]
+			callbacks.each do |callback|
+				method = Module.const_get(callback[0])
+				method(uuid, data)
+			end
 		end
+		status 200
 	end
 	
-end
-
-class Controller < Sinatra::Base
-
-	configure do
-		#db_flie = "/./terramod.db"
-		#db = SQLite3::Database.new db_flie
-		#db.execute "CREATE TABLE nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
-		
-	end
-
 	get '/' do
 		erb '<h1>TerraMod Dashboard</h1>'
-	end
+	end	
 	
 end
 
+TerraMod.run!
