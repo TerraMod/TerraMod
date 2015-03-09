@@ -4,6 +4,8 @@ require 'sinatra/base'
 require 'json'
 require 'sqlite3'
 
+Dir["./apps/*.rb"].each {|file| require file }
+
 class TerraMod < Sinatra::Base
 	
 	configure do
@@ -13,8 +15,12 @@ class TerraMod < Sinatra::Base
 		db = SQLite3::Database.new db_file
 		db.execute "CREATE TABLE Nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
 		db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
-		db.execute "CREATE TABLE Callbacks(uuid TEXT, method TEXT);"
+		db.execute "CREATE TABLE Callbacks(uuid TEXT, class TEXT);"
 		
+		devices = {"Door" => "934d38cc-8fd2-4ac3-9b4d-059712a7a08b",
+			   "PIR"  => "eb036152-2bb0-4b4e-afc0-5b2de33584ba"}
+		DemoApp.setup(db, devices)
+
 		set :db, db
 		set :port, 80
 		set :bind, "0.0.0.0"
@@ -37,10 +43,10 @@ class TerraMod < Sinatra::Base
 				settings.db.execute "INSERT OR IGNORE INTO Modules VALUES(?,?,?,?,?);", [module_uuid, uuid, name, room, type]
 			end
 		elsif type == "EventReport"
-			callbacks = settings.db.execute "SELECT method FROM Callbacks WHERE uuid=?;", [uuid]
+			callbacks = settings.db.execute "SELECT class FROM Callbacks WHERE uuid=?;", [uuid]
 			callbacks.each do |callback|
-				method = Module.const_get(callback[0])
-				method(uuid, data)
+				app_class = Module.const_get(callback[0])
+				app_class.callback(settings.db, uuid, data)
 			end
 		end
 		status 200
