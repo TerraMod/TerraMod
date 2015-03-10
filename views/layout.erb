@@ -2,52 +2,175 @@
 <html>
 	
 	<head>
+		<script src="/vendor/jquery-1.9.1.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+		<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/vendor/metro/MetroJs.js"></script>
+		
 		
 		<title>TerraMod</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="/vendor/metro/MetroJs2.css" rel="stylesheet">
 		
 	</head>
 	
 	<body>
-
-		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+		
+		<!-- Navbar -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>	
 					</button>
 					<a class="navbar-brand" href="/">TerraMod</a>
 				</div>
+				<!-- Navbar Items -->
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="/queue">Queue</a></li>
-						<li><a href="/settings">Settings</a></li>
+						<!-- Apps Dropdown -->
 						<li class="dropdown">
-						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">DropDown <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="/login/form">Option 1</a></li>
-							<li class="divider"></li>
-							<li><a href="/logout">Option 2</a></li>
-						</ul>
-					  </li>
+						  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/apps/greenlights">Green Lights</a></li>
+								<li class="divider"></li>
+								<li><a href="/apps/locks">Locks</a></li>
+							</ul>
+						<!-- Apps Dropdown end -->
+					  	</li>
+						<li><a href="/settings">Settings</a></li>
 					</ul>
+				<!-- Navbar Items end -->
 				</div>
+			<!-- Container end -->
 			</div>
+		<!-- Navbar end -->
 		</nav>
 
-		<div class="container">
+		<div style="margin-top: 50px" class="container">
+			<h1>Draggable tiles</h1>
+			<div class="tiles cobalt">
+			    <div class="live-tile" id="tile1" data-mode="flip">        
+			        <div class="front">
+			            <p id="msg">Click to edit</p>
+			            <span class="tile-title">Example</span>
+			        </div>
+			        <div class="back">
+			            <p>
+			                <label for="text">Example Field:</label>
+			                <input style="color: black" id="text" type="text" />
+			                <input style="color: black" id="done1" type="button" value="done" class="done" />
+			            </p>
+			        </div>
+					<script type="text/javascript">
+						var $tile1 = null;
 
-			<%= yield %>
+						var frontFaceClick = function (event) {
+							$("#text").val($("#msg").text());
+							if ($tile1 == null)
+								$tile1 = $("#tile1").liveTile({ repeatCount: 0, delay: 0 });
+							else
+								$tile1.liveTile('play');
+						}
 
+						var backFaceClick = function (event) {
+							event.stopPropagation();
+						}
+    			
+						var doneClick = function (event) {
+							$("#msg").text($("#text").val());
+							$tile1.liveTile('play');
+						}
+    
+						$("#tile1").find(">.front").bind("click", frontFaceClick);
+						$("#tile1").find(">.back").bind("click", backFaceClick);
+						$("#done1").bind("click", doneClick);
+					</script>
+			    </div>
+			    <div class="live-tile emerald" id="tile2" data-mode="flip">        
+			        <div class="front">
+			            <p id="msg2">Click to edit</p>
+			            <span class="tile-title">Example</span>
+			        </div>
+			        <div class="back">
+			            <p>
+			                <label for="text2">Example Field:</label>
+			                <input style="color: black" id="text2" type="text" />
+			                <input style="color: black" id="done2" type="button" value="done" class="done" />
+			            </p>
+			        </div>
+					<script type="text/javascript">
+						var $tile2 = null;
+
+						var frontFaceClick = function (event) {
+							$("#text2").val($("#msg2").text());
+							if ($tile2 == null)
+								$tile2 = $("#tile2").liveTile({ repeatCount: 0, delay: 0 });
+							else
+								$tile2.liveTile('play');
+						}
+
+						var backFaceClick = function (event) {
+							event.stopPropagation();
+						}
+    			
+						var doneClick = function (event) {
+							$("#msg2").text($("#text2").val());
+							$tile2.liveTile('play');
+						}
+    
+						$("#tile2").find(">.front").bind("click", frontFaceClick);
+						$("#tile2").find(">.back").bind("click", backFaceClick);
+						$("#done2").bind("click", doneClick);
+					</script>
+			    </div>
+				<div class="live-tile red" id="tile3" data-mode="flip">        
+			        <div class="front">
+			            <p id="msg3">Click to edit</p>
+			            <span class="tile-title">Example</span>
+			        </div>
+			        <div class="back">
+			            <p>
+			                <label for="text3">Example Field:</label>
+			                <input style="color: black" id="text3" type="text" />
+			                <input style="color: black" id="done3" type="button" value="done" class="done" />
+			                <input style="color: black" id="done3" type="button" value="done" class="done" />
+			            </p>
+			        </div>
+					<script type="text/javascript">
+						var $tile2 = null;
+
+						var frontFaceClick = function (event) {
+							$("#text3").val($("#msg3").text());
+							if ($tile2 == null)
+								$tile2 = $("#tile3").liveTile({ repeatCount: 0, delay: 0 });
+							else
+								$tile2.liveTile('play');
+						}
+
+						var backFaceClick = function (event) {
+							event.stopPropagation();
+						}
+    			
+						var doneClick = function (event) {
+							$("#msg3").text($("#text3").val());
+							$tile2.liveTile('play');
+						}
+    
+						$("#tile3").find(">.front").bind("click", frontFaceClick);
+						$("#tile3").find(">.back").bind("click", backFaceClick);
+						$("#done3").bind("click", doneClick);
+					</script>
+			    </div>
+			<script>
+				$( ".tiles" ).sortable();
+				$( ".tiles" ).disableSelection();
+			</script>
 		</div>
-
-		<script src="/vendor/jquery-1.9.1.min.js"></script>
-		<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-		
 	</body>
 	
 </html>
