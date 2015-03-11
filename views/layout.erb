@@ -53,119 +53,15 @@
 
 		<div style="margin-top: 50px" class="container">
 			<h1>Draggable tiles</h1>
-			<div class="tiles cobalt">
-			    <div class="live-tile" id="tile1" data-mode="flip">        
-			        <div class="front">
-			            <p id="msg">Click to edit</p>
-			            <span class="tile-title">Example</span>
-			        </div>
-			        <div class="back">
-			            <p>
-			                <label for="text">Example Field:</label>
-			                <input style="color: black" id="text" type="text" />
-			                <input style="color: black" id="done1" type="button" value="done" class="done" />
-			            </p>
-			        </div>
-					<script type="text/javascript">
-						var $tile1 = null;
+			<div class="tiles">
+				<div class="live-tile" id="greenLights"></div>
+				<div class="live-tile" id="templateTile"></div>
 
-						var frontFaceClick = function (event) {
-							$("#text").val($("#msg").text());
-							if ($tile1 == null)
-								$tile1 = $("#tile1").liveTile({ repeatCount: 0, delay: 0 });
-							else
-								$tile1.liveTile('play');
-						}
-
-						var backFaceClick = function (event) {
-							event.stopPropagation();
-						}
-    			
-						var doneClick = function (event) {
-							$("#msg").text($("#text").val());
-							$tile1.liveTile('play');
-						}
-    
-						$("#tile1").find(">.front").bind("click", frontFaceClick);
-						$("#tile1").find(">.back").bind("click", backFaceClick);
-						$("#done1").bind("click", doneClick);
-					</script>
-			    </div>
-			    <div class="live-tile emerald" id="tile2" data-mode="flip">        
-			        <div class="front">
-			            <p id="msg2">Click to edit</p>
-			            <span class="tile-title">Example</span>
-			        </div>
-			        <div class="back">
-			            <p>
-			                <label for="text2">Example Field:</label>
-			                <input style="color: black" id="text2" type="text" />
-			                <input style="color: black" id="done2" type="button" value="done" class="done" />
-			            </p>
-			        </div>
-					<script type="text/javascript">
-						var $tile2 = null;
-
-						var frontFaceClick = function (event) {
-							$("#text2").val($("#msg2").text());
-							if ($tile2 == null)
-								$tile2 = $("#tile2").liveTile({ repeatCount: 0, delay: 0 });
-							else
-								$tile2.liveTile('play');
-						}
-
-						var backFaceClick = function (event) {
-							event.stopPropagation();
-						}
-    			
-						var doneClick = function (event) {
-							$("#msg2").text($("#text2").val());
-							$tile2.liveTile('play');
-						}
-    
-						$("#tile2").find(">.front").bind("click", frontFaceClick);
-						$("#tile2").find(">.back").bind("click", backFaceClick);
-						$("#done2").bind("click", doneClick);
-					</script>
-			    </div>
-				<div class="live-tile red" id="tile3" data-mode="flip">        
-			        <div class="front">
-			            <p id="msg3">Click to edit</p>
-			            <span class="tile-title">Example</span>
-			        </div>
-			        <div class="back">
-			            <p>
-			                <label for="text3">Example Field:</label>
-			                <input style="color: black" id="text3" type="text" />
-			                <input style="color: black" id="done3" type="button" value="done" class="done" />
-			                <input style="color: black" id="done3" type="button" value="done" class="done" />
-			            </p>
-			        </div>
-					<script type="text/javascript">
-						var $tile2 = null;
-
-						var frontFaceClick = function (event) {
-							$("#text3").val($("#msg3").text());
-							if ($tile2 == null)
-								$tile2 = $("#tile3").liveTile({ repeatCount: 0, delay: 0 });
-							else
-								$tile2.liveTile('play');
-						}
-
-						var backFaceClick = function (event) {
-							event.stopPropagation();
-						}
-    			
-						var doneClick = function (event) {
-							$("#msg3").text($("#text3").val());
-							$tile2.liveTile('play');
-						}
-    
-						$("#tile3").find(">.front").bind("click", frontFaceClick);
-						$("#tile3").find(">.back").bind("click", backFaceClick);
-						$("#done3").bind("click", doneClick);
-					</script>
-			    </div>
+				<script>
+						$("#greenLights").load("greenLights.html")
+						$("#templateTile").load("templateTile.html")
+				</script>
+				
 			<script>
 				$( ".tiles" ).sortable();
 				$( ".tiles" ).disableSelection();

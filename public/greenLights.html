@@ -1,0 +1,40 @@
+
+<div class="live-tile purple" id="greenlight" data-mode="flip">        
+	<div class="front">
+		<p style="text-align: center;font-size:xx-large;" id="msg">Green Lights</p>
+		<p id="power-usage">kWh used:</p>
+		<a style="text-indent: 50px;" href="/alerts">Alerts: </a>
+		<span class="tile-title">Green Lights</span>
+	</div>
+	<div class="back">
+		<p>
+			<label for="text">Example Field:</label>
+			<input style="color: black" id="text" type="text" />
+			<input style="color: black" id="done" type="button" value="done" class="done" />
+		</p>
+	</div>
+	<script type="text/javascript">
+		var $greenlight = null;
+
+		var frontFaceClick = function (event) {
+			$("#text").val($("#msg").text());
+			if ($greenlight == null)
+				$greenlight = $("#greenlight").liveTile({ repeatCount: 0, delay: 0 });
+			else
+				$greenlight.liveTile('play');
+		}
+
+		var backFaceClick = function (event) {
+			event.stopPropagation();
+		}
+
+		var doneClick = function (event) {
+			$("#msg").text($("#text").val());
+			$greenlight.liveTile('play');
+		}
+
+		$("#greenlight").find(">.front").bind("click", frontFaceClick);
+		$("#greenlight").find(">.back").bind("click", backFaceClick);
+		$("#done").bind("click", doneClick);
+	</script>
+</div>
