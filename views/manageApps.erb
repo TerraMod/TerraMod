@@ -49,10 +49,25 @@
 		<!-- Navbar end -->
 		</nav>
 
-		<div style="margin-top: 50px" class="container">
+		<div style="margin-top: 50px; padding-top: 25px" class="container">
 			<div class="panel panel-default">
-				<div class="panel-body">
-					Basic panel example
+				<div style="text-align: center; font-size:200%;" class="panel-body">
+					<b>Manage Installed Apps</b>
+					<div style="padding-top: 25px; text-align: left;" class="container">
+							<table>
+								<% apps = ["App 1", "App 2"] %>
+								<% for app in apps%>
+									<tr> 
+										<td> <%= app%> </td>
+										<td> 
+											<button style="position: relative; left: 25px;"button" class="btn btn-default btn-lg">
+												<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Uninstall
+											</button>
+										</td>
+									</tr>
+								<% end %>
+							</table>
+					</div>
 				</div>
 			</div>
 		</div>
