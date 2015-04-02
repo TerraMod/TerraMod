@@ -36,9 +36,18 @@
 						<li class="dropdown">
 						  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcuts <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="/apps/greenlights">Green Lights</a></li>
-								<li class="divider"></li>
-								<li><a href="/apps/locks">Locks</a></li>
+								<% keys = ["Green Lights", "Audio Routing"] %>
+								<% apps = { "Green Lights" => "/apps/lights", "Audio Routing" => "/apps/audio" } %>
+								<% keys.each_with_index do |key, index| %>
+									<li>
+										<a href=<%= apps[key] %> >
+											<%= key %>
+										</a>
+									</li>
+									<% if index < keys.size-1 %>
+										<li class="divider"></li>
+									<% end %>
+								<% end %>
 							</ul>
 						<!-- Apps Dropdown end -->
 					  	</li>
@@ -52,7 +61,7 @@
 		<!-- Navbar end -->
 		</nav>
 
-		<div style="margin-top: 50px" class="container">
+		<div style="margin-top: 75px" class="container">
 			<%= yield %>
 		</div>
 	</body>
