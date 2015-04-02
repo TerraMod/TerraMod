@@ -53,20 +53,7 @@
 		</nav>
 
 		<div style="margin-top: 50px" class="container">
-			<h1 style="text-align: center;">Welcome Home</h1>
-			<div class="tiles">
-				<div class="live-tile" id="greenLights"></div>
-				<div class="live-tile" id="templateTile"></div>
-
-				<script>
-						$("#greenLights").load("greenLights.html")
-						$("#templateTile").load("templateTile.html")
-				</script>
-				
-			<script>
-				$( ".tiles" ).sortable();
-				$( ".tiles" ).disableSelection();
-			</script>
+			<%= yield %>
 		</div>
 	</body>
 	
