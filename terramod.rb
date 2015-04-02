@@ -53,11 +53,11 @@ class TerraMod < Sinatra::Base
 	end
 	
 	get '/' do
-		erb '<h1>TerraMod Dashboard</h1>'
+		erb :layout
 	end
 	
 	get '/manage' do
-		erb :manageApps
+		erb :layout, :layout => :manageApps
 	end
 	
 end
