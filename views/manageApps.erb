@@ -8,7 +8,11 @@
 					<% apps = ["App 1", "App 2"] %>
 					<% for app in apps%>
 						<tr> 
-							<td> <%= app %> </td>
+							<td> 
+								<a href="/dummy">
+									<%= app %> 
+								</a>
+							</td>
 							<td> 
 								<button style="position: relative; left: 25px;"button" class="btn btn-default btn-lg">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Uninstall
