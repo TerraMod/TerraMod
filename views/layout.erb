@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-	
 	<head>
 		<script src="/vendor/jquery-1.9.1.min.js"></script>
 		<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
@@ -12,11 +11,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/vendor/metro/MetroJs2.css" rel="stylesheet">
-		
 	</head>
 	
 	<body>
-		
 		<!-- Navbar -->
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="container">
@@ -35,23 +32,29 @@
 						<!-- Apps Dropdown -->
 						<li class="dropdown">
 						  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcuts <b class="caret"></b></a>
+						  	<!-- Menu Items -->
 							<ul class="dropdown-menu">
 								<!-- Populates the dropdown with dummy data for now, it will dynamically generate the list in the future -->
-								<% keys = ["Green Lights", "Audio Routing"] %>
-								<% apps = { "Green Lights" => "/apps/lights", "Audio Routing" => "/apps/audio" } %>
+								<!-- TODO: figure out database queries. Can this happen here, or only in terramod.rb? -->
+								<% keys = ["Green Lights", "Audio Routing"]
+								   apps = { "Green Lights" => "/apps/lights", "Audio Routing" => "/apps/audio" } %>
 								<% keys.each_with_index do |key, index| %>
 									<li>
 										<a href=<%= apps[key] %> >
 											<%= key %>
 										</a>
 									</li>
+									<!-- Avoid an extra divider at the bottom of the dropdown -->
 									<% if index < keys.size-1 %>
 										<li class="divider"></li>
 									<% end %>
 								<% end %>
+								<!-- End dummy code -->
+							<!-- Menu Items end-->
 							</ul>
 						<!-- Apps Dropdown end -->
 					  	</li>
+					  	<!-- the following two routes are subject to change TODO: set the right routes -->
 						<li><a href="/settings"> Settings </a></li>
 						<li><a href="/manage"> Manage Apps </a></li>
 					</ul>
@@ -61,8 +64,8 @@
 			</div>
 		<!-- Navbar end -->
 		</nav>
-
-		<div style="margin-top: 75px" class="container">
+		<!-- Container for each individual page, then yield -->
+		<div style="margin-top: 50px" class="container">
 			<%= yield %>
 		</div>
 	</body>
