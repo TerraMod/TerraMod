@@ -35,9 +35,10 @@
 						  	<!-- Menu Items -->
 							<ul class="dropdown-menu">
 								<!-- The app_list should be passed in from Sinatra in terramod.rb. Should be a hash containing the app name and web route -->
+								<!-- TODO: make that happen -->
 								<% app_names.each_with_index do |app_name, index| %>
 									<li>
-										<!-- TODO: get the web route and put it in here -->
+										<!-- TODO: make this not ugly -->
 										<a href=<%= app_routes[index][0] %>>
 											<%= app_name[0] %>
 										</a>
