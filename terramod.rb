@@ -58,7 +58,7 @@ class TerraMod < Sinatra::Base
 	
 	get '/manage' do
 		a = "hello world"
-		erb :manageApps, :locals => {:a => a}
+		erb :manage_apps, :locals => {:a => a}
 	end
 	
 end
