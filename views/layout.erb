@@ -35,15 +35,15 @@
 						  	<!-- Menu Items -->
 							<ul class="dropdown-menu">
 								<!-- The app_list should be passed in from Sinatra in terramod.rb. Should be a hash containing the app name and web route -->
-								<% app_list.each_with_index do |index| %>
+								<% app_names.each_with_index do |app_name, index| %>
 									<li>
 										<!-- TODO: get the web route and put it in here -->
-										<a href=<%= placeholder %> >
-											<%= app_list[index] %>
+										<a href=<%= app_routes[index][0] %>>
+											<%= app_name[0] %>
 										</a>
 									</li>
 									<!-- Avoid an extra divider at the bottom of the dropdown -->
-									<% if index < app_list.size-1 %>
+									<% if index < app_names.size-1 %>
 										<li class="divider"></li>
 									<% end %>
 								<% end %>
