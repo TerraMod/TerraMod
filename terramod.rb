@@ -16,6 +16,7 @@ class TerraMod < Sinatra::Base
 		db.execute "CREATE TABLE Nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
 		db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
 		db.execute "CREATE TABLE Callbacks(uuid TEXT, class TEXT);"
+		db.execute "CREATE TABLE Apps(app TEXT, route TEXT);"
 		
 		devices = {"Door" => "934d38cc-8fd2-4ac3-9b4d-059712a7a08b",
 			   "PIR"  => "eb036152-2bb0-4b4e-afc0-5b2de33584ba"}
