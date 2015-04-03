@@ -34,22 +34,19 @@
 						  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcuts <b class="caret"></b></a>
 						  	<!-- Menu Items -->
 							<ul class="dropdown-menu">
-								<!-- Populates the dropdown with dummy data for now, it will dynamically generate the list in the future -->
-								<!-- TODO: figure out database queries. Can this happen here, or only in terramod.rb? -->
-								<% keys = ["Green Lights", "Audio Routing"]
-								   apps = { "Green Lights" => "/apps/lights", "Audio Routing" => "/apps/audio" } %>
-								<% keys.each_with_index do |key, index| %>
+								<!-- The app_list should be passed in from Sinatra in terramod.rb. Should be a hash containing the app name and web route -->
+								<% app_list.each_with_index do |index| %>
 									<li>
-										<a href=<%= apps[key] %> >
-											<%= key %>
+										<!-- TODO: get the web route and put it in here -->
+										<a href=<%= placeholder %> >
+											<%= app_list[index] %>
 										</a>
 									</li>
 									<!-- Avoid an extra divider at the bottom of the dropdown -->
-									<% if index < keys.size-1 %>
+									<% if index < app_list.size-1 %>
 										<li class="divider"></li>
 									<% end %>
 								<% end %>
-								<!-- End dummy code -->
 							<!-- Menu Items end-->
 							</ul>
 						<!-- Apps Dropdown end -->

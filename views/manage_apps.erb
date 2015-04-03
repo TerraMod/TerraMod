@@ -7,8 +7,7 @@
 		<!-- Currently uses some dummy data, will substitute database calls when the time comes -->
 			<div class="well">
 				<table>
-					<% apps = ["App 1", "App 2"] %>
-					<% for app in apps%>
+					<% for app in app_list%>
 						<tr> 
 							<td> 
 								<a href="/dummy">
@@ -16,13 +15,16 @@
 								</a>
 							</td>
 							<td> 
-								<button style="position: relative; left: 25px;"button" class="btn btn-default btn-lg">
+								<button style="margin: auto auto auto 0" type="button" class="btn btn-default btn-lg">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Uninstall
 								</button>
 							</td>
 						</tr>
 					<% end %>
 				</table>
+				<button style="margin: auto;" type="button" class="btn btn-default btn-lg">
+					<span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Install App
+				</button>
 			<!-- Well end -->
 			</div>
 		<!-- Container end -->

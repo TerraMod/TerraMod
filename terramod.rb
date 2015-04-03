@@ -53,12 +53,13 @@ class TerraMod < Sinatra::Base
 	end
 	
 	get '/' do
-		erb :index
+		app_list = settings.db.execute "SELECT * FROM Apps"
+		erb :index, :locals => {:app_list => app_list}
 	end
 	
 	get '/manage' do
-		a = "hello world"
-		erb :manage_apps, :locals => {:a => a}
+		app_list = settings.db.execute "SELECT * FROM Apps"
+		erb :manage_apps, :locals => {:app_list => app_list}
 	end
 	
 end
