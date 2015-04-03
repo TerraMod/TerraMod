@@ -1,0 +1,52 @@
+
+<div class="live-tile yellow" id="templateTile" data-mode="flip">        
+	<div class="front">
+		<p style="text-align: center;font-size:xx-large; color: white;
+		text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;" id="templateTitle">Template Tile</p>
+		<p id="templateField1">Field 1: <span id="outputField1"> </span></p>
+		<p id="templateField2">Field 2: <span id="outputField2"> </span></p>
+		<p id="templateField3">Field 3: <span id="outputField3"> </span></p>
+		<p id="alertTicker" href="/alerts">Alerts: </a>
+	</div>
+	<div class="back">
+		<p>
+			<label for="text">Example Field 1:</label>
+			<input style="color: black" id="textField1" type="text" />
+			<input style="color: black" id="templateDoneButtom" type="button" value="done" class="done" />
+			
+			<label for="text">Example Field 2:</label>
+			<input style="color: black" id="textField2" type="text" />
+			
+			<label for="text">Example Field 3:</label>
+			<input style="color: black" id="textField3" type="text" />
+		</p>
+	</div>
+	<script type="text/javascript">
+		var $templateTile = null;
+
+		var frontFaceClick = function (event) {
+			$("#textField1").val($("#outputField1").text());
+			$("#textField2").val($("#outputField2").text());
+			$("#textField3").val($("#outputField3").text());
+			if ($templateTile == null)
+				$templateTile = $("#templateTile").liveTile({ repeatCount: 0, delay: 0 });
+			else
+				$templateTile.liveTile('play');
+		}
+
+		var backFaceClick = function (event) {
+			event.stopPropagation();
+		}
+
+		var doneClick = function (event) {
+			$("#outputField1").text($("#textField1").val());
+			$("#outputField2").text($("#textField2").val());
+			$("#outputField3").text($("#textField3").val());
+			$templateTile.liveTile('play');
+		}
+
+		$("#templateTile").find(">.front").bind("click", frontFaceClick);
+		$("#templateTile").find(">.back").bind("click", backFaceClick);
+		$("#templateDoneButtom").bind("click", doneClick);
+	</script>
+</div>

@@ -22,7 +22,7 @@ class TerraMod < Sinatra::Base
 		DemoApp.setup(db, devices)
 
 		set :db, db
-		set :port, 80
+		set :port, 8080
 		set :bind, "0.0.0.0"
 		
 	end
@@ -53,8 +53,14 @@ class TerraMod < Sinatra::Base
 	end
 	
 	get '/' do
-		erb '<h1>TerraMod Dashboard</h1>'
-	end	
+		app_list = settings.db.execute "SELECT * FROM Apps"
+		erb :index, :locals => {:app_list => app_list}
+	end
+	
+	get '/manage' do
+		app_list = settings.db.execute "SELECT * FROM Apps"
+		erb :manage_apps, :locals => {:app_list => app_list}
+	end
 	
 end
 

@@ -1,53 +1,70 @@
 <!DOCTYPE html>
 <html>
-	
 	<head>
+		<script src="/vendor/jquery-1.9.1.min.js"></script>
+		<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+		<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/vendor/metro/MetroJs2.css"></script>
+		
 		
 		<title>TerraMod</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		
+		<link href="/vendor/metro/MetroJs2.css" rel="stylesheet">
 	</head>
 	
 	<body>
-
-		<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+		<!-- Navbar -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>	
 					</button>
 					<a class="navbar-brand" href="/">TerraMod</a>
 				</div>
+				<!-- Navbar Items -->
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="/queue">Queue</a></li>
-						<li><a href="/settings">Settings</a></li>
+						<!-- Apps Dropdown -->
 						<li class="dropdown">
-						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">DropDown <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="/login/form">Option 1</a></li>
-							<li class="divider"></li>
-							<li><a href="/logout">Option 2</a></li>
-						</ul>
-					  </li>
+						  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcuts <b class="caret"></b></a>
+						  	<!-- Menu Items -->
+							<ul class="dropdown-menu">
+								<!-- The app_list should be passed in from Sinatra in terramod.rb. Should be a hash containing the app name and web route -->
+								<% app_list.each_with_index do |index| %>
+									<li>
+										<!-- TODO: get the web route and put it in here -->
+										<a href=<%= placeholder %> >
+											<%= app_list[index] %>
+										</a>
+									</li>
+									<!-- Avoid an extra divider at the bottom of the dropdown -->
+									<% if index < app_list.size-1 %>
+										<li class="divider"></li>
+									<% end %>
+								<% end %>
+							<!-- Menu Items end-->
+							</ul>
+						<!-- Apps Dropdown end -->
+					  	</li>
+					  	<!-- the following two routes are subject to change TODO: set the right routes -->
+						<li><a href="/settings"> Settings </a></li>
+						<li><a href="/manage"> Manage Apps </a></li>
 					</ul>
+				<!-- Navbar Items end -->
 				</div>
+			<!-- Container end -->
 			</div>
+		<!-- Navbar end -->
 		</nav>
-
-		<div class="container">
-
+		<!-- Container for each individual page, then yield -->
+		<div style="margin-top: 50px" class="container">
 			<%= yield %>
-
 		</div>
-
-		<script src="/vendor/jquery-1.9.1.min.js"></script>
-		<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-		
 	</body>
 	
 </html>

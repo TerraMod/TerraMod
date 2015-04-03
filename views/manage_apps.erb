@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<div class="panel panel-default">
+	<div style="text-align: center; font-size:200%;" class="panel-body">
+		<b>Manage Installed Apps</b>
+		<div style="padding-top: 25px; padding-right: 75px; text-align: left;" class="container">
+		<!-- Currently uses some dummy data, will substitute database calls when the time comes -->
+			<div class="well">
+				<table>
+					<% for app in app_list%>
+						<tr> 
+							<td> 
+								<a href="/dummy">
+									<%= app %> 
+								</a>
+							</td>
+							<td> 
+								<button style="margin: auto auto auto 0" type="button" class="btn btn-default btn-lg">
+									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Uninstall
+								</button>
+							</td>
+						</tr>
+					<% end %>
+				</table>
+				<button style="margin: auto;" type="button" class="btn btn-default btn-lg">
+					<span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Install App
+				</button>
+			<!-- Well end -->
+			</div>
+		<!-- Container end -->
+		</div>
+	<!-- Panel Body end -->
+	</div>
+<!-- Panel end -->
+</div>
+</html>
+<!-- TODO: Add "Install" button -->
