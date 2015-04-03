@@ -65,6 +65,10 @@ class TerraMod < Sinatra::Base
 		erb :manage_apps, :locals => {:app_names => app_names, :app_routes => app_routes}
 	end
 	
+	get '/settings' do
+		status 404
+	end
+	
 end
 
 TerraMod.run!
