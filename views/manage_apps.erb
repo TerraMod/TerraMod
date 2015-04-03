@@ -7,11 +7,11 @@
 		<!-- Currently uses some dummy data, will substitute database calls when the time comes -->
 			<div class="well">
 				<table>
-					<% for app in app_list%>
+					<% app_names.each_with_index do |app_name, index| %>
 						<tr> 
 							<td> 
-								<a href="/dummy">
-									<%= app %> 
+								<a href=<%= app_routes[index][0] %>>
+									<%= app_name[0] %>
 								</a>
 							</td>
 							<td> 

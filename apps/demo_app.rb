@@ -14,6 +14,9 @@ class DemoApp
 			db.execute "INSERT INTO DemoApp VALUES(?, ?);", [k, v]
 			db.execute "INSERT INTO Callbacks VALUES (?, ?);", [v, "DemoApp"]
 		end
+		name = "Demo App"
+		route = "/apps/demo"
+		db.execute "INSERT INTO Apps VALUES(?, ?);", [name, route]
 	end
 
 	def self.callback(db, uuid, data)
