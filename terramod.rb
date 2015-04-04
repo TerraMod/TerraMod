@@ -3,8 +3,9 @@
 require 'sinatra/base'
 require 'json'
 require 'sqlite3'
+require 'date'
 
-Dir["./apps/*.rb"].each {|file| require file }
+Dir["./apps/*/app.rb"].each {|file| require file }
 
 class TerraMod < Sinatra::Base
 	
@@ -16,7 +17,7 @@ class TerraMod < Sinatra::Base
 		db.execute "CREATE TABLE Nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
 		db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
 		db.execute "CREATE TABLE Callbacks(uuid TEXT, class TEXT);"
-		db.execute "CREATE TABLE Apps(name TEXT, route TEXT);"
+		db.execute "CREATE TABLE Apps(name TEXT, description TEXT, object TEXT, page TEXT, version TEXT, UNIQUE(object), UNIQUE(page));"
 		
 		devices = {"Door" => "934d38cc-8fd2-4ac3-9b4d-059712a7a08b",
 			   "PIR"  => "eb036152-2bb0-4b4e-afc0-5b2de33584ba"}
@@ -54,19 +55,15 @@ class TerraMod < Sinatra::Base
 	end
 	
 	get '/' do
-		app_names = settings.db.execute "SELECT name FROM Apps"
-		app_routes = settings.db.execute "SELECT route FROM Apps"
-		erb :index, :locals => {:app_names => app_names, :app_routes => app_routes}
+		erb :index, :locals => {:apps => settings.db.execute("SELECT * FROM Apps;")}
 	end
 	
 	get '/manage' do
-		app_names = settings.db.execute "SELECT name FROM Apps"
-		app_routes = settings.db.execute "SELECT route FROM Apps"
-		erb :manage_apps, :locals => {:app_names => app_names, :app_routes => app_routes}
+		erb :manage_apps, :locals => {:apps => settings.db.execute("SELECT * FROM Apps;")}
 	end
 	
 	get '/settings' do
-		status 404
+		erb :settings, :locals => {:apps => settings.db.execute("SELECT * FROM Apps;")}
 	end
 	
 end

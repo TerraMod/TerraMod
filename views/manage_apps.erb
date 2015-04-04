@@ -1,36 +1,40 @@
-<!DOCTYPE html>
-<html>
-<div style="margin-top: 5%" class="panel panel-default">
-	<div style="text-align: center; font-size:200%;" class="panel-body">
-		<b>Manage Installed Apps</b>
+<div  style="margin-top: 6%" class="panel panel-default">
+	<div style="text-align: center;" class="panel-body">
+		<h2>Manage Installed Apps</h2>
 		<div class="well">
 			<table style="width: 100%; padding: 2%;">
 				<!-- The app_list should be passed in from Sinatra in terramod.rb. Should be a hash containing the app name and web route -->
 				<!-- TODO: make that happen -->
-				<% app_names.each_with_index do |app_name, index| %>
-					<tr> 
+				<% apps.each do |app| 
+					name = app[0]
+					description = app[1]
+					object = app[2]
+					version = app[4]%>
+					<tr>
 						<td align="left"> 
-							<!-- TODO: make this not ugly -->
-							<a href=<%= app_routes[index][0] %>>
-								<%= app_name[0] %>
-							</a>
+							<h4><a href="/edit_app/"<%= object %>><%= name %></a></h4>
 						</td>
+                                                <td align="left">
+                                                        Version <%= version %>
+                                                </td>
+                                                <td align="left">
+                                                        <%= description[0..64] %>...
+                                                </td>
+
 						<td align="right">
-							<button type="button" class="btn btn-default btn-lg">
+							<button type="button" class="btn btn-danger btn-default">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Uninstall
 							</button>
 						</td>
 					</tr>
 				<% end %>
 			</table>
-			<button type="button" class="btn btn-default btn-lg">
-				<span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Install App
-			</button>
-		<!-- Well end -->
 		</div>
-	<!-- Panel Body end -->
+		<button type="button" class="btn btn-success btn-default btn-lg">
+			<span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Install App
+		</button>
+	<!-- Well end -->
+<!-- Panel Body end -->
 	</div>
 <!-- Panel end -->
 </div>
-</html>
-<!-- TODO: Add "Install" button -->
