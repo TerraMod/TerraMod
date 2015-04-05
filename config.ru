@@ -1,2 +1,2 @@
 require './terramod.rb'
-run EventReciever
+run TerraMod

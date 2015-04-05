@@ -11,8 +11,7 @@ Dir["./apps/*/app.rb"].each {|file| require file }
 
 class TerraMod < Sinatra::Base
 
-	def self.install(app)
-		app.install(settings.db)
+	def self.register_routes(app)
 		app.routes.each do |hookup|
                         url = hookup[:url]
                         template = hookup[:template]
@@ -31,19 +30,31 @@ class TerraMod < Sinatra::Base
                                               :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
 							  :queries => query.call}
                         end
-                end
+		end
+	end
+
+	def self.install(app)
+		app.install(settings.db)
+                register_routes(app)
 	end
 	
 	configure do
 		
 		db_file = "./terramod.db"
-		File.delete db_file if File.exists? db_file
-		db = SQLite3::Database.new db_file
-		db.execute "CREATE TABLE Nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
-		db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
-		db.execute "CREATE TABLE Callbacks(uuid TEXT, class TEXT);"
-		db.execute "CREATE TABLE Apps(name TEXT, version TEXT, object TEXT, description TEXT, page TEXT, dir TEXT, UNIQUE(object), UNIQUE(page), UNIQUE(dir));"
-	
+		db = nil
+		if File.exists? db_file
+			db = SQLite3::Database.open db_file
+			db.execute("SELECT object FROM Apps;").each do |app|
+				register_routes(Module.const_get(app[0]))
+			end
+		else
+			db = SQLite3::Database.new db_file
+			db.execute "CREATE TABLE Nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
+			db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
+			db.execute "CREATE TABLE Callbacks(uuid TEXT, class TEXT);"
+			db.execute "CREATE TABLE Apps(name TEXT, version TEXT, object TEXT, description TEXT, page TEXT, dir TEXT, UNIQUE(object), UNIQUE(page), UNIQUE(dir));"
+		end
+
 		set :install, self.method(:install)
 		set :db, db
 		set :port, 80
