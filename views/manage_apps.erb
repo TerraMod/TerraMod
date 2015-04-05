@@ -1,40 +1,72 @@
-<div  style="margin-top: 6%" class="panel panel-default">
-	<div style="text-align: center;" class="panel-body">
-		<h2>Manage Installed Apps</h2>
-		<div class="well">
-			<table style="width: 100%; padding: 2%;">
-				<!-- The app_list should be passed in from Sinatra in terramod.rb. Should be a hash containing the app name and web route -->
-				<!-- TODO: make that happen -->
-				<% apps.each do |app| 
-					name = app[0]
-					description = app[1]
-					object = app[2]
-					version = app[4]%>
-					<tr>
-						<td align="left"> 
-							<h4><a href="/edit_app/"<%= object %>><%= name %></a></h4>
-						</td>
-                                                <td align="left">
-                                                        Version <%= version %>
-                                                </td>
-                                                <td align="left">
-                                                        <%= description[0..64] %>...
-                                                </td>
+<style type="text/css">
+td {
+	white-space: nowrap;
+	padding-right: 10px;
+}
+</style>
+<div style="text-align: center;" class="panel panel-default">
 
-						<td align="right">
-							<button type="button" class="btn btn-danger btn-default">
-								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Uninstall
-							</button>
-						</td>
-					</tr>
-				<% end %>
-			</table>
-		</div>
-		<button type="button" class="btn btn-success btn-default btn-lg">
-			<span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Install App
-		</button>
-	<!-- Well end -->
-<!-- Panel Body end -->
+	<div class="panel-heading">
+		<h2>Manage Apps</h2>
 	</div>
-<!-- Panel end -->
+
+	<div class="panel-body">
+		<% if defined? message  %>
+			<div class="alert <%= message[:class] %> alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong><%= message[:title] %></strong> <%= message[:detail] %>
+			</div>
+		<% end %>
+		<% apps.each do |app| 
+			name = app[0]
+			version = app[1]
+			object = app[2]
+			description = app[3]%>
+
+			<div class="well table-responsive">
+				<table style="width: 100%;">
+					<tbody>
+						<tr>
+							<td>
+                                                                <h4><a href="/edit_app/<%= object %>"><%= name %></a></h4>
+                                                        </td>
+
+                                                        <td>
+                                                                Version <%= version %>
+                                                        </td>
+
+
+							<td>
+								<%= description[0..80] + (description.size > 80 ? "..." : "" ) %>
+							</td>
+
+							<td align="right">
+								<a href="/uninstall_app/<%= object %>">
+									<button type="button" class="btn btn-danger btn-default">
+                                                                		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Uninstall
+                                                        		</button>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		<% end %>
+
+	        <form action="/install_app" method="POST" enctype="multipart/form-data">
+			<label class="btn btn-default btn-lg btn-success" for="app-file">
+				<input type="file" id="app-file" style="display:none">
+				<span class="glyphicon glyphicon-upload" aria-hidden="true" /> Install
+			</label>
+		</form>
+	</div>
 </div>
+
+<script>
+	var file = document.getElementById('app-file');
+	file.onchange = function() {
+		if (this.value !== '')
+			this.form.submit();
+	};
+</script>
+

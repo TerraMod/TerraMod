@@ -1,4 +1,11 @@
-class DemoApp
+class ExampleApp
+
+	@@name = "Example Application"
+	@@version = "0.1"
+	@@object = "ExampleApp"
+	@@description = "This application demonstrates the TerraMod framework.  The goal is to print any sensor to standard output."
+	@@page = "/example_app"
+	@@dir = "example_app"
 
 	def self.requirements
 		return {"Door" => {:class => "EntranceSensor",
@@ -10,29 +17,45 @@ class DemoApp
 			}
 	end
 
-	def self.setup(db, devices)
-		# Create app table
+	def self.set_options(db, options)
+		# update all table with relevent information
+
+
+		# clear out and fill the 'ExampleApp" tables
+		#devices.each do |k, v|
+                #        db.execute "INSERT INTO DemoApp VALUES(?, ?);", [k, v]
+                #        db.execute "INSERT INTO Callbacks VALUES (?, ?);", [v, "DemoApp"]
+                #end
+
+	end
+
+	def self.install(db)
+		# Create table(s) to store app information
 		db.execute "CREATE TABLE DemoApp(name TEXT, uuid TEXT);"
 
-		# Parse devices input and insert into app and callbacks tables
-		devices.each do |k, v|
-			db.execute "INSERT INTO DemoApp VALUES(?, ?);", [k, v]
-			db.execute "INSERT INTO Callbacks VALUES (?, ?);", [v, "DemoApp"]
-		end
-		#return errors?
+		# Populate Apps table with app information
+		db.execute "INSERT INTO Apps VALUES(?, ?, ?, ?, ?, ?);", [@@name, @@version, @@object, @@description, @@page, @@dir]
+	end
 
-		# Populate apps table with app information
-		name = "Example Application"
-		description = "This application demonstrates the TerraMod framework.  The goal is to print any sensor to standard output."
-		object = "DemoApp"
-		page = "/routing/information?"
-		version = "0.1"
-		db.execute "INSERT INTO Apps VALUES(?, ?, ?, ?, ?);", [name, description, object, page, version]
+	def self.uninstall(db)
+		# Drop all tables created by the app, remove from Apps table
+		db.execute "DROP TABLE DemoApp;"
+		db.execute "DELETE FROM Apps WHERE object=?;", [@@object]
 	end
 
 	def self.tile
 		return {:title => "Example App",
 			:content => "example tile content"}
+	end
+
+	def self.routes
+		return [{
+			:url => "/example_app",
+			:template => :template,
+			:views => "./apps/example_app/",
+			# locals
+		}
+		]
 	end
 
 	def self.callback(db, uuid, data)

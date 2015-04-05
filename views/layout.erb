@@ -36,9 +36,9 @@
 							<ul class="dropdown-menu">
 								<!-- The app_list should be passed in from Sinatra in terramod.rb. Should be a hash containing the app name and web route -->
 								<!-- TODO: make that happen -->
-								<% apps.each_with_index do |app, index|
+								<% app_links.each_with_index do |app, index|
 									name = app[0]
-									page = app[3]%>
+									page = app[1]%>
 									<li>
 										<!-- TODO: make this not ugly -->
 										<a href=<%= page %>>
@@ -46,7 +46,7 @@
 										</a>
 									</li>
 									<!-- Avoid an extra divider at the bottom of the dropdown -->
-									<% if index < apps.size-1 %>
+									<% if index < app_links.size-1 %>
 										<li class="divider"></li>
 									<% end %>
 								<% end %>
@@ -54,7 +54,6 @@
 							</ul>
 						<!-- Apps Dropdown end -->
 					  	</li>
-					  	<!-- the following two routes are subject to change TODO: set the right routes -->
 						<li><a href="/settings"> Settings </a></li>
 						<li><a href="/manage"> Manage Apps </a></li>
 					</ul>
@@ -66,6 +65,7 @@
 		</nav>
 		<!-- Container for each individual page, then yield -->
 		<div class="container">
+			<br /><br /><br /><br />
 			<%= yield %>
 		</div>
 	</body>
