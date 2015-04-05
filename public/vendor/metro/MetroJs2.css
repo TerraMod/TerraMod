@@ -928,607 +928,99 @@ a.live-tile .metroExtraSmall:link {
   background-color: #212021;
 }
 /*live tile accent colors */
-.amber .accent,
-.amber .accentBg,
-.amber .accentBgHover:hover,
-.amber .accentBgHover a:hover,
-.amber .live-tile > div,
-.amber .copy-tile > div,
-.amber .live-tile > .face,
-.amber .copy-tile > .face,
-.amber .live-tile > .slide,
-.amber .live-tile > .flip-back,
-.amber .live-tile > .flip-front,
-.amber .live-tile > .slide-back,
-.amber .live-tile > .slide-front,
-.amber .list-tile > div,
-.amber .flip-list > li > div {
-  background-color: #f1a30b;
-}
-.amber .accentColor,
-.amber .accentHover:hover,
-.amber .accentHover a:hover,
-.amber .accentLink a,
-.amber .accentLink a:hover,
-.amber .accentLink a:visited,
-.amber a.accentLink,
-.amber a.accentLink:hover,
-.amber a.accentLink:visited {
-  color: #f1a30b;
-}
-.amber .accentBorder {
-  border-color: #f1a30b;
-}
-.amber .accentBorderBottom {
-  border-bottom-color: #f1a30b;
-}
-.amber .accentBorderLeft {
-  border-left-color: #f1a30b;
-}
-.amber .accentBorderRight {
-  border-right-color: #f1a30b;
-}
-.amber .accentBorderTop {
-  border-top-color: #f1a30b;
-}
-.blue .accent,
-.blue .accentBg,
-.blue .accentBgHover:hover,
-.blue .accentBgHover a:hover,
-.blue .live-tile > div,
-.blue .copy-tile > div,
-.blue .live-tile > .face,
-.blue .copy-tile > .face,
-.blue .live-tile > .slide,
-.blue .live-tile > .flip-back,
-.blue .live-tile > .flip-front,
-.blue .live-tile > .slide-back,
-.blue .live-tile > .slide-front,
-.blue .list-tile > div,
-.blue .flip-list > li > div {
-  background-color: #1ba1e2;
-}
-.blue .accentColor,
-.blue .accentHover:hover,
-.blue .accentHover a:hover,
-.blue .accentLink a,
-.blue .accentLink a:hover,
-.blue .accentLink a:visited,
-.blue a.accentLink,
-.blue a.accentLink:hover,
-.blue a.accentLink:visited {
-  color: #1ba1e2;
-}
-.blue .accentBorder {
-  border-color: #1ba1e2;
-}
-.blue .accentBorderBottom {
-  border-bottom-color: #1ba1e2;
-}
-.blue .accentBorderLeft {
-  border-left-color: #1ba1e2;
-}
-.blue .accentBorderRight {
-  border-right-color: #1ba1e2;
-}
-.blue .accentBorderTop {
-  border-top-color: #1ba1e2;
-}
-.brown .accent,
-.brown .accentBg,
-.brown .accentBgHover:hover,
-.brown .accentBgHover a:hover,
-.brown .live-tile > div,
-.brown .copy-tile > div,
-.brown .live-tile > .face,
-.brown .copy-tile > .face,
-.brown .live-tile > .slide,
-.brown .live-tile > .flip-back,
-.brown .live-tile > .flip-front,
-.brown .live-tile > .slide-back,
-.brown .live-tile > .slide-front,
-.brown .list-tile > div,
-.brown .flip-list > li > div {
-  background-color: #a05000;
-}
-.brown .accentColor,
-.brown .accentHover:hover,
-.brown .accentHover a:hover,
-.brown .accentLink a,
-.brown .accentLink a:hover,
-.brown .accentLink a:visited,
-.brown a.accentLink,
-.brown a.accentLink:hover,
-.brown a.accentLink:visited {
-  color: #a05000;
-}
-.brown .accentBorder {
-  border-color: #a05000;
-}
-.brown .accentBorderBottom {
-  border-bottom-color: #a05000;
-}
-.brown .accentBorderLeft {
-  border-left-color: #a05000;
-}
-.brown .accentBorderRight {
-  border-right-color: #a05000;
-}
-.brown .accentBorderTop {
-  border-top-color: #a05000;
-}
-.cobalt .accent,
-.cobalt .accentBg,
-.cobalt .accentBgHover:hover,
-.cobalt .accentBgHover a:hover,
-.cobalt .live-tile > div,
-.cobalt .copy-tile > div,
-.cobalt .live-tile > .face,
-.cobalt .copy-tile > .face,
-.cobalt .live-tile > .slide,
-.cobalt .live-tile > .flip-back,
-.cobalt .live-tile > .flip-front,
-.cobalt .live-tile > .slide-back,
-.cobalt .live-tile > .slide-front,
-.cobalt .list-tile > div,
-.cobalt .flip-list > li > div {
-  background-color: #0050ef;
-}
-.cobalt .accentColor,
-.cobalt .accentHover:hover,
-.cobalt .accentHover a:hover,
-.cobalt .accentLink a,
-.cobalt .accentLink a:hover,
-.cobalt .accentLink a:visited,
-.cobalt a.accentLink,
-.cobalt a.accentLink:hover,
-.cobalt a.accentLink:visited {
-  color: #0050ef;
-}
-.cobalt .accentBorder {
-  border-color: #0050ef;
-}
-.cobalt .accentBorderBottom {
-  border-bottom-color: #0050ef;
-}
-.cobalt .accentBorderLeft {
-  border-left-color: #0050ef;
-}
-.cobalt .accentBorderRight {
-  border-right-color: #0050ef;
-}
-.cobalt .accentBorderTop {
-  border-top-color: #0050ef;
-}
-.crimson .accent,
-.crimson .accentBg,
-.crimson .accentBgHover:hover,
-.crimson .accentBgHover a:hover,
-.crimson .live-tile > div,
-.crimson .copy-tile > div,
-.crimson .live-tile > .face,
-.crimson .copy-tile > .face,
-.crimson .live-tile > .slide,
-.crimson .live-tile > .flip-back,
-.crimson .live-tile > .flip-front,
-.crimson .live-tile > .slide-back,
-.crimson .live-tile > .slide-front,
-.crimson .list-tile > div,
-.crimson .flip-list > li > div {
-  background-color: #a20025;
-}
-.crimson .accentColor,
-.crimson .accentHover:hover,
-.crimson .accentHover a:hover,
-.crimson .accentLink a,
-.crimson .accentLink a:hover,
-.crimson .accentLink a:visited,
-.crimson a.accentLink,
-.crimson a.accentLink:hover,
-.crimson a.accentLink:visited {
-  color: #a20025;
-}
-.crimson .accentBorder {
-  border-color: #a20025;
-}
-.crimson .accentBorderBottom {
-  border-bottom-color: #a20025;
-}
-.crimson .accentBorderLeft {
-  border-left-color: #a20025;
-}
-.crimson .accentBorderRight {
-  border-right-color: #a20025;
-}
-.crimson .accentBorderTop {
-  border-top-color: #a20025;
-}
-.cyan .accent,
-.cyan .accentBg,
-.cyan .accentBgHover:hover,
-.cyan .accentBgHover a:hover,
-.cyan .live-tile > div,
-.cyan .copy-tile > div,
-.cyan .live-tile > .face,
-.cyan .copy-tile > .face,
-.cyan .live-tile > .slide,
-.cyan .live-tile > .flip-back,
-.cyan .live-tile > .flip-front,
-.cyan .live-tile > .slide-back,
-.cyan .live-tile > .slide-front,
-.cyan .list-tile > div,
-.cyan .flip-list > li > div {
-  background-color: #1ba0e1;
-}
-.cyan .accentColor,
-.cyan .accentHover:hover,
-.cyan .accentHover a:hover,
-.cyan .accentLink a,
-.cyan .accentLink a:hover,
-.cyan .accentLink a:visited,
-.cyan a.accentLink,
-.cyan a.accentLink:hover,
-.cyan a.accentLink:visited {
-  color: #1ba0e1;
-}
-.cyan .accentBorder {
-  border-color: #1ba0e1;
-}
-.cyan .accentBorderBottom {
-  border-bottom-color: #1ba0e1;
-}
-.cyan .accentBorderLeft {
-  border-left-color: #1ba0e1;
-}
-.cyan .accentBorderRight {
-  border-right-color: #1ba0e1;
-}
-.cyan .accentBorderTop {
-  border-top-color: #1ba0e1;
-}
-.emerald .accent,
-.emerald .accentBg,
-.emerald .accentBgHover:hover,
-.emerald .accentBgHover a:hover,
-.emerald .live-tile > div,
-.emerald .copy-tile > div,
-.emerald .live-tile > .face,
-.emerald .copy-tile > .face,
-.emerald .live-tile > .slide,
-.emerald .live-tile > .flip-back,
-.emerald .live-tile > .flip-front,
-.emerald .live-tile > .slide-back,
-.emerald .live-tile > .slide-front,
-.emerald .list-tile > div,
-.emerald .flip-list > li > div {
-  background-color: #008a00;
-}
-.emerald .accentColor,
-.emerald .accentHover:hover,
-.emerald .accentHover a:hover,
-.emerald .accentLink a,
-.emerald .accentLink a:hover,
-.emerald .accentLink a:visited,
-.emerald a.accentLink,
-.emerald a.accentLink:hover,
-.emerald a.accentLink:visited {
-  color: #008a00;
-}
-.emerald .accentBorder {
-  border-color: #008a00;
-}
-.emerald .accentBorderBottom {
-  border-bottom-color: #008a00;
-}
-.emerald .accentBorderLeft {
-  border-left-color: #008a00;
-}
-.emerald .accentBorderRight {
-  border-right-color: #008a00;
-}
-.emerald .accentBorderTop {
-  border-top-color: #008a00;
-}
-.green .accent,
-.green .accentBg,
-.green .accentBgHover:hover,
-.green .accentBgHover a:hover,
-.green .live-tile > div,
-.green .copy-tile > div,
-.green .live-tile > .face,
-.green .copy-tile > .face,
-.green .live-tile > .slide,
-.green .live-tile > .flip-back,
-.green .live-tile > .flip-front,
-.green .live-tile > .slide-back,
-.green .live-tile > .slide-front,
-.green .list-tile > div,
-.green .flip-list > li > div {
-  background-color: #339933;
-}
-.green .accentColor,
-.green .accentHover:hover,
-.green .accentHover a:hover,
-.green .accentLink a,
-.green .accentLink a:hover,
-.green .accentLink a:visited,
-.green a.accentLink,
-.green a.accentLink:hover,
-.green a.accentLink:visited {
-  color: #339933;
-}
-.green .accentBorder {
-  border-color: #339933;
-}
-.green .accentBorderBottom {
-  border-bottom-color: #339933;
-}
-.green .accentBorderLeft {
-  border-left-color: #339933;
-}
-.green .accentBorderRight {
-  border-right-color: #339933;
-}
-.green .accentBorderTop {
-  border-top-color: #339933;
-}
-.indigo .accent,
-.indigo .accentBg,
-.indigo .accentBgHover:hover,
-.indigo .accentBgHover a:hover,
-.indigo .live-tile > div,
-.indigo .copy-tile > div,
-.indigo .live-tile > .face,
-.indigo .copy-tile > .face,
-.indigo .live-tile > .slide,
-.indigo .live-tile > .flip-back,
-.indigo .live-tile > .flip-front,
-.indigo .live-tile > .slide-back,
-.indigo .live-tile > .slide-front,
-.indigo .list-tile > div,
-.indigo .flip-list > li > div {
-  background-color: #6a00ff;
-}
-.indigo .accentColor,
-.indigo .accentHover:hover,
-.indigo .accentHover a:hover,
-.indigo .accentLink a,
-.indigo .accentLink a:hover,
-.indigo .accentLink a:visited,
-.indigo a.accentLink,
-.indigo a.accentLink:hover,
-.indigo a.accentLink:visited {
-  color: #6a00ff;
-}
-.indigo .accentBorder {
-  border-color: #6a00ff;
-}
-.indigo .accentBorderBottom {
-  border-bottom-color: #6a00ff;
-}
-.indigo .accentBorderLeft {
-  border-left-color: #6a00ff;
-}
-.indigo .accentBorderRight {
-  border-right-color: #6a00ff;
-}
-.indigo .accentBorderTop {
-  border-top-color: #6a00ff;
-}
-.lime .accent,
-.lime .accentBg,
-.lime .accentBgHover:hover,
-.lime .accentBgHover a:hover,
-.lime .live-tile > div,
-.lime .copy-tile > div,
-.lime .live-tile > .face,
-.lime .copy-tile > .face,
-.lime .live-tile > .slide,
-.lime .live-tile > .flip-back,
-.lime .live-tile > .flip-front,
-.lime .live-tile > .slide-back,
-.lime .live-tile > .slide-front,
-.lime .list-tile > div,
-.lime .flip-list > li > div {
-  background-color: #a2c139;
-}
-.lime .accentColor,
-.lime .accentHover:hover,
-.lime .accentHover a:hover,
-.lime .accentLink a,
-.lime .accentLink a:hover,
-.lime .accentLink a:visited,
-.lime a.accentLink,
-.lime a.accentLink:hover,
-.lime a.accentLink:visited {
-  color: #a2c139;
-}
-.lime .accentBorder {
-  border-color: #a2c139;
-}
-.lime .accentBorderBottom {
-  border-bottom-color: #a2c139;
-}
-.lime .accentBorderLeft {
-  border-left-color: #a2c139;
-}
-.lime .accentBorderRight {
-  border-right-color: #a2c139;
-}
-.lime .accentBorderTop {
-  border-top-color: #a2c139;
-}
-.magenta .accent,
-.magenta .accentBg,
-.magenta .accentBgHover:hover,
-.magenta .accentBgHover a:hover,
-.magenta .live-tile > div,
-.magenta .copy-tile > div,
-.magenta .live-tile > .face,
-.magenta .copy-tile > .face,
-.magenta .live-tile > .slide,
-.magenta .live-tile > .flip-back,
-.magenta .live-tile > .flip-front,
-.magenta .live-tile > .slide-back,
-.magenta .live-tile > .slide-front,
-.magenta .list-tile > div,
-.magenta .flip-list > li > div {
-  background-color: #d80073;
-}
-.magenta .accentColor,
-.magenta .accentHover:hover,
-.magenta .accentHover a:hover,
-.magenta .accentLink a,
-.magenta .accentLink a:hover,
-.magenta .accentLink a:visited,
-.magenta a.accentLink,
-.magenta a.accentLink:hover,
-.magenta a.accentLink:visited {
-  color: #d80073;
-}
-.magenta .accentBorder {
-  border-color: #d80073;
-}
-.magenta .accentBorderBottom {
-  border-bottom-color: #d80073;
-}
-.magenta .accentBorderLeft {
-  border-left-color: #d80073;
-}
-.magenta .accentBorderRight {
-  border-right-color: #d80073;
-}
-.magenta .accentBorderTop {
-  border-top-color: #d80073;
-}
-.mango .accent,
-.mango .accentBg,
-.mango .accentBgHover:hover,
-.mango .accentBgHover a:hover,
-.mango .live-tile > div,
-.mango .copy-tile > div,
-.mango .live-tile > .face,
-.mango .copy-tile > .face,
-.mango .live-tile > .slide,
-.mango .live-tile > .flip-back,
-.mango .live-tile > .flip-front,
-.mango .live-tile > .slide-back,
-.mango .live-tile > .slide-front,
-.mango .list-tile > div,
-.mango .flip-list > li > div {
-  background-color: #f09609;
-}
-.mango .accentColor,
-.mango .accentHover:hover,
-.mango .accentHover a:hover,
-.mango .accentLink a,
-.mango .accentLink a:hover,
-.mango .accentLink a:visited,
-.mango a.accentLink,
-.mango a.accentLink:hover,
-.mango a.accentLink:visited {
-  color: #f09609;
-}
-.mango .accentBorder {
-  border-color: #f09609;
-}
-.mango .accentBorderBottom {
-  border-bottom-color: #f09609;
-}
-.mango .accentBorderLeft {
-  border-left-color: #f09609;
-}
-.mango .accentBorderRight {
-  border-right-color: #f09609;
-}
-.mango .accentBorderTop {
-  border-top-color: #f09609;
-}
-.mauve .accent,
-.mauve .accentBg,
-.mauve .accentBgHover:hover,
-.mauve .accentBgHover a:hover,
-.mauve .live-tile > div,
-.mauve .copy-tile > div,
-.mauve .live-tile > .face,
-.mauve .copy-tile > .face,
-.mauve .live-tile > .slide,
-.mauve .live-tile > .flip-back,
-.mauve .live-tile > .flip-front,
-.mauve .live-tile > .slide-back,
-.mauve .live-tile > .slide-front,
-.mauve .list-tile > div,
-.mauve .flip-list > li > div {
-  background-color: #765f89;
-}
-.mauve .accentColor,
-.mauve .accentHover:hover,
-.mauve .accentHover a:hover,
-.mauve .accentLink a,
-.mauve .accentLink a:hover,
-.mauve .accentLink a:visited,
-.mauve a.accentLink,
-.mauve a.accentLink:hover,
-.mauve a.accentLink:visited {
-  color: #765f89;
-}
-.mauve .accentBorder {
-  border-color: #765f89;
-}
-.mauve .accentBorderBottom {
-  border-bottom-color: #765f89;
-}
-.mauve .accentBorderLeft {
-  border-left-color: #765f89;
-}
-.mauve .accentBorderRight {
-  border-right-color: #765f89;
-}
-.mauve .accentBorderTop {
-  border-top-color: #765f89;
-}
-.olive .accent,
-.olive .accentBg,
-.olive .accentBgHover:hover,
-.olive .accentBgHover a:hover,
-.olive .live-tile > div,
-.olive .copy-tile > div,
-.olive .live-tile > .face,
-.olive .copy-tile > .face,
-.olive .live-tile > .slide,
-.olive .live-tile > .flip-back,
-.olive .live-tile > .flip-front,
-.olive .live-tile > .slide-back,
-.olive .live-tile > .slide-front,
-.olive .list-tile > div,
-.olive .flip-list > li > div {
-  background-color: #6d8764;
-}
-.olive .accentColor,
-.olive .accentHover:hover,
-.olive .accentHover a:hover,
-.olive .accentLink a,
-.olive .accentLink a:hover,
-.olive .accentLink a:visited,
-.olive a.accentLink,
-.olive a.accentLink:hover,
-.olive a.accentLink:visited {
-  color: #6d8764;
-}
-.olive .accentBorder {
-  border-color: #6d8764;
-}
-.olive .accentBorderBottom {
-  border-bottom-color: #6d8764;
-}
-.olive .accentBorderLeft {
-  border-left-color: #6d8764;
-}
-.olive .accentBorderRight {
-  border-right-color: #6d8764;
-}
-.olive .accentBorderTop {
-  border-top-color: #6d8764;
+.red .accent,
+.red .accentBg,
+.red .accentBgHover:hover,
+.red .accentBgHover a:hover,
+.red .live-tile > div,
+.red .copy-tile > div,
+.red .live-tile > .face,
+.red .copy-tile > .face,
+.red .live-tile > .slide,
+.red .live-tile > .flip-back,
+.red .live-tile > .flip-front,
+.red .live-tile > .slide-back,
+.red .live-tile > .slide-front,
+.red .list-tile > div,
+.red .flip-list > li > div {
+  background-color: #ff8080;
+}
+.red .accentColor,
+.red .accentHover:hover,
+.red .accentHover a:hover,
+.red .accentLink a,
+.red .accentLink a:hover,
+.red .accentLink a:visited,
+.red a.accentLink,
+.red a.accentLink:hover,
+.red a.accentLink:visited {
+  color: #ff8080;
+}
+.red .accentBorder {
+  border-color: #ff8080;
+}
+.red .accentBorderBottom {
+  border-bottom-color: #ff8080;
+}
+.red .accentBorderLeft {
+  border-left-color: #ff8080;
+}
+.red .accentBorderRight {
+  border-right-color: #ff8080;
+}
+.red .accentBorderTop {
+  border-top-color: #ff8080;
+}
+html body .red.accent,
+html body .red.live-tile > .accent,
+html body .red.list-tile > .accent,
+html body .red.copy-tile > .accent,
+html body .red.live-tile > div,
+html body .red.copy-tile > div,
+html body .red.list-tile > div,
+html body .red.live-tile > .face,
+html body .red.list-tile > .face,
+html body .red.copy-tile > .face,
+html body .red.live-tile > .slide,
+html body .red.live-tile > .flip-back,
+html body .red.live-tile > .flip-front,
+html body .red.live-tile > .slide-back,
+html body .red.live-tile > .slide-front,
+html body .red.flip-list > li > .accent,
+html body .red.flip-list > li > .flip-back,
+html body .red.flip-list > li > .flip-front,
+html body .red.slide.accent,
+html body .red.slide-front.accent,
+html body .red.slide-back.accent,
+html body .red.flip-front.accent,
+html body .red.flip-back.accent {
+  background-color: #ff8080;
+}
+html body .red.accentColor,
+html body .red.accentHover:hover,
+html body .red.accentHover a:hover,
+html body .red.accentLink a,
+html body .red.accentLink a:hover,
+html body .red.accentLink a:visited,
+a.accentLinkhtml body .red,
+a.accentLinkhtml body .red:hover,
+a.accentLinkhtml body .red:visited {
+  color: #ff8080;
+}
+html body .red.accentBorder {
+  border-color: #ff8080;
+}
+html body .red.accentBorderBottom {
+  border-bottom-color: #ff8080;
+}
+html body .red.accentBorderLeft {
+  border-left-color: #ff8080;
+}
+html body .red.accentBorderRight {
+  border-right-color: #ff8080;
+}
+html body .red.accentBorderTop {
+  border-top-color: #ff8080;
 }
 .orange .accent,
 .orange .accentBg,
@@ -1545,7 +1037,7 @@ a.live-tile .metroExtraSmall:link {
 .orange .live-tile > .slide-front,
 .orange .list-tile > div,
 .orange .flip-list > li > div {
-  background-color: #fa6801;
+  background-color: #ff8566;
 }
 .orange .accentColor,
 .orange .accentHover:hover,
@@ -1556,323 +1048,73 @@ a.live-tile .metroExtraSmall:link {
 .orange a.accentLink,
 .orange a.accentLink:hover,
 .orange a.accentLink:visited {
-  color: #fa6801;
+  color: #ff8566;
 }
 .orange .accentBorder {
-  border-color: #fa6801;
+  border-color: #ff8566;
 }
 .orange .accentBorderBottom {
-  border-bottom-color: #fa6801;
+  border-bottom-color: #ff8566;
 }
 .orange .accentBorderLeft {
-  border-left-color: #fa6801;
+  border-left-color: #ff8566;
 }
 .orange .accentBorderRight {
-  border-right-color: #fa6801;
+  border-right-color: #ff8566;
 }
 .orange .accentBorderTop {
-  border-top-color: #fa6801;
+  border-top-color: #ff8566;
 }
-.pink .accent,
-.pink .accentBg,
-.pink .accentBgHover:hover,
-.pink .accentBgHover a:hover,
-.pink .live-tile > div,
-.pink .copy-tile > div,
-.pink .live-tile > .face,
-.pink .copy-tile > .face,
-.pink .live-tile > .slide,
-.pink .live-tile > .flip-back,
-.pink .live-tile > .flip-front,
-.pink .live-tile > .slide-back,
-.pink .live-tile > .slide-front,
-.pink .list-tile > div,
-.pink .flip-list > li > div {
-  background-color: #e671b8;
+html body .orange.accent,
+html body .orange.live-tile > .accent,
+html body .orange.list-tile > .accent,
+html body .orange.copy-tile > .accent,
+html body .orange.live-tile > div,
+html body .orange.copy-tile > div,
+html body .orange.list-tile > div,
+html body .orange.live-tile > .face,
+html body .orange.list-tile > .face,
+html body .orange.copy-tile > .face,
+html body .orange.live-tile > .slide,
+html body .orange.live-tile > .flip-back,
+html body .orange.live-tile > .flip-front,
+html body .orange.live-tile > .slide-back,
+html body .orange.live-tile > .slide-front,
+html body .orange.flip-list > li > .accent,
+html body .orange.flip-list > li > .flip-back,
+html body .orange.flip-list > li > .flip-front,
+html body .orange.slide.accent,
+html body .orange.slide-front.accent,
+html body .orange.slide-back.accent,
+html body .orange.flip-front.accent,
+html body .orange.flip-back.accent {
+  background-color: #ff8566;
 }
-.pink .accentColor,
-.pink .accentHover:hover,
-.pink .accentHover a:hover,
-.pink .accentLink a,
-.pink .accentLink a:hover,
-.pink .accentLink a:visited,
-.pink a.accentLink,
-.pink a.accentLink:hover,
-.pink a.accentLink:visited {
-  color: #e671b8;
+html body .orange.accentColor,
+html body .orange.accentHover:hover,
+html body .orange.accentHover a:hover,
+html body .orange.accentLink a,
+html body .orange.accentLink a:hover,
+html body .orange.accentLink a:visited,
+a.accentLinkhtml body .orange,
+a.accentLinkhtml body .orange:hover,
+a.accentLinkhtml body .orange:visited {
+  color: #ff8566;
 }
-.pink .accentBorder {
-  border-color: #e671b8;
+html body .orange.accentBorder {
+  border-color: #ff8566;
 }
-.pink .accentBorderBottom {
-  border-bottom-color: #e671b8;
+html body .orange.accentBorderBottom {
+  border-bottom-color: #ff8566;
 }
-.pink .accentBorderLeft {
-  border-left-color: #e671b8;
+html body .orange.accentBorderLeft {
+  border-left-color: #ff8566;
 }
-.pink .accentBorderRight {
-  border-right-color: #e671b8;
+html body .orange.accentBorderRight {
+  border-right-color: #ff8566;
 }
-.pink .accentBorderTop {
-  border-top-color: #e671b8;
-}
-.purple .accent,
-.purple .accentBg,
-.purple .accentBgHover:hover,
-.purple .accentBgHover a:hover,
-.purple .live-tile > div,
-.purple .copy-tile > div,
-.purple .live-tile > .face,
-.purple .copy-tile > .face,
-.purple .live-tile > .slide,
-.purple .live-tile > .flip-back,
-.purple .live-tile > .flip-front,
-.purple .live-tile > .slide-back,
-.purple .live-tile > .slide-front,
-.purple .list-tile > div,
-.purple .flip-list > li > div {
-  background-color: #a200ff;
-}
-.purple .accentColor,
-.purple .accentHover:hover,
-.purple .accentHover a:hover,
-.purple .accentLink a,
-.purple .accentLink a:hover,
-.purple .accentLink a:visited,
-.purple a.accentLink,
-.purple a.accentLink:hover,
-.purple a.accentLink:visited {
-  color: #a200ff;
-}
-.purple .accentBorder {
-  border-color: #a200ff;
-}
-.purple .accentBorderBottom {
-  border-bottom-color: #a200ff;
-}
-.purple .accentBorderLeft {
-  border-left-color: #a200ff;
-}
-.purple .accentBorderRight {
-  border-right-color: #a200ff;
-}
-.purple .accentBorderTop {
-  border-top-color: #a200ff;
-}
-.violet .accent,
-.violet .accentBg,
-.violet .accentBgHover:hover,
-.violet .accentBgHover a:hover,
-.violet .live-tile > div,
-.violet .copy-tile > div,
-.violet .live-tile > .face,
-.violet .copy-tile > .face,
-.violet .live-tile > .slide,
-.violet .live-tile > .flip-back,
-.violet .live-tile > .flip-front,
-.violet .live-tile > .slide-back,
-.violet .live-tile > .slide-front,
-.violet .list-tile > div,
-.violet .flip-list > li > div {
-  background-color: #a200ff;
-}
-.violet .accentColor,
-.violet .accentHover:hover,
-.violet .accentHover a:hover,
-.violet .accentLink a,
-.violet .accentLink a:hover,
-.violet .accentLink a:visited,
-.violet a.accentLink,
-.violet a.accentLink:hover,
-.violet a.accentLink:visited {
-  color: #a200ff;
-}
-.violet .accentBorder {
-  border-color: #a200ff;
-}
-.violet .accentBorderBottom {
-  border-bottom-color: #a200ff;
-}
-.violet .accentBorderLeft {
-  border-left-color: #a200ff;
-}
-.violet .accentBorderRight {
-  border-right-color: #a200ff;
-}
-.violet .accentBorderTop {
-  border-top-color: #a200ff;
-}
-.red .accent,
-.red .accentBg,
-.red .accentBgHover:hover,
-.red .accentBgHover a:hover,
-.red .live-tile > div,
-.red .copy-tile > div,
-.red .live-tile > .face,
-.red .copy-tile > .face,
-.red .live-tile > .slide,
-.red .live-tile > .flip-back,
-.red .live-tile > .flip-front,
-.red .live-tile > .slide-back,
-.red .live-tile > .slide-front,
-.red .list-tile > div,
-.red .flip-list > li > div {
-  background-color: #e51400;
-}
-.red .accentColor,
-.red .accentHover:hover,
-.red .accentHover a:hover,
-.red .accentLink a,
-.red .accentLink a:hover,
-.red .accentLink a:visited,
-.red a.accentLink,
-.red a.accentLink:hover,
-.red a.accentLink:visited {
-  color: #e51400;
-}
-.red .accentBorder {
-  border-color: #e51400;
-}
-.red .accentBorderBottom {
-  border-bottom-color: #e51400;
-}
-.red .accentBorderLeft {
-  border-left-color: #e51400;
-}
-.red .accentBorderRight {
-  border-right-color: #e51400;
-}
-.red .accentBorderTop {
-  border-top-color: #e51400;
-}
-.sienna .accent,
-.sienna .accentBg,
-.sienna .accentBgHover:hover,
-.sienna .accentBgHover a:hover,
-.sienna .live-tile > div,
-.sienna .copy-tile > div,
-.sienna .live-tile > .face,
-.sienna .copy-tile > .face,
-.sienna .live-tile > .slide,
-.sienna .live-tile > .flip-back,
-.sienna .live-tile > .flip-front,
-.sienna .live-tile > .slide-back,
-.sienna .live-tile > .slide-front,
-.sienna .list-tile > div,
-.sienna .flip-list > li > div {
-  background-color: #7b3a3e;
-}
-.sienna .accentColor,
-.sienna .accentHover:hover,
-.sienna .accentHover a:hover,
-.sienna .accentLink a,
-.sienna .accentLink a:hover,
-.sienna .accentLink a:visited,
-.sienna a.accentLink,
-.sienna a.accentLink:hover,
-.sienna a.accentLink:visited {
-  color: #7b3a3e;
-}
-.sienna .accentBorder {
-  border-color: #7b3a3e;
-}
-.sienna .accentBorderBottom {
-  border-bottom-color: #7b3a3e;
-}
-.sienna .accentBorderLeft {
-  border-left-color: #7b3a3e;
-}
-.sienna .accentBorderRight {
-  border-right-color: #7b3a3e;
-}
-.sienna .accentBorderTop {
-  border-top-color: #7b3a3e;
-}
-.steel .accent,
-.steel .accentBg,
-.steel .accentBgHover:hover,
-.steel .accentBgHover a:hover,
-.steel .live-tile > div,
-.steel .copy-tile > div,
-.steel .live-tile > .face,
-.steel .copy-tile > .face,
-.steel .live-tile > .slide,
-.steel .live-tile > .flip-back,
-.steel .live-tile > .flip-front,
-.steel .live-tile > .slide-back,
-.steel .live-tile > .slide-front,
-.steel .list-tile > div,
-.steel .flip-list > li > div {
-  background-color: #657688;
-}
-.steel .accentColor,
-.steel .accentHover:hover,
-.steel .accentHover a:hover,
-.steel .accentLink a,
-.steel .accentLink a:hover,
-.steel .accentLink a:visited,
-.steel a.accentLink,
-.steel a.accentLink:hover,
-.steel a.accentLink:visited {
-  color: #657688;
-}
-.steel .accentBorder {
-  border-color: #657688;
-}
-.steel .accentBorderBottom {
-  border-bottom-color: #657688;
-}
-.steel .accentBorderLeft {
-  border-left-color: #657688;
-}
-.steel .accentBorderRight {
-  border-right-color: #657688;
-}
-.steel .accentBorderTop {
-  border-top-color: #657688;
-}
-.teal .accent,
-.teal .accentBg,
-.teal .accentBgHover:hover,
-.teal .accentBgHover a:hover,
-.teal .live-tile > div,
-.teal .copy-tile > div,
-.teal .live-tile > .face,
-.teal .copy-tile > .face,
-.teal .live-tile > .slide,
-.teal .live-tile > .flip-back,
-.teal .live-tile > .flip-front,
-.teal .live-tile > .slide-back,
-.teal .live-tile > .slide-front,
-.teal .list-tile > div,
-.teal .flip-list > li > div {
-  background-color: #00aba9;
-}
-.teal .accentColor,
-.teal .accentHover:hover,
-.teal .accentHover a:hover,
-.teal .accentLink a,
-.teal .accentLink a:hover,
-.teal .accentLink a:visited,
-.teal a.accentLink,
-.teal a.accentLink:hover,
-.teal a.accentLink:visited {
-  color: #00aba9;
-}
-.teal .accentBorder {
-  border-color: #00aba9;
-}
-.teal .accentBorderBottom {
-  border-bottom-color: #00aba9;
-}
-.teal .accentBorderLeft {
-  border-left-color: #00aba9;
-}
-.teal .accentBorderRight {
-  border-right-color: #00aba9;
-}
-.teal .accentBorderTop {
-  border-top-color: #00aba9;
+html body .orange.accentBorderTop {
+  border-top-color: #ff8566;
 }
 .yellow .accent,
 .yellow .accentBg,
@@ -1889,7 +1131,7 @@ a.live-tile .metroExtraSmall:link {
 .yellow .live-tile > .slide-front,
 .yellow .list-tile > div,
 .yellow .flip-list > li > div {
-  background-color: #d8c101;
+  background-color: #ffffb2;
 }
 .yellow .accentColor,
 .yellow .accentHover:hover,
@@ -1900,151 +1142,355 @@ a.live-tile .metroExtraSmall:link {
 .yellow a.accentLink,
 .yellow a.accentLink:hover,
 .yellow a.accentLink:visited {
-  color: #d8c101;
+  color: #ffffb2;
 }
 .yellow .accentBorder {
-  border-color: #d8c101;
+  border-color: #ffffb2;
 }
 .yellow .accentBorderBottom {
-  border-bottom-color: #d8c101;
+  border-bottom-color: #ffffb2;
 }
 .yellow .accentBorderLeft {
-  border-left-color: #d8c101;
+  border-left-color: #ffffb2;
 }
 .yellow .accentBorderRight {
-  border-right-color: #d8c101;
+  border-right-color: #ffffb2;
 }
 .yellow .accentBorderTop {
-  border-top-color: #d8c101;
+  border-top-color: #ffffb2;
 }
-.trans .accent,
-.trans .accentBg,
-.trans .accentBgHover:hover,
-.trans .accentBgHover a:hover,
-.trans .live-tile > div,
-.trans .copy-tile > div,
-.trans .live-tile > .face,
-.trans .copy-tile > .face,
-.trans .live-tile > .slide,
-.trans .live-tile > .flip-back,
-.trans .live-tile > .flip-front,
-.trans .live-tile > .slide-back,
-.trans .live-tile > .slide-front,
-.trans .list-tile > div,
-.trans .flip-list > li > div {
-  background-color: transparent;
+html body .yellow.accent,
+html body .yellow.live-tile > .accent,
+html body .yellow.list-tile > .accent,
+html body .yellow.copy-tile > .accent,
+html body .yellow.live-tile > div,
+html body .yellow.copy-tile > div,
+html body .yellow.list-tile > div,
+html body .yellow.live-tile > .face,
+html body .yellow.list-tile > .face,
+html body .yellow.copy-tile > .face,
+html body .yellow.live-tile > .slide,
+html body .yellow.live-tile > .flip-back,
+html body .yellow.live-tile > .flip-front,
+html body .yellow.live-tile > .slide-back,
+html body .yellow.live-tile > .slide-front,
+html body .yellow.flip-list > li > .accent,
+html body .yellow.flip-list > li > .flip-back,
+html body .yellow.flip-list > li > .flip-front,
+html body .yellow.slide.accent,
+html body .yellow.slide-front.accent,
+html body .yellow.slide-back.accent,
+html body .yellow.flip-front.accent,
+html body .yellow.flip-back.accent {
+  background-color: #ffffb2;
 }
-.trans .accentColor,
-.trans .accentHover:hover,
-.trans .accentHover a:hover,
-.trans .accentLink a,
-.trans .accentLink a:hover,
-.trans .accentLink a:visited,
-.trans a.accentLink,
-.trans a.accentLink:hover,
-.trans a.accentLink:visited {
-  color: transparent;
+html body .yellow.accentColor,
+html body .yellow.accentHover:hover,
+html body .yellow.accentHover a:hover,
+html body .yellow.accentLink a,
+html body .yellow.accentLink a:hover,
+html body .yellow.accentLink a:visited,
+a.accentLinkhtml body .yellow,
+a.accentLinkhtml body .yellow:hover,
+a.accentLinkhtml body .yellow:visited {
+  color: #ffffb2;
 }
-.trans .accentBorder {
-  border-color: transparent;
+html body .yellow.accentBorder {
+  border-color: #ffffb2;
 }
-.trans .accentBorderBottom {
-  border-bottom-color: transparent;
+html body .yellow.accentBorderBottom {
+  border-bottom-color: #ffffb2;
 }
-.trans .accentBorderLeft {
-  border-left-color: transparent;
+html body .yellow.accentBorderLeft {
+  border-left-color: #ffffb2;
 }
-.trans .accentBorderRight {
-  border-right-color: transparent;
+html body .yellow.accentBorderRight {
+  border-right-color: #ffffb2;
 }
-.trans .accentBorderTop {
-  border-top-color: transparent;
+html body .yellow.accentBorderTop {
+  border-top-color: #ffffb2;
 }
-.white .accent,
-.white .accentBg,
-.white .accentBgHover:hover,
-.white .accentBgHover a:hover,
-.white .live-tile > div,
-.white .copy-tile > div,
-.white .live-tile > .face,
-.white .copy-tile > .face,
-.white .live-tile > .slide,
-.white .live-tile > .flip-back,
-.white .live-tile > .flip-front,
-.white .live-tile > .slide-back,
-.white .live-tile > .slide-front,
-.white .list-tile > div,
-.white .flip-list > li > div {
-  background-color: #ffffff;
+.green .accent,
+.green .accentBg,
+.green .accentBgHover:hover,
+.green .accentBgHover a:hover,
+.green .live-tile > div,
+.green .copy-tile > div,
+.green .live-tile > .face,
+.green .copy-tile > .face,
+.green .live-tile > .slide,
+.green .live-tile > .flip-back,
+.green .live-tile > .flip-front,
+.green .live-tile > .slide-back,
+.green .live-tile > .slide-front,
+.green .list-tile > div,
+.green .flip-list > li > div {
+  background-color: #99c299;
 }
-.white .accentColor,
-.white .accentHover:hover,
-.white .accentHover a:hover,
-.white .accentLink a,
-.white .accentLink a:hover,
-.white .accentLink a:visited,
-.white a.accentLink,
-.white a.accentLink:hover,
-.white a.accentLink:visited {
-  color: #ffffff;
+.green .accentColor,
+.green .accentHover:hover,
+.green .accentHover a:hover,
+.green .accentLink a,
+.green .accentLink a:hover,
+.green .accentLink a:visited,
+.green a.accentLink,
+.green a.accentLink:hover,
+.green a.accentLink:visited {
+  color: #99c299;
 }
-.white .accentBorder {
-  border-color: #ffffff;
+.green .accentBorder {
+  border-color: #99c299;
 }
-.white .accentBorderBottom {
-  border-bottom-color: #ffffff;
+.green .accentBorderBottom {
+  border-bottom-color: #99c299;
 }
-.white .accentBorderLeft {
-  border-left-color: #ffffff;
+.green .accentBorderLeft {
+  border-left-color: #99c299;
 }
-.white .accentBorderRight {
-  border-right-color: #ffffff;
+.green .accentBorderRight {
+  border-right-color: #99c299;
 }
-.white .accentBorderTop {
-  border-top-color: #ffffff;
+.green .accentBorderTop {
+  border-top-color: #99c299;
 }
-.black .accent,
-.black .accentBg,
-.black .accentBgHover:hover,
-.black .accentBgHover a:hover,
-.black .live-tile > div,
-.black .copy-tile > div,
-.black .live-tile > .face,
-.black .copy-tile > .face,
-.black .live-tile > .slide,
-.black .live-tile > .flip-back,
-.black .live-tile > .flip-front,
-.black .live-tile > .slide-back,
-.black .live-tile > .slide-front,
-.black .list-tile > div,
-.black .flip-list > li > div {
-  background-color: #000000;
+html body .green.accent,
+html body .green.live-tile > .accent,
+html body .green.list-tile > .accent,
+html body .green.copy-tile > .accent,
+html body .green.live-tile > div,
+html body .green.copy-tile > div,
+html body .green.list-tile > div,
+html body .green.live-tile > .face,
+html body .green.list-tile > .face,
+html body .green.copy-tile > .face,
+html body .green.live-tile > .slide,
+html body .green.live-tile > .flip-back,
+html body .green.live-tile > .flip-front,
+html body .green.live-tile > .slide-back,
+html body .green.live-tile > .slide-front,
+html body .green.flip-list > li > .accent,
+html body .green.flip-list > li > .flip-back,
+html body .green.flip-list > li > .flip-front,
+html body .green.slide.accent,
+html body .green.slide-front.accent,
+html body .green.slide-back.accent,
+html body .green.flip-front.accent,
+html body .green.flip-back.accent {
+  background-color: #99c299;
 }
-.black .accentColor,
-.black .accentHover:hover,
-.black .accentHover a:hover,
-.black .accentLink a,
-.black .accentLink a:hover,
-.black .accentLink a:visited,
-.black a.accentLink,
-.black a.accentLink:hover,
-.black a.accentLink:visited {
-  color: #000000;
+html body .green.accentColor,
+html body .green.accentHover:hover,
+html body .green.accentHover a:hover,
+html body .green.accentLink a,
+html body .green.accentLink a:hover,
+html body .green.accentLink a:visited,
+a.accentLinkhtml body .green,
+a.accentLinkhtml body .green:hover,
+a.accentLinkhtml body .green:visited {
+  color: #99c299;
 }
-.black .accentBorder {
-  border-color: #000000;
+html body .green.accentBorder {
+  border-color: #99c299;
 }
-.black .accentBorderBottom {
-  border-bottom-color: #000000;
+html body .green.accentBorderBottom {
+  border-bottom-color: #99c299;
 }
-.black .accentBorderLeft {
-  border-left-color: #000000;
+html body .green.accentBorderLeft {
+  border-left-color: #99c299;
 }
-.black .accentBorderRight {
-  border-right-color: #000000;
+html body .green.accentBorderRight {
+  border-right-color: #99c299;
 }
-.black .accentBorderTop {
-  border-top-color: #000000;
+html body .green.accentBorderTop {
+  border-top-color: #99c299;
+}
+.blue .accent,
+.blue .accentBg,
+.blue .accentBgHover:hover,
+.blue .accentBgHover a:hover,
+.blue .live-tile > div,
+.blue .copy-tile > div,
+.blue .live-tile > .face,
+.blue .copy-tile > .face,
+.blue .live-tile > .slide,
+.blue .live-tile > .flip-back,
+.blue .live-tile > .flip-front,
+.blue .live-tile > .slide-back,
+.blue .live-tile > .slide-front,
+.blue .list-tile > div,
+.blue .flip-list > li > div {
+  background-color: #8080ff;
+}
+.blue .accentColor,
+.blue .accentHover:hover,
+.blue .accentHover a:hover,
+.blue .accentLink a,
+.blue .accentLink a:hover,
+.blue .accentLink a:visited,
+.blue a.accentLink,
+.blue a.accentLink:hover,
+.blue a.accentLink:visited {
+  color: #8080ff;
+}
+.blue .accentBorder {
+  border-color: #8080ff;
+}
+.blue .accentBorderBottom {
+  border-bottom-color: #8080ff;
+}
+.blue .accentBorderLeft {
+  border-left-color: #8080ff;
+}
+.blue .accentBorderRight {
+  border-right-color: #8080ff;
+}
+.blue .accentBorderTop {
+  border-top-color: #8080ff;
+}
+html body .blue.accent,
+html body .blue.live-tile > .accent,
+html body .blue.list-tile > .accent,
+html body .blue.copy-tile > .accent,
+html body .blue.live-tile > div,
+html body .blue.copy-tile > div,
+html body .blue.list-tile > div,
+html body .blue.live-tile > .face,
+html body .blue.list-tile > .face,
+html body .blue.copy-tile > .face,
+html body .blue.live-tile > .slide,
+html body .blue.live-tile > .flip-back,
+html body .blue.live-tile > .flip-front,
+html body .blue.live-tile > .slide-back,
+html body .blue.live-tile > .slide-front,
+html body .blue.flip-list > li > .accent,
+html body .blue.flip-list > li > .flip-back,
+html body .blue.flip-list > li > .flip-front,
+html body .blue.slide.accent,
+html body .blue.slide-front.accent,
+html body .blue.slide-back.accent,
+html body .blue.flip-front.accent,
+html body .blue.flip-back.accent {
+  background-color: #8080ff;
+}
+html body .blue.accentColor,
+html body .blue.accentHover:hover,
+html body .blue.accentHover a:hover,
+html body .blue.accentLink a,
+html body .blue.accentLink a:hover,
+html body .blue.accentLink a:visited,
+a.accentLinkhtml body .blue,
+a.accentLinkhtml body .blue:hover,
+a.accentLinkhtml body .blue:visited {
+  color: #8080ff;
+}
+html body .blue.accentBorder {
+  border-color: #8080ff;
+}
+html body .blue.accentBorderBottom {
+  border-bottom-color: #8080ff;
+}
+html body .blue.accentBorderLeft {
+  border-left-color: #8080ff;
+}
+html body .blue.accentBorderRight {
+  border-right-color: #8080ff;
+}
+html body .blue.accentBorderTop {
+  border-top-color: #8080ff;
+}
+.purple .accent,
+.purple .accentBg,
+.purple .accentBgHover:hover,
+.purple .accentBgHover a:hover,
+.purple .live-tile > div,
+.purple .copy-tile > div,
+.purple .live-tile > .face,
+.purple .copy-tile > .face,
+.purple .live-tile > .slide,
+.purple .live-tile > .flip-back,
+.purple .live-tile > .flip-front,
+.purple .live-tile > .slide-back,
+.purple .live-tile > .slide-front,
+.purple .list-tile > div,
+.purple .flip-list > li > div {
+  background-color: #c299eb;
+}
+.purple .accentColor,
+.purple .accentHover:hover,
+.purple .accentHover a:hover,
+.purple .accentLink a,
+.purple .accentLink a:hover,
+.purple .accentLink a:visited,
+.purple a.accentLink,
+.purple a.accentLink:hover,
+.purple a.accentLink:visited {
+  color: #c299eb;
+}
+.purple .accentBorder {
+  border-color: #c299eb;
+}
+.purple .accentBorderBottom {
+  border-bottom-color: #c299eb;
+}
+.purple .accentBorderLeft {
+  border-left-color: #c299eb;
+}
+.purple .accentBorderRight {
+  border-right-color: #c299eb;
+}
+.purple .accentBorderTop {
+  border-top-color: #c299eb;
+}
+html body .purple.accent,
+html body .purple.live-tile > .accent,
+html body .purple.list-tile > .accent,
+html body .purple.copy-tile > .accent,
+html body .purple.live-tile > div,
+html body .purple.copy-tile > div,
+html body .purple.list-tile > div,
+html body .purple.live-tile > .face,
+html body .purple.list-tile > .face,
+html body .purple.copy-tile > .face,
+html body .purple.live-tile > .slide,
+html body .purple.live-tile > .flip-back,
+html body .purple.live-tile > .flip-front,
+html body .purple.live-tile > .slide-back,
+html body .purple.live-tile > .slide-front,
+html body .purple.flip-list > li > .accent,
+html body .purple.flip-list > li > .flip-back,
+html body .purple.flip-list > li > .flip-front,
+html body .purple.slide.accent,
+html body .purple.slide-front.accent,
+html body .purple.slide-back.accent,
+html body .purple.flip-front.accent,
+html body .purple.flip-back.accent {
+  background-color: #c299eb;
+}
+html body .purple.accentColor,
+html body .purple.accentHover:hover,
+html body .purple.accentHover a:hover,
+html body .purple.accentLink a,
+html body .purple.accentLink a:hover,
+html body .purple.accentLink a:visited,
+a.accentLinkhtml body .purple,
+a.accentLinkhtml body .purple:hover,
+a.accentLinkhtml body .purple:visited {
+  color: #c299eb;
+}
+html body .purple.accentBorder {
+  border-color: #c299eb;
+}
+html body .purple.accentBorderBottom {
+  border-bottom-color: #c299eb;
+}
+html body .purple.accentBorderLeft {
+  border-left-color: #c299eb;
+}
+html body .purple.accentBorderRight {
+  border-right-color: #c299eb;
+}
+html body .purple.accentBorderTop {
+  border-top-color: #c299eb;
 }
 /* Local style overrides */
 html body .amber.accent,

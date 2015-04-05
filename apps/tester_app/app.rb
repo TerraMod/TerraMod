@@ -1,13 +1,13 @@
 require 'open_weather'
 
-class ExampleApp
+class TesterApp
 
-	@@name = "Example Application"
-	@@version = "0.1"
-	@@object = "ExampleApp"
-	@@description = "This application demonstrates the TerraMod framework.  The goal is to print any sensor to standard output."
-	@@page = "/example_app"
-	@@dir = "example_app"
+	@@name = "Tester Application"
+	@@version = "1.0"
+	@@object = "TesterApp"
+	@@description = "This application demonstrates the TerraMod framework.  This is a copy of ExampleApp to show the menus."
+	@@page = "/test_app"
+	@@dir = "tester_app"
 
 	def self.requirements
 		return {"Door" => {:class => "EntranceSensor",
@@ -33,7 +33,7 @@ class ExampleApp
 
 	def self.install(db)
 		# Create table(s) to store app information
-		db.execute "CREATE TABLE DemoApp(name TEXT, uuid TEXT);"
+		db.execute "CREATE TABLE TestApp(name TEXT, uuid TEXT);"
 
 		# Populate Apps table with app information
 		db.execute "INSERT INTO Apps VALUES(?, ?, ?, ?, ?, ?);", [@@name, @@version, @@object, @@description, @@page, @@dir]
@@ -41,16 +41,16 @@ class ExampleApp
 
 	def self.uninstall(db)
 		# Drop all tables created by the app, remove from Apps table
-		db.execute "DROP TABLE DemoApp;"
+		db.execute "DROP TABLE TestApp;"
 		db.execute "DELETE FROM Apps WHERE object=?;", [@@object]
 	end
 
 	def self.tile
 		date = Time.now.strftime("%d/%m/%Y")
 		weather = OpenWeather::Current.city_id("5750162")
-		return {:color => "green",
+		return {:color => "blue",
 			:front => {
-				:title => "Example tile",
+				:title => "Another tile",
 				:content => [
 					"Today's date is #{date}",
 					"Click to view the weather"
@@ -68,9 +68,9 @@ class ExampleApp
 
 	def self.routes
 		return [{
-			:url => "/example_app",
+			:url => "/test_app",
 			:template => :template,
-			:views => "./apps/example_app/",
+			:views => "./apps/#{@@dir}/",
 			:locals => {
 				:modules => ["SELECT uuid,name,room FROM Modules;", []]
 				}

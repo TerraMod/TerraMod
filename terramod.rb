@@ -182,7 +182,18 @@ class TerraMod < Sinatra::Base
 	end
 
 	get '/' do
-		erb :index, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;")}
+		tiles = []
+		apps = settings.db.execute("SELECT object FROM Apps;")
+		apps.each do |row|
+			object = Module.const_get(row[0])
+			if object.methods.include? :tile
+				tile = object.tile
+				tile[:object] = row[0]
+				tiles << tile
+			end
+		end
+		erb :index, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+					:tiles => tiles}
 	end
 	
 	get '/manage' do

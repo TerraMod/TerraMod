@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    json (1.8.1)
+    open-weather (0.10.0)
+      json
     rack (1.5.2)
     rack-protection (1.5.1)
       rack
@@ -16,6 +19,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  open-weather
   rubyzip
   sinatra
   sqlite3
