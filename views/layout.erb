@@ -1,22 +1,28 @@
-<!DOCTYPE html>
 <html>
 	<head>
-		<script src="/vendor/jquery-1.9.1.min.js"></script>
-		<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+		<script src="/vendor/jquery/jquery-1.9.1.min.js"></script>
+		<script src="/vendor/jquery/jquery-ui.js"></script>
 		<script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
-		<script src="/vendor/metro/MetroJs2.css"></script>
+		<script src="/vendor/metro/MetroJs.js"></script>
+		<script src="/vendor/nprogress/nprogress.js"></script>
+		<script src="/vendor/terramod/terramod.js"></script>
 		
-		
-		<title>TerraMod</title>
+		<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/vendor/metro/MetroJs2.css" rel="stylesheet" />
+		<link href="/vendor/nprogress/nprogress.css" rel="stylesheet" />
+		<link href="/vendor/terramod/terramod.css" rel="stylesheet" />
+
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="/vendor/metro/MetroJs2.css" rel="stylesheet">
+
+		<title>TerraMod</title>
+
 	</head>
 	
 	<body>
-		<!-- Navbar -->
+
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="container">
+
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 						<span class="sr-only">Toggle navigation</span>
@@ -26,46 +32,39 @@
 					</button>
 					<a class="navbar-brand" href="/">TerraMod</a>
 				</div>
-				<!-- Navbar Items -->
+
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<!-- Apps Dropdown -->
 						<li class="dropdown">
-						  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Shortcuts <b class="caret"></b></a>
-						  	<!-- Menu Items -->
+						  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<!-- The app_list should be passed in from Sinatra in terramod.rb. Should be a hash containing the app name and web route -->
-								<!-- TODO: make that happen -->
-								<% app_names.each_with_index do |app_name, index| %>
+								<% app_links.each_with_index do |app, index|
+									name = app[0]
+									page = app[1]%>
 									<li>
-										<!-- TODO: make this not ugly -->
-										<a href=<%= app_routes[index][0] %>>
-											<%= app_name[0] %>
+										<a href=<%= page %>>
+											<%= name %>
 										</a>
 									</li>
-									<!-- Avoid an extra divider at the bottom of the dropdown -->
-									<% if index < app_names.size-1 %>
+									<% if index < app_links.size-1 %>
 										<li class="divider"></li>
 									<% end %>
 								<% end %>
-							<!-- Menu Items end-->
 							</ul>
-						<!-- Apps Dropdown end -->
 					  	</li>
-					  	<!-- the following two routes are subject to change TODO: set the right routes -->
 						<li><a href="/settings"> Settings </a></li>
 						<li><a href="/manage"> Manage Apps </a></li>
 					</ul>
-				<!-- Navbar Items end -->
 				</div>
-			<!-- Container end -->
+
 			</div>
-		<!-- Navbar end -->
 		</nav>
-		<!-- Container for each individual page, then yield -->
+
 		<div class="container">
+			<br /><br /><br /><br />
 			<%= yield %>
 		</div>
+
 	</body>
 	
 </html>
