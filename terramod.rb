@@ -3,22 +3,33 @@
 require 'sinatra/base'
 require 'json'
 require 'sqlite3'
+require 'net/http'
+require 'zip'
+require 'fileutils'
 
 Dir["./apps/*/app.rb"].each {|file| require file }
 
-
 class TerraMod < Sinatra::Base
 
-	def self.install(app, db)
-		app.install(db)
+	def self.install(app)
+		app.install(settings.db)
 		app.routes.each do |hookup|
                         url = hookup[:url]
                         template = hookup[:template]
                         views = hookup[:views]
+			locals = hookup[:locals]
+			query = Proc.new {
+				results = {}
+				locals.each do |k, v|
+					results[k] = settings.db.execute v[0], v[1]
+				end
+				results
+			}
                         get url do
                                 erb template, :views => views,
                                               :layout_options => { :views => 'views' },
-                                              :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;")}
+                                              :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+							  :queries => query.call}
                         end
                 end
 	end
@@ -65,32 +76,39 @@ class TerraMod < Sinatra::Base
 		status 200
 	end
 
-	get '/activate' do
-		settings.install.(ExampleApp, settings.db)
-		"activated!"
-	end
-
 	post '/install_app' do
-		
-	#	app_zip = "./apps/"+params[:file][:filename]
-	#	file = params[:file][:tempfile]
-	#	File.open(app_zip, 'wb') do |f|
-	#		f.write(file.read)
-	#	end
-		# unzip 
+		begin
+			filename = params[:appfile][:filename]
+			app_zip = "./apps/" + filename
+			file = params[:appfile][:tempfile]
+			File.open(app_zip, 'wb') do |f|
+				f.write(file.read)
+			end
+			Zip::File.open(app_zip) do |open_zip|
+				open_zip.each do |zipped_file|
+					zipped_file.extract "./apps/" + zipped_file.name
+				end
+			end
+			File.delete(app_zip)
+			dir_name = filename.split(".")[0]
+			class_name = dir_name.split('_').collect(&:capitalize).join
+			require "./apps/#{dir_name}/app.rb"
+			settings.install.(Module.const_get(class_name))
+			err_message = ""
+		rescue => e
+			begin
+				File.delete(app_zip)
+			rescue
+			end
+			err_message = e.to_s
+		end
 
-		# upload zip and unzip it in apps folder
-		# require app file
-		# get the class name somehow (filename in zip?)
-		#settings.install.(ClassName, settings.db)
-
-		err_message = "App installation not yet implemented."
 		message = {}
 		if err_message == ""
 			message = {
 				:class => "alert-success",
                                 :title => "Success:",
-                                :detail => "Your app has been installed.  Please select it from the list below to configure."
+                                :detail => "Your app has been installed to /apps/#{dir_name}/.  Please select it from the list below to configure."
 			}
 		else
 			message = {
@@ -122,20 +140,31 @@ class TerraMod < Sinatra::Base
 	end
 
 	get '/uninstall_app/:app' do
-		message = {
-			:class => "alert-warning",
-                        :title => "Warning:",
-                        :detail => "Deleted from the database, but not from disk"
-                        }
-
 		begin
                         app = Module.const_get(params['app'])
-                rescue
-                        status 404
-                        return
+			FileUtils.rm_rf("./apps/" + app.class_variable_get(:@@dir))
+			app.uninstall(settings.db)
+			err_message = ""
+                rescue => e
+                        err_message = e.to_s
                 end
-		app.uninstall(settings.db)
-		# delete app from disk
+
+		message = {}
+		if err_message == ""
+			message = {
+				:class => "alert-success",
+                        	:title => "Success:",
+                	        :detail => "uninstalled #{app.class_variable_get(:@@name)}"
+			}
+		else
+			message = {
+                                :class => "alert-danger",
+                                :title => "Error:",
+                                :detail => err_message
+                        }
+
+		end
+
 		erb :manage_apps, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
 					      :apps => settings.db.execute("SELECT name,version,object,description FROM Apps;"),
 					      :message => message}
@@ -151,7 +180,29 @@ class TerraMod < Sinatra::Base
 	end
 	
 	get '/settings' do
-		erb :settings, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;")}
+		modules = []
+		settings.db.execute("SELECT type,name,room,nexus_uuid FROM Modules;").each do |row|
+			mod = {:type => row[0],
+			       :name => row[1],
+			       :room => row[2]
+			}
+			nexus_uuid = row[3]
+			mod[:nexus_ip] = settings.db.execute("SELECT ip FROM Nexus WHERE uuid=?;", [nexus_uuid])[0][0]
+			modules << mod
+		end
+		erb :settings, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+					   :modules => modules}
+	end
+
+	get '/query_module/:uuid' do
+		module_uuid = params['uuid']
+		nexus_uuid = settings.db.execute("SELECT nexus_uuid FROM Modules WHERE uuid=?;", [module_uuid])[0]
+		if !nexus_uuid
+			return "disconnected nexus"
+		end
+		nexus_ip = settings.db.execute("SELECT ip FROM Nexus WHERE uuid=?;", nexus_uuid)[0][0]
+		resp = Net::HTTP.get(URI.parse("http://#{nexus_ip}/query/#{module_uuid}"))
+		return resp
 	end
 	
 end

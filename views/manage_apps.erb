@@ -54,8 +54,8 @@ td {
 		<% end %>
 
 	        <form action="/install_app" method="POST" enctype="multipart/form-data">
-			<label class="btn btn-default btn-lg btn-success" for="app-file">
-				<input type="file" id="app-file" style="display:none">
+			<label class="btn btn-default btn-lg btn-success" for="appfile">
+				<input type="file" name="appfile" id="appfile" style="display:none">
 				<span class="glyphicon glyphicon-upload" aria-hidden="true" /> Install
 			</label>
 		</form>
@@ -63,7 +63,7 @@ td {
 </div>
 
 <script>
-	var file = document.getElementById('app-file');
+	var file = document.getElementById('appfile');
 	file.onchange = function() {
 		if (this.value !== '')
 			this.form.submit();

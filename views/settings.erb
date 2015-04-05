@@ -14,7 +14,12 @@
 				</div>
 
 				<div class="panel-body">
-					Add a nexus menu	
+					This panel will contain the menu for adding a new Nexus, including:<br /><br />
+					<ul>
+						<li>Contain a download link for the nexus installation script</li>
+						<li>Allow the user to specify which GPIO ports use which module types</li>
+						<li>Generate a configuration file for the nexus</li>
+					</ul>
 				</div>
 
 			</div>
@@ -24,11 +29,32 @@
 			<div class="panel panel-default">
 
                                 <div class="panel-heading">
-                                        <h3 class="panel-title">Generate App Template</h3>
+                                        <h3 class="panel-title">All Modules</h3>
                                 </div>  
 
                                 <div class="panel-body">
-                                        App template menu
+					<div class="well table-responsive">
+                                        	<table style="width: 100%; text-align: center;">
+							<tbody>
+								<tr>
+									<td><b>Name</b></td>
+									<td><b>Type</b></td>
+									<td><b>Room</b></td>
+									<td><b>Nexus IP</b></td>
+								</tr>
+
+								<% modules.each do |mod| %>
+									<tr>
+                                	                                        <td><%= mod[:name] %></td>
+                        	                                                <td><%= mod[:type] %></td>
+                	                                                        <td><%= mod[:room] %></td>
+        	                                                                <td><%= mod[:nexus_ip] %></td>
+	                                                                </tr>
+								<% end %>
+
+							</tbody>
+						</table>
+					</div>
                                 </div>  
                         </div>
 		</p>
