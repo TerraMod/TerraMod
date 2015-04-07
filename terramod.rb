@@ -51,7 +51,7 @@ class TerraMod < Sinatra::Base
 			db = SQLite3::Database.new db_file
 			db.execute "CREATE TABLE Nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
 			db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
-			db.execute "CREATE TABLE Callbacks(uuid TEXT, class TEXT);"
+			db.execute "CREATE TABLE Callbacks(uuid TEXT, class TEXT, method TEXT);"
 			db.execute "CREATE TABLE Apps(name TEXT, version TEXT, object TEXT, description TEXT, page TEXT, dir TEXT, UNIQUE(object), UNIQUE(page), UNIQUE(dir));"
 		end
 
@@ -88,6 +88,7 @@ class TerraMod < Sinatra::Base
 	end
 
 	post '/install_app' do
+		# (/class \w+/.match File.read("app.rb")).to_s.split(" ")[1] # "class in file"
 		begin
 			filename = params[:appfile][:filename]
 			app_zip = "./apps/" + filename
@@ -192,16 +193,17 @@ class TerraMod < Sinatra::Base
 				tiles << tile
 			end
 		end
-		erb :index, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+		erb :dashboard, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
 					:tiles => tiles}
 	end
 	
-	get '/manage' do
+	get '/manage_apps' do
 		erb :manage_apps, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
 					      :apps => settings.db.execute("SELECT name,version,object,description FROM Apps;")}
 	end
 	
-	get '/settings' do
+	get '/admin' do
+
 		modules = []
 		settings.db.execute("SELECT type,name,room,nexus_uuid FROM Modules;").each do |row|
 			mod = {:type => row[0],
@@ -212,8 +214,23 @@ class TerraMod < Sinatra::Base
 			mod[:nexus_ip] = settings.db.execute("SELECT ip FROM Nexus WHERE uuid=?;", [nexus_uuid])[0][0]
 			modules << mod
 		end
-		erb :settings, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
-					   :modules => modules}
+
+		callbacks = []
+		settings.db.execute("SELECT * FROM Callbacks;").each do |row|
+			mod = settings.db.execute("SELECT name,room FROM Modules WHERE uuid=?;", [row[0]])[0]
+			call = {:module => "#{mod[0]} in #{mod[0]}",
+				:class => row[1],
+				:method => row[2]
+			}
+			callbacks << call
+		end
+
+		erb :admin, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+					:app_count => settings.db.execute("SELECT count(object) FROM Apps;")[0][0],
+					:module_count => settings.db.execute("SELECT count(uuid) FROM Modules;")[0][0],
+					:nexus_count => settings.db.execute("SELECT count(uuid) FROM Nexus;")[0][0],
+					:callbacks => callbacks,
+					:modules => modules}
 	end
 
 	get '/query_module/:uuid' do
