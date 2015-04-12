@@ -3,3 +3,11 @@ td {
         padding-right: 10px;
 }
 
+label {
+	font-weight: normal !important;
+}
+
+label:hover {
+	background: #CCEAFF;
+}
+
