@@ -41,19 +41,13 @@
 								<% app_links.each_with_index do |app, index|
 									name = app[0]
 									page = app[1]%>
-									<li>
-										<a href=<%= page %>>
-											<%= name %>
-										</a>
-									</li>
-									<% if index < app_links.size-1 %>
-										<li class="divider"></li>
-									<% end %>
+										<li><a href="<%= page %>"><%= name %></a></li>
 								<% end %>
+								<li class="divider"></li>
+								<li><a href="/manage_apps">Manage Apps</a></li>
 							</ul>
 					  	</li>
-						<li><a href="/settings"> Settings </a></li>
-						<li><a href="/manage"> Manage Apps </a></li>
+						<li><a href="/admin"> Administration </a></li>
 					</ul>
 				</div>
 

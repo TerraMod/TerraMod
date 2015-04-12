@@ -1,0 +1,261 @@
+<div style="text-align: center;" class="panel panel-default">
+
+	<div class="panel-heading">
+		<h2>Administration</h2>
+	</div>
+
+	<div style="text-align: left;" class="panel-body">
+
+		<% if defined? message and message != nil %>
+                        <div class="alert <%= message[:class] %> alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong><%= message[:title] %></strong> <%= message[:detail] %>
+                        </div>
+                <% end %>
+
+		<p>
+                        <div class="panel panel-default">
+                                <div class="panel-body" style="text-align: center; background-color: #f5f5f5;">
+					<table style="width: 100%; text-align: center;">
+						<tbody>
+							<tr>
+								<td><h4><%= app_count %> app<%= app_count == 1 ? "" : "s" %> installed</h4></td>
+								<td><h4><%= nexus_count %> nexus device<%= nexus_count == 1 ? "" : "s" %> detected</h4></td>
+	        		                        	<td><h4><%= module_count %> module<%= module_count == 1 ? "" : "s" %> reported</h4>
+							</tr>
+						</tbody>
+					</table>
+                                </div>
+                        </div>
+                </p>
+
+		<p>
+                        <div class="panel panel-default">
+
+                                <div class="panel-heading">
+                                        <h3 class="panel-title">Maintaince</h3>
+                                </div>
+
+                                <div class="panel-body">
+
+					<div class="well table-responsive">
+						<table style="width: 100%;">
+							<tbody>
+								<tr>
+									<td style="text-align: left;">
+										<b>Clear Modules</b>
+									</td>
+									<td style="text-align: center;">
+										If old modules need to be removed from the database, you can clear the entire Modules table here
+									</td>
+									<td style="text-align: right;">
+										<button type="button" class="btn btn-default btn-sm btn-danger" onclick="clear_modules()">Clear</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="well table-responsive">
+						<table style="width: 100%;">
+                                                        <tbody>
+                                                                <tr>
+                                                                        <td style="text-align: left;">
+                                                                                <b>Nexus Scan</b>
+                                                                        </td>
+                                                                        <td style="Text-align: center;">
+                                                                                Re-scan the Nexus devices on the network to populate the Modules table
+                                                                        </td>
+                                                                        <td style="text-align: right;">
+										<button type="button" class="btn btn-default btn-sm btn-warning" onclick="progress_scan()">Scan</button>
+                                                                        </td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
+					</div>
+
+                                </div>
+
+                        </div>
+                </p>
+
+		<p>
+			<div class="panel panel-default">
+
+				<div class="panel-heading">
+					<h3 class="panel-title">Add a Nexus</h3>
+				</div>
+
+				<div class="panel-body">
+					This panel will contain the menu for adding a new Nexus, including:<br /><br />
+					<ul>
+						<li>Contain a download link for the nexus installation script</li>
+						<li>Allow the user to specify which GPIO ports use which module types</li>
+						<li>Generate a configuration file for the nexus</li>
+					</ul>
+				</div>
+
+			</div>
+		</p>
+
+		<p>
+                        <div class="panel panel-default">
+
+                                <div class="panel-heading">
+                                        <h3 class="panel-title">Create an App</h3>
+                                </div>
+
+                                <div class="panel-body">
+                                        This panel will contain a small menu to set an app name and generate a blank template with that name, to help start building new apps.
+                                </div>
+
+                        </div>
+                </p>
+
+
+		<p>
+			<div class="panel panel-default">
+
+                                <div class="panel-heading">
+                                        <h3 class="panel-title">All Modules</h3>
+                                </div>  
+
+                                <div class="panel-body">
+					<div class="well table-responsive">
+                                        	<table style="width: 100%; text-align: center;">
+							<thead>
+								<tr>
+									<td><b>Name</b></td>
+									<td><b>Type</b></td>
+									<td><b>Room</b></td>
+									<td><b>Nexus IP</b></td>
+								</tr>
+							</thead>
+
+							<tbody>
+								<% modules.each do |mod| %>
+									<tr>
+
+                                	                                        <td>
+											<label id="<%= mod[:uuid] %>-name" uuid="<%= mod[:uuid] %>" type="name" default="<%= mod[:name] %>"><%= mod[:name] %></label>
+											<input class="clicked" type="text" />
+										</td>
+
+                        	                                                <td>
+											<%= mod[:type] %>
+										</td>
+
+                	                                                        <td>
+											<label id="<%= mod[:uuid] %>-room" uuid="<%= mod[:uuid] %>" type="room" default="<%= mod[:room] %>"><%= mod[:room] %></label>
+                                                                                        <input class="clicked" type="text" />
+										</td>
+
+        	                                                                <td>
+											<%= mod[:nexus_ip] %>
+										</td>
+	                                                                </tr>
+								<% end %>
+
+							</tbody>
+						</table>
+					</div>
+                                </div>  
+                        </div>
+		</p>
+
+		<p>
+
+                        <div class="panel panel-default">
+
+                                <div class="panel-heading">
+                                        <h3 class="panel-title">All Callbacks</h3>
+                                </div>
+
+                                <div class="panel-body">
+                                        <div class="well table-responsive">
+                                                <table style="width: 100%; text-align: center;">
+                                                        <tbody>
+                                                                <tr>
+                                                                        <td><b>Module</b></td>
+									<td><b>Event</b></td>
+                                                                        <td><b>Call</b></td>
+                                                                </tr>
+
+                                                                <% callbacks.each do |callback| %>
+                                                                        <tr>
+                                                                                <td><%= callback[0] %></td>
+										<td>event</td>
+                                                                                <td><%= callback[1] %>.<%= callback[2] %></td>
+                                                                        </tr>
+                                                                <% end %>
+
+                                                        </tbody>
+                                                </table>
+                                        </div>
+                                </div>
+                        </div>
+                </p>
+
+	</div>
+</div>
+
+<script>
+
+$('.clicked').hide()
+.focusout(update_module)
+.keyup(function (e) {
+    if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+        $(this).blur();
+    }
+})
+.prev().click(function () {
+    $(this).hide();
+    $(this).next().show().focus();
+});
+
+function update_module(e) {
+	var input = $(e.target);
+	var label = input && input.prev();
+	label.text(input.val() === '' ? label.attr('default') : input.val());
+	input.hide();
+	label.show();
+	var name;
+	var room;
+	var uuid = label.attr('uuid');
+	if (label.attr('type') == 'name') {
+		name = label.text();
+		room = document.getElementById(uuid+'-room').textContent;
+	} else {
+		room = label.text();
+		name = document.getElementById(uuid+'-name').textContent;
+	}
+	rename(uuid, name, room);
+}
+
+function rename(uuid, name, room){
+	NProgress.start();
+	$.get("/rename/"+uuid+"/"+name+"/"+room, function(body) {
+		NProgress.done();
+	});
+}
+
+function progress_scan() {
+	NProgress.start();
+	$.get("/nexus_scan", function(body) {
+		NProgress.done();
+		document.open();
+		document.write(body);
+		document.close();
+	});
+};
+
+function clear_modules() {
+	$.get("/clear_modules", function(body) {
+		document.open();
+		document.write(body);
+		document.close();
+	});
+};
+
+</script>
+

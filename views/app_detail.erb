@@ -19,11 +19,14 @@
 						version = app[1]
 						page = app[2]
 						description = app[3]
+						object = app[4]
 					%>
 					<b>Name: </b><%= name %><br />
 					<b>Version: </b><%= version %><br />
-					<b>Page: </b><a href="<%= page %>">view</a><br />
-					<b>Description: </b><%= description %><br />
+					<b>Description: </b><%= description %><br /><br />
+					<a href="<%= page %>"><button type="button" class="btn btn-default btn-primary">View Page</button></a>
+					<a href=""><button type="button" class="btn btn-default btn-primary">Download</button></a>
+					<a href="/uninstall_app/<%= object %>"><button type="button" class="btn btn-default btn-danger">Uninstall</button></a>
                 		</div>
 			</div>
 		</p>

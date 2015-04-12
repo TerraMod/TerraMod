@@ -5,7 +5,7 @@
 	</div>
 
 	<div class="panel-body">
-		<% if defined? message  %>
+		<% if defined? message and message != nil %>
 			<div class="alert <%= message[:class] %> alert-dismissible" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<strong><%= message[:title] %></strong> <%= message[:detail] %>
@@ -22,7 +22,7 @@
 					<tbody>
 						<tr>
 							<td>
-                                                                <h4><a href="/edit_app/<%= object %>"><%= name %></a></h4>
+                                                                <h4><a href="/app_detail/<%= object %>"><%= name %></a></h4>
                                                         </td>
 
                                                         <td>
@@ -35,11 +35,9 @@
 							</td>
 
 							<td align="right">
-								<a href="/uninstall_app/<%= object %>">
-									<button type="button" class="btn btn-danger btn-default">
-                                                                		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Uninstall
-                                                        		</button>
-								</a>
+								<button type="button" class="btn btn-danger btn-default" onclick="uninstall_app('<%= object %>')">
+                                                                	<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Uninstall
+                                                        	</button>
 							</td>
 						</tr>
 					</tbody>
@@ -59,8 +57,26 @@
 <script>
 	var file = document.getElementById('appfile');
 	file.onchange = function() {
-		if (this.value !== '')
+		if (this.value !== '') {
 			this.form.submit();
+		}
 	};
-</script>
 
+//       function install_all() {
+//                $.get("/nexus_scan", function(body) {
+//                        document.open();
+//                        document.write(body);
+//                        document.close();
+//                });
+//        };
+
+        function uninstall_app(app_name) {
+                $.get("/uninstall_app/"+app_name, function(body) {
+                        document.open();
+                        document.write(body);
+                        document.close();
+                });
+        };
+
+
+</script>
