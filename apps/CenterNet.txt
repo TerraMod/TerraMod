@@ -1,0 +1,21 @@
+CenterNet					(~4550)
+	Case:		Rack mount		(105)		http://www.newegg.com/Product/Product.aspx?Item=N82E16811147164
+	PSU:		750W			(120)		http://www.newegg.com/Product/Product.aspx?Item=N82E16817438017
+	CPU:		6 core x2		(860)		http://www.newegg.com/Product/Product.aspx?Item=N82E16819117480
+	Cooler:		Fan x2			(80)		http://www.newegg.com/Product/Product.aspx?Item=N82E16816101683
+	Mobo:		Supermicro		(320)		http://www.newegg.com/Product/Product.aspx?item=N82E16813182944
+	RAM:		64GB			(730)		http://www.newegg.com/Product/Product.aspx?Item=N82E16820148855
+	Xen Drives:	512x2 RAID 1		(540)		http://www.newegg.com/Product/Product.aspx?Item=N82E16820147361
+	SAS controllers	m1015 x2		(248)		http://www.ebay.com/itm/NEW-IBM-ServeRaid-M1015-46M0861-SAS-SATA-PCI-e-RAID-Controller-LSI-SAS9220-8i-/151193725495
+	Hot spare	for zpool		(80)		http://www.newegg.com/Product/Product.aspx?Item=N82E16822236404
+	UPS:		1500W			(530)		http://www.newegg.com/Product/Product.aspx?Item=N82E16842102111
+	Rack:		24U			(550)		http://www.newegg.com/Product/Product.aspx?Item=N82E16816133052
+	Router		ERPro-8			(350)		http://www.bhphotovideo.com/bnh/controller/home?O=&sku=1049765&gclid=Cj0KEQiA6ounBRCq0LKBjKGgysEBEiQAZmpvAxPCuvspXeVLPQXvJVh3u85a6kctq3YxGFFm7aEmbbcaAi7g8P8HAQ&Q=&is=REG&A=details
+
+Studio:
+	Laptop		XPS 13 dev		(950)
+	Monitor		2560x1440		(290)		http://www.newegg.com/Product/Product.aspx?Item=9SIA4JH1JX0558
+	Monitor stand	desk mount		(135)		http://www.newegg.com/Product/Product.aspx?Item=N82E16824994063
+	Speaker cable
+	Speaker mounts
+	Access Point	Unifi AC		(300)		https://store.ubnt.com/unifi.html

@@ -6,6 +6,7 @@ require 'sqlite3'
 require 'net/http'
 require 'zip'
 require 'fileutils'
+require 'pathname'
 
 Dir["./apps/*/app.rb"].each {|file| require file }
 
@@ -130,85 +131,91 @@ class TerraMod < Sinatra::Base
 	end
 
 	post '/install_app' do
-		# (/class \w+/.match File.read("app.rb")).to_s.split(" ")[1] # "class in file"
+
 		begin
-			filename = params[:appfile][:filename]
-			app_zip = "./apps/" + filename
+			# Upload app zip
+			zip_filename = File.basename(params[:appfile][:filename])
+			zip_filename = "./apps/" + zip_filename
 			file = params[:appfile][:tempfile]
-			File.open(app_zip, 'wb') do |f|
-				f.write(file.read)
-			end
-			Zip::File.open(app_zip) do |open_zip|
+			File.open(zip_filename, 'wb') { |f| f.write(file.read) }
+
+			# Extract and check zip
+			app_dir = ""
+			extracted = []
+			Zip::File.open(zip_filename) do |open_zip|
 				open_zip.each do |zipped_file|
-					zipped_file.extract "./apps/" + zipped_file.name
+					path = Pathname.new(zipped_file.name).each_filename.to_a
+					if File.basename(zipped_file.name) == "app.rb" and path.size == 2
+						app_dir = path[0]
+					end
+					destination = "./apps/" + zipped_file.name
+					zipped_file.extract destination
+					extracted << destination
 				end
 			end
-			File.delete(app_zip)
-			dir_name = filename.split(".")[0]
-			class_name = dir_name.split('_').collect(&:capitalize).join
-			require "./apps/#{dir_name}/app.rb"
+			raise "no app.rb in first directory of zip" if app_dir == ""
+			File.delete(zip_filename)
+
+			# Load app zip, lookup class name and try to install
+			require "./apps/#{app_dir}/app.rb"
+			class_name = (/class \w+/.match File.read("./apps/#{app_dir}/app.rb")).to_s.split(" ")[1]
 			settings.install.(Module.const_get(class_name))
-			err_message = ""
+
+			redirect to("/app_detail/#{class_name}")
+
 		rescue => e
 			begin
-				File.delete(app_zip)
+				File.remove(zip_filename)
+				extracted.each { |f| File.remove(f) }
 			rescue
 			end
-			err_message = e.to_s
-		end
-
-		if err_message == ""
-			redirect to("/app_detail/#{class_name}")
-		else
 			render_manage_apps({
-				:class => "alert-danger",
-				:title => "Error:",
-				:detail => err_message
-			})
+                                :class => "alert-danger",
+                                :title => "Error:",
+                                :detail => e.to_s
+                        })
+
 		end
 
 	end
 
-	get '/app_detail/:app' do
-		begin
-			app = Module.const_get(params['app']) # clean this up
-		rescue
-			status 404
-			return
-		end
-		erb :app_detail, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
-					   :app => settings.db.execute("SELECT name,version,page,description,object FROM Apps WHERE object=?;", [params['app']])[0],
-					   :requirements => app.requirements,
-					   :modules => settings.db.execute("SELECT * FROM Modules;")}	# maybe send the db to the application here?
-	end
+	get '/uninstall_app/:app' do |app_obj|
 
-	get '/uninstall_app/:app' do
+		count = settings.db.execute("SELECT COUNT(*) FROM Apps WHERE object=?;", [app_obj])[0][0].to_i
+                ( status 404; return ) if count == 0
+                app = Module.const_get(app_obj)
+
 		begin
-                        app = Module.const_get(params['app'])
-			FileUtils.rm_rf("./apps/" + app.class_variable_get(:@@dir))
 			app.uninstall(settings.db)
-			err_message = ""
-                rescue => e
-                        err_message = e.to_s
-                end
-
-		message = {}
-		if err_message == ""
+			FileUtils.rm_rf("./apps/" + app.class_variable_get(:@@dir))	# look all this up from db before uninstalling it
 			message = {
 				:class => "alert-success",
                         	:title => "Success:",
                 	        :detail => "uninstalled #{app.class_variable_get(:@@name)}"
 			}
-		else
+		rescue => e
 			message = {
                                 :class => "alert-danger",
                                 :title => "Error:",
-                                :detail => err_message
+                                :detail => e.to_s
                         }
-
 		end
 
 		render_manage_apps(message)
+
+	end
+
+
+	get '/app_detail/:app' do |app_obj|
+
+		count = settings.db.execute("SELECT COUNT(*) FROM Apps WHERE object=?;", [app_obj])[0][0].to_i
+		( status 404; return ) if count == 0
+		app = Module.const_get(app_obj)
+
+		erb :app_detail, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+					   :app => settings.db.execute("SELECT name,version,page,description,object FROM Apps WHERE object=?;", [app_obj])[0],
+					   :requirements => app.requirements,
+					   :modules => settings.db.execute("SELECT * FROM Modules;")}	# maybe send the db to the application here?
 
 	end
 
@@ -228,11 +235,11 @@ class TerraMod < Sinatra::Base
 	end
 	
 	get '/manage_apps' do
-		render_manage_apps()
+		render_manage_apps
 	end
 	
 	get '/admin' do
-		render_admin()
+		render_admin
 	end
 
 	get '/clear_modules' do
@@ -271,7 +278,7 @@ class TerraMod < Sinatra::Base
 
 	end
 
-	get '/query_module/:module_uuid' do |module_uuid|
+	get '/query_module/:module_uuid' do |module_uuid|	# should be moved into the apps
 		begin
 			nexus_uuid = settings.db.execute("SELECT nexus_uuid FROM Modules WHERE uuid=?;", [module_uuid])[0]
 		rescue
