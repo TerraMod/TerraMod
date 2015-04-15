@@ -133,11 +133,14 @@ class TerraMod < Sinatra::Base
 	post '/install_app' do
 
 		begin
+			# Note the entries in 'apps' to preserve if the app upload fails
+			entries = Dir["./apps/*"]
+
 			# Upload app zip
 			zip_filename = File.basename(params[:appfile][:filename])
 			zip_filename = "./apps/" + zip_filename
 			file = params[:appfile][:tempfile]
-			File.open(zip_filename, 'wb') { |f| f.write(file.read) }
+			File.open(zip_filename, 'wb') { |zip_file| zip_file.write(file.read) }
 
 			# Extract and check zip
 			app_dir = ""
@@ -159,22 +162,24 @@ class TerraMod < Sinatra::Base
 			# Load app zip, lookup class name and try to install
 			require "./apps/#{app_dir}/app.rb"
 			class_name = (/class \w+/.match File.read("./apps/#{app_dir}/app.rb")).to_s.split(" ")[1]
-			settings.install.(Module.const_get(class_name))
+			app = Module.const_get(class_name)
+			settings.install.(app)
+			name = app.class_variable_get(:@@name)
+			version = app.class_variable_get(:@@version)
+			description = app.class_variable_get(:@@description)
+			dashboard = app.class_variable_get(:@@dashboard)
+			settings.db.execute "INSERT INTO Apps VALUES(?, ?, ?, ?, ?, ?);", [name, version, class_name, description, dashboard.to_s, app_dir]
 
 			redirect to("/app_detail/#{class_name}")
 
 		rescue => e
-			begin
-				File.remove(zip_filename)
-				extracted.each { |f| File.remove(f) }
-			rescue
-			end
+			(Dir["./apps/*"] - entries).each { |item| FileUtils.rm_rf item }
 			render_manage_apps({
                                 :class => "alert-danger",
                                 :title => "Error:",
                                 :detail => e.to_s
                         })
-
+		
 		end
 
 	end
@@ -186,8 +191,10 @@ class TerraMod < Sinatra::Base
                 app = Module.const_get(app_obj)
 
 		begin
+			FileUtils.rm_rf("./apps/" + settings.db.execute("SELECT dir FROM Apps WHERE object=?", [app_obj])[0][0])
 			app.uninstall(settings.db)
-			FileUtils.rm_rf("./apps/" + app.class_variable_get(:@@dir))	# look all this up from db before uninstalling it
+			settings.db.execute "DELETE FROM Apps WHERE object=?;", [app_obj]
+			settings.db.execute "DELETE FROM Callbacks WHERE class=?;", [app_obj]
 			message = {
 				:class => "alert-success",
                         	:title => "Success:",
@@ -213,9 +220,8 @@ class TerraMod < Sinatra::Base
 		app = Module.const_get(app_obj)
 
 		erb :app_detail, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
-					   :app => settings.db.execute("SELECT name,version,page,description,object FROM Apps WHERE object=?;", [app_obj])[0],
-					   :requirements => app.requirements,
-					   :modules => settings.db.execute("SELECT * FROM Modules;")}	# maybe send the db to the application here?
+					     :app => settings.db.execute("SELECT name,version,page,description,object FROM Apps WHERE object=?;", [app_obj])[0],
+					     :modules => settings.db.execute("SELECT * FROM Modules;")}	# maybe send the db to the application here?
 
 	end
 

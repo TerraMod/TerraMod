@@ -4,50 +4,26 @@ class ExampleApp
 
 	@@name = "Example Application"
 	@@version = "0.1"
-	@@object = "ExampleApp"
 	@@description = "This application demonstrates the TerraMod framework.  The goal is to print any sensor to standard output."
-	@@page = "/example_app"
-	@@dir = "example_app"
-
-	def self.requirements
-		return {"Door" => {:class => "EntranceSensor",
-				   :description => "Door to alert"},
-			"PIR" =>  {:class => "MotionSensor",
-				   :description => "PIR to alert"},
-		        "Integer" => {:class => "Fixnum",
-				      :description => "Example integer"}
-			}
-	end
-
-	def self.set_options(db, options)
-		# update all table with relevent information
-
-
-		# clear out and fill the 'ExampleApp" tables
-		#devices.each do |k, v|
-                #        db.execute "INSERT INTO DemoApp VALUES(?, ?);", [k, v]
-                #        db.execute "INSERT INTO Callbacks VALUES (?, ?);", [v, "DemoApp"]
-                #end
-
-	end
+	@@dashboard = true
 
 	def self.install(db)
 		# Create table(s) to store app information
 		db.execute "CREATE TABLE DemoApp(name TEXT, uuid TEXT);"
-
-		# Populate Apps table with app information
-		db.execute "INSERT INTO Apps VALUES(?, ?, ?, ?, ?, ?);", [@@name, @@version, @@object, @@description, @@page, @@dir]
 	end
 
 	def self.uninstall(db)
-		# Drop all tables created by the app, remove from Apps table
+		# Drop all tables created by the app
 		db.execute "DROP TABLE DemoApp;"
-		db.execute "DELETE FROM Apps WHERE object=?;", [@@object]
 	end
 
 	def self.tile
 		date = Time.now.strftime("%d/%m/%Y")
-		weather = OpenWeather::Current.city_id("5750162")
+		begin
+			weather = OpenWeather::Current.city_id("5750162")
+		rescue
+			weather = "Weather download failed, please refresh"
+		end
 		return {:color => "green",
 			:front => {
 				:title => "Example tile",
@@ -74,7 +50,7 @@ class ExampleApp
 			:locals => {
 				:modules => ["SELECT uuid,name,room FROM Modules;", []]
 				}
-		}
+		}	# set template free pages?  force ruby into the erb files?
 		]
 	end
 
