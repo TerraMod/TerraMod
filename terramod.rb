@@ -13,6 +13,9 @@ Dir["./apps/*/app.rb"].each {|file| require file }
 class TerraMod < Sinatra::Base
 
 	def self.register_routes(app)
+		app_class = app.ancestors[0].to_s
+		app_info = settings.db.execute("SELECT dir FROM Apps WHERE object=?;", [app_class])[0]
+		app_dir = app_info[0]
 		app.routes.each do |hookup|
                         url = hookup[:url]
                         template = hookup[:template]
@@ -25,10 +28,10 @@ class TerraMod < Sinatra::Base
 				end
 				results
 			}
-                        get url do	# get "app.dur"+url
-                                erb template, :views => views,
+                        get "/#{app_class}/#{url}" do
+                                erb template, :views => "./apps/#{app_dir}/views",
                                               :layout_options => { :views => 'views' },
-                                              :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+                                              :locals => {:app_links => settings.db.execute("SELECT name,page,object FROM Apps;"),
 							  :queries => query.call}
                         end
 		end
@@ -42,22 +45,20 @@ class TerraMod < Sinatra::Base
 	configure do
 		
 		db_file = "./terramod.db"
-		db = nil
 		if File.exists? db_file
-			db = SQLite3::Database.open db_file
-			db.execute("SELECT object FROM Apps;").each do |app|
+			set :db, SQLite3::Database.open(db_file)
+			settings.db.execute("SELECT object FROM Apps;").each do |app|
 				register_routes(Module.const_get(app[0]))
 			end
 		else
-			db = SQLite3::Database.new db_file
-			db.execute "CREATE TABLE Nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
-			db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
-			db.execute "CREATE TABLE Callbacks(uuid TEXT, event TEXT, class TEXT, method TEXT);"
-			db.execute "CREATE TABLE Apps(name TEXT, version TEXT, object TEXT, description TEXT, page TEXT, dir TEXT, UNIQUE(object), UNIQUE(page), UNIQUE(dir));"
+			set :db, SQLite3::Database.new(db_file)
+			settings.db.execute "CREATE TABLE Nexus(uuid TEXT, ip TEXT, UNIQUE(uuid));"
+			settings.db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
+			settings.db.execute "CREATE TABLE Callbacks(uuid TEXT, event TEXT, class TEXT, method TEXT);"
+			settings.db.execute "CREATE TABLE Apps(name TEXT, version TEXT, object TEXT, description TEXT, page TEXT, dir TEXT, UNIQUE(object), UNIQUE(page), UNIQUE(dir));"
 		end
 
 		set :install, self.method(:install)
-		set :db, db
 		set :port, 80
 		set :bind, "0.0.0.0"
 		
@@ -88,7 +89,7 @@ class TerraMod < Sinatra::Base
                         	callbacks << call
 	                end
 
-        	        erb :admin, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+        	        erb :admin, :locals => {:app_links => settings.db.execute("SELECT name,page,object FROM Apps;"),
                 	                        :app_count => settings.db.execute("SELECT count(object) FROM Apps;")[0][0],
                         	                :module_count => settings.db.execute("SELECT count(uuid) FROM Modules;")[0][0],
                                 	        :nexus_count => settings.db.execute("SELECT count(uuid) FROM Nexus;")[0][0],
@@ -98,7 +99,7 @@ class TerraMod < Sinatra::Base
 		end
 
 		def render_manage_apps(message=nil)
-			erb :manage_apps, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+			erb :manage_apps, :locals => {:app_links => settings.db.execute("SELECT name,page,object FROM Apps;"),
                         			      :apps => settings.db.execute("SELECT name,version,object,description FROM Apps;"),
 						      :message => message}
 		end
@@ -219,8 +220,8 @@ class TerraMod < Sinatra::Base
 		( status 404; return ) if count == 0
 		app = Module.const_get(app_obj)
 
-		erb :app_detail, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
-					     :app => settings.db.execute("SELECT name,version,page,description,object FROM Apps WHERE object=?;", [app_obj])[0],
+		erb :app_detail, :locals => {:app_links => settings.db.execute("SELECT name,page,object FROM Apps;"),
+					     :app => settings.db.execute("SELECT name,version,page,object,description FROM Apps WHERE object=?;", [app_obj])[0],
 					     :modules => settings.db.execute("SELECT * FROM Modules;")}	# maybe send the db to the application here?
 
 	end
@@ -236,7 +237,7 @@ class TerraMod < Sinatra::Base
 				tiles << tile
 			end
 		end
-		erb :dashboard, :locals => {:app_links => settings.db.execute("SELECT name,page FROM Apps;"),
+		erb :dashboard, :locals => {:app_links => settings.db.execute("SELECT name,page,object FROM Apps;"),
 					    :tiles => tiles}
 	end
 	

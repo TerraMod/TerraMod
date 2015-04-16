@@ -17,14 +17,16 @@
                         		<%
 						name = app[0]
 						version = app[1]
-						page = app[2]
-						description = app[3]
-						object = app[4]
+						page = app[2] == "true"
+						object = app[3]
+						description = app[4]
 					%>
 					<b>Name: </b><%= name %><br />
 					<b>Version: </b><%= version %><br />
 					<b>Description: </b><%= description %><br /><br />
-					<a href="<%= page %>"><button type="button" class="btn btn-default btn-primary">View Page</button></a>
+					<% if page %>
+						<a href="/<%= object %>/dashboard"><button type="button" class="btn btn-default btn-primary">View Page</button></a>
+					<% end %>
 					<a href=""><button type="button" class="btn btn-default btn-primary">Download</button></a>
 					<a href="/uninstall_app/<%= object %>"><button type="button" class="btn btn-default btn-danger">Uninstall</button></a>
                 		</div>

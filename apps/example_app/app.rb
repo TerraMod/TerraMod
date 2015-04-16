@@ -44,9 +44,8 @@ class ExampleApp
 
 	def self.routes
 		return [{
-			:url => "/example_app",
-			:template => :template,
-			:views => "./apps/example_app/",
+			:url => "dashboard",
+			:template => :dashboard,
 			:locals => {
 				:modules => ["SELECT uuid,name,room FROM Modules;", []]
 				}
