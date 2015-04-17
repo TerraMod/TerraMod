@@ -24,7 +24,7 @@ class ExampleApp
 		rescue
 			weather = "Weather download failed, please refresh"
 		end
-		return {:color => "green",
+		return {:color => "purple",
 			:front => {
 				:title => "Example tile",
 				:content => [
@@ -47,7 +47,7 @@ class ExampleApp
 			:url => "dashboard",
 			:template => :dashboard,
 			:locals => {
-				:modules => ["SELECT uuid,name,room FROM Modules;", []]
+				:modules => ["SELECT uuid,name,room FROM Modules;", []] # send entire db?
 				}
 		}	# set template free pages?  force ruby into the erb files?
 		]

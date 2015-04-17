@@ -17,14 +17,13 @@
                         		<%
 						name = app[0]
 						version = app[1]
-						page = app[2] == "true"
-						object = app[3]
-						description = app[4]
+						object = app[2]
+						description = app[3]
 					%>
 					<b>Name: </b><%= name %><br />
 					<b>Version: </b><%= version %><br />
 					<b>Description: </b><%= description %><br /><br />
-					<% if page %>
+					<% if Module.const_get(object).routes.map{ |route| break true if route[:url] == "dashboard"} == true %>
 						<a href="/<%= object %>/dashboard"><button type="button" class="btn btn-default btn-primary">View Page</button></a>
 					<% end %>
 					<a href=""><button type="button" class="btn btn-default btn-primary">Download</button></a>
