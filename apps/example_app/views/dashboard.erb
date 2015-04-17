@@ -29,7 +29,7 @@
                                 </div>
 
                                 <div class="panel-body">
-                                        <% queries[:modules].each do |mod|
+                                        <% db.execute("SELECT uuid,name,room FROM Modules;").each do |mod|
 						uuid = mod[0]
                                                 name = mod[1]
                                                 room = mod[2]%>

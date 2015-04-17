@@ -19,21 +19,20 @@ class TerraMod < Sinatra::Base
 		app.routes.each do |hookup|
                         url = hookup[:url]
                         template = hookup[:template]
-                        views = hookup[:views]
-			locals = hookup[:locals]
-			query = Proc.new {
-				results = {}
-				locals.each do |k, v|
-					results[k] = settings.db.execute v[0], v[1]
+			method = hookup[:method]
+			if template != nil
+	                        get "/#{app_class}/#{url}" do
+        	                        erb template, :views => "./apps/#{app_dir}/views",
+                	                              :layout_options => { :views => 'views' },
+                        	                      :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
+								  :db => settings.db}
+	                        end
+			elsif method != nil
+				puts "registering /#{app_class}/#{url}"
+				get "/#{app_class}/#{url}" do
+					method.()
 				end
-				results
-			}
-                        get "/#{app_class}/#{url}" do
-                                erb template, :views => "./apps/#{app_dir}/views",
-                                              :layout_options => { :views => 'views' },
-                                              :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
-							  :queries => query.call}
-                        end
+			end
 		end
 	end
 

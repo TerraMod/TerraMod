@@ -2,10 +2,9 @@ require 'open_weather'
 
 class ExampleApp
 
-	@@name = "Example Application"
-	@@version = "0.1"
-	@@description = "This application demonstrates the TerraMod framework.  The goal is to print any sensor to standard output."
-	@@dashboard = true
+	@@name		= "Example Application"
+	@@version	= "0.1"
+	@@description	= "This application demonstrates the TerraMod framework.  The goal is to print any sensor to standard output."
 
 	def self.install(db)
 		# Create table(s) to store app information
@@ -44,13 +43,18 @@ class ExampleApp
 
 	def self.routes
 		return [{
-			:url => "dashboard",
-			:template => :dashboard,
-			:locals => {
-				:modules => ["SELECT uuid,name,room FROM Modules;", []] # send entire db?
-				}
-		}	# set template free pages?  force ruby into the erb files?
+				:url => "dashboard",
+				:template => :dashboard
+			},
+			{
+				:url => "test_route",
+				:method	=> ExampleApp.method(:test_route)
+			}
 		]
+	end
+
+	def self.test_route
+		return "I've been called"
 	end
 
 	def self.callback(db, uuid, data)
