@@ -132,7 +132,7 @@ class TerraMod < Sinatra::Base
 
 	post '/install_app' do
 
-		begin
+#		begin
 			# Note the entries in 'apps' to preserve if the app upload fails
 			entries = Dir["./apps/*"]
 
@@ -148,6 +148,7 @@ class TerraMod < Sinatra::Base
 			Zip::File.open(zip_filename) do |open_zip|
 				open_zip.each do |zipped_file|
 					path = Pathname.new(zipped_file.name).each_filename.to_a
+					FileUtils.mkdir_p "./apps/"+path[0..path.size-2].join("/")
 					if File.basename(zipped_file.name) == "app.rb" and path.size == 2
 						app_dir = path[0]
 					end
@@ -158,7 +159,7 @@ class TerraMod < Sinatra::Base
 			end
 			raise "no app.rb in first directory of zip" if app_dir == ""
 			File.delete(zip_filename)
-
+begin
 			# Load app zip, lookup class name and try to install
 			require "./apps/#{app_dir}/app.rb"
 			class_name = (/class \w+/.match File.read("./apps/#{app_dir}/app.rb")).to_s.split(" ")[1]
@@ -172,7 +173,6 @@ class TerraMod < Sinatra::Base
 			redirect to("/app_detail/#{class_name}")
 
 		rescue => e
-			p e.backtrace
 			(Dir["./apps/*"] - entries).each { |item| FileUtils.rm_rf item }
 			render_manage_apps({
                                 :class => "alert-danger",
@@ -282,6 +282,25 @@ class TerraMod < Sinatra::Base
                         :detail => "all Nexus devices asked to report modules"
                 })
 
+	end
+
+	get '/download_zip/:app_object' do |app_obj|
+
+                count = settings.db.execute("SELECT COUNT(*) FROM Apps WHERE object=?;", [app_obj])[0][0].to_i
+                ( status 404; return ) if count == 0
+                dir = settings.db.execute("SELECT dir FROM Apps WHERE object=?;", [app_obj])[0][0]
+		
+		tmp_file = "/tmp/#{dir}.zip"
+		File.delete(tmp_file) if File.exists? tmp_file
+		app_files = (Dir.glob("./apps/#{dir}/**/*").reject { |entry| File.directory?(entry) }).map! { |s| s = s.split("apps/")[1] }
+		Zip::OutputStream.open(tmp_file) do |zip_stream|
+			app_files.each do |file|
+				zip_stream.put_next_entry(file)
+				File.open("./apps/"+file) { |f| zip_stream << f.read}
+			end
+		end
+
+		send_file tmp_file, :type => 'application/zip', :disposition => 'attachment', :filename => "#{dir}.zip"
 	end
 
 	get '/query_module/:module_uuid' do |module_uuid|	# should be moved into the apps

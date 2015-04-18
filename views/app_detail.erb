@@ -24,9 +24,9 @@
 					<b>Version: </b><%= version %><br />
 					<b>Description: </b><%= description %><br /><br />
 					<% if Module.const_get(object).routes.map{ |route| break true if route[:url] == "dashboard"} == true %>
-						<a href="/<%= object %>/dashboard"><button type="button" class="btn btn-default btn-primary">View Page</button></a>
+						<a href="/<%= object %>/dashboard"><button type="button" class="btn btn-default btn-primary">View Dashboard</button></a>
 					<% end %>
-					<a href=""><button type="button" class="btn btn-default btn-primary">Download</button></a>
+					<a href="/download_zip/<%= object %>"><button type="button" class="btn btn-default btn-primary">Download</button></a>
 					<a href="/uninstall_app/<%= object %>"><button type="button" class="btn btn-default btn-danger">Uninstall</button></a>
                 		</div>
 			</div>
@@ -45,6 +45,20 @@
 				</div>
 			</div>
 		</p>
+
+		<p>
+
+                        <div class="panel panel-default">
+
+                                <div class="panel-heading">
+                                        <h3 class="panel-title">Available Methods</h3>
+                                </div>
+
+                                <div class="panel-body">
+
+                                </div>
+                        </div>
+                </p>
 
 	</div>
 </div>
