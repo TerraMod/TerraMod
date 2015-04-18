@@ -38,10 +38,12 @@
 						<li class="dropdown">
 						  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<% app_links.each_with_index do |app, index|
+								<% app_links.each do |app|
 									name = app[0]
-									page = app[1]%>
-										<li><a href="<%= page %>"><%= name %></a></li>
+									object = app[1]%>
+										<% if Module.const_get(object).routes.map{ |route| break true if route[:url] == "dashboard"} == true %>
+											<li><a href="/<%= object %>/dashboard"><%= name %></a></li>
+										<% end %>
 								<% end %>
 								<li class="divider"></li>
 								<li><a href="/manage_apps">Manage Apps</a></li>
