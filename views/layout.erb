@@ -41,7 +41,8 @@
 								<% app_links.each do |app|
 									name = app[0]
 									object = app[1]%>
-										<% if Module.const_get(object).routes.map{ |route| break true if route[:url] == "dashboard"} == true %>
+										<% app = Module.const_get(object) %>
+										<% if app.methods.include?(:routes) and app.routes.map{ |route| break true if route[:url] == "dashboard"} == true %>
 											<li><a href="/<%= object %>/dashboard"><%= name %></a></li>
 										<% end %>
 								<% end %>

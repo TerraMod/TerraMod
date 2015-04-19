@@ -47,8 +47,9 @@ class TerraMod < Sinatra::Base
 		db_file = "./terramod.db"
 		if File.exists? db_file
 			set :db, SQLite3::Database.open(db_file)
-			settings.db.execute("SELECT object FROM Apps;").each do |app|
-				register_routes(Module.const_get(app[0]))
+			settings.db.execute("SELECT object FROM Apps;").each do |object|
+				app = Module.const_get(object[0])
+				register_routes(app) if app.methods.include? :routes
 			end
 		else
 			set :db, SQLite3::Database.new(db_file)
