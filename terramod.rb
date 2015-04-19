@@ -17,28 +17,29 @@ class TerraMod < Sinatra::Base
 		app_info = settings.db.execute("SELECT dir FROM Apps WHERE object=?;", [app_class])[0]
 		app_dir = app_info[0]
 		app.routes.each do |hookup|
+			verb = self.method(hookup[:verb].downcase.to_sym)
                         url = hookup[:url]
                         template = hookup[:template]
 			method = hookup[:method]
 			if template != nil
-	                        get "/#{app_class}/#{url}" do
+	                        verb.("/#{app_class}/#{url}", &Proc.new {
         	                        erb template, :views => "./apps/#{app_dir}/views",
                 	                              :layout_options => { :views => 'views' },
                         	                      :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
-								  :db => settings.db}
-	                        end
+								  :db => settings.db,
+								  :params => params}
+	                        })
 			elsif method != nil
-				puts "registering /#{app_class}/#{url}"
-				get "/#{app_class}/#{url}" do
-					method.()
-				end
+				verb.("/#{app_class}/#{url}", &Proc.new {
+					method.(settings.db, params)
+				})
 			end
 		end
 	end
 
 	def self.install(app)
-		app.install(settings.db)
-                register_routes(app)
+		app.install_tables(settings.db) if app.methods.include? :install_tables
+                register_routes(app)if app.methods.include? :routes
 	end
 	
 	configure do
@@ -132,7 +133,7 @@ class TerraMod < Sinatra::Base
 
 	post '/install_app' do
 
-#		begin
+		begin
 			# Note the entries in 'apps' to preserve if the app upload fails
 			entries = Dir["./apps/*"]
 
@@ -159,7 +160,7 @@ class TerraMod < Sinatra::Base
 			end
 			raise "no app.rb in first directory of zip" if app_dir == ""
 			File.delete(zip_filename)
-begin
+
 			# Load app zip, lookup class name and try to install
 			require "./apps/#{app_dir}/app.rb"
 			class_name = (/class \w+/.match File.read("./apps/#{app_dir}/app.rb")).to_s.split(" ")[1]
@@ -192,7 +193,7 @@ begin
 
 		begin
 			FileUtils.rm_rf("./apps/" + settings.db.execute("SELECT dir FROM Apps WHERE object=?", [app_obj])[0][0])
-			app.uninstall(settings.db)
+			app.remove_tables(settings.db) if app.methods.include? :remove_tables
 			settings.db.execute "DELETE FROM Apps WHERE object=?;", [app_obj]
 			settings.db.execute "DELETE FROM Callbacks WHERE class=?;", [app_obj]
 			message = {
@@ -301,21 +302,6 @@ begin
 		end
 
 		send_file tmp_file, :type => 'application/zip', :disposition => 'attachment', :filename => "#{dir}.zip"
-	end
-
-	get '/query_module/:module_uuid' do |module_uuid|	# should be moved into the apps
-		begin
-			nexus_uuid = settings.db.execute("SELECT nexus_uuid FROM Modules WHERE uuid=?;", [module_uuid])[0]
-		rescue
-			status 404
-			return
-		end
-		if !nexus_uuid
-			return "disconnected nexus"
-		end
-		nexus_ip = settings.db.execute("SELECT ip FROM Nexus WHERE uuid=?;", nexus_uuid)[0][0]
-		resp = Net::HTTP.get(URI.parse("http://#{nexus_ip}/query/#{module_uuid}"))
-		return resp
 	end
 
 	get '/rename/:module_uuid/:new_name/:new_room' do |module_uuid, new_name, new_room|
