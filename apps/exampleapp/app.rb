@@ -8,37 +8,12 @@ class ExampleApp
 
 	def self.install_tables(db)
 		# Create table(s) to store app information
-		db.execute "CREATE TABLE DemoApp(name TEXT, uuid TEXT);"
+		#db.execute "CREATE TABLE DemoApp(name TEXT, uuid TEXT);"
 	end
 
 	def self.remove_tables(db)
 		# Drop all tables created by the app
-		db.execute "DROP TABLE DemoApp;"
-	end
-
-	def self.tile
-		date = Time.now.strftime("%d/%m/%Y")
-		begin
-			weather = OpenWeather::Current.city_id("5750162")
-		rescue
-			weather = "Weather download failed, please refresh"
-		end
-		return {:color => "purple",
-			:front => {
-				:title => "Example tile",
-				:content => [
-					"Today's date is #{date}",
-					"Click to view the weather"
-				]
-			},
-			:back => {
-				:title => "#{weather["name"]} Weather",
-				:content => [
-					"<b>#{weather["weather"][0]["main"]}</b>",
-                                        "Today's weather is #{weather["weather"][0]["description"]}"
-                                ]
-			}		
-		       }
+		#db.execute "DROP TABLE DemoApp;"
 	end
 
 	def self.routes
@@ -46,29 +21,20 @@ class ExampleApp
 				:verb => "get",
 				:url => "dashboard",
 				:template => :dashboard
-			},
-			{
-				:verb => "get",
-				:url => "test_route",
-				:method	=> ExampleApp.method(:test_route)
 			}
 		]
 	end
 
-	def self.test_route
-		return "I've been called"
-	end
-
 	def self.callback(db, uuid, data)
-		component = db.execute "SELECT name FROM DemoApp WHERE uuid=?;", [uuid]
-		component = component[0][0]
-		details = db.execute "SELECT name,room FROM Modules WHERE uuid=?", [uuid]
-		name = details[0][0]
-		room = details[0][1]
-		if component == "Door"
-			puts "DemoApp: #{name} in #{room} changed to state #{data}"
-		elsif component == "PIR"
-			puts "DemoApp: #{data} detection on #{name} in #{room}"
-		end
+		#component = db.execute "SELECT name FROM DemoApp WHERE uuid=?;", [uuid]
+		#component = component[0][0]
+		#details = db.execute "SELECT name,room FROM Modules WHERE uuid=?", [uuid]
+		#name = details[0][0]
+		#room = details[0][1]
+		#if component == "Door"
+		#	puts "DemoApp: #{name} in #{room} changed to state #{data}"
+		#elsif component == "PIR"
+		#	puts "DemoApp: #{data} detection on #{name} in #{room}"
+		#end
 	end
 end
