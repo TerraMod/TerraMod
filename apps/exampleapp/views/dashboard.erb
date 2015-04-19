@@ -20,44 +20,70 @@
 			</div>
 		</p>
 
+		<% if db.execute("SELECT COUNT(*) FROM Apps WHERE name=?;", ["libquerymod"])[0][0] != 0 %>
 	
+			<p>
+	                        <div class="panel panel-default">
+
+                                	<div class="panel-heading">
+                        	                <h3 class="panel-title">Query modules</h3>
+                	                </div>
+
+        	                        <div class="panel-body">
+	                                        <% db.execute("SELECT uuid,name,room FROM Modules;").each do |mod|
+							uuid = mod[0]
+                                	                name = mod[1]
+                        	                        room = mod[2]%>
+
+                	                                <div class="well table-responsive">
+								<table style="width: 100%; text-align: center;">
+									<tbody>
+										<tr>
+											<td>
+                                        	                				<b><%= name %> in <%= room %></b>
+											</td>
+											<td>
+												<b>State: </b><span id="<%= uuid %>">Hit update to query the state</span>
+											</td>
+											<td>
+												<button class="btn btn-primary" onclick="update_state(<%= "\'"+uuid+"\'" %>)">Update</a>
+                                                                	                </td>
+										</tr>
+									</tbody>
+								</table>
+                                	                </div>
+
+                        	                <% end %>
+                	                </div>
+
+        	                </div>
+	                </p>
+
+		<% else %>
+
+			<p>
+
+				<div class="alert alert-danger" role="alert"><b>Error:</b> App 'libquerymod' is missing, cannot query modules.</div>
+
+			</p>
+
+		<% end %>
+
 		<p>
-                        <div class="panel panel-default">
 
-                                <div class="panel-heading">
-                                        <h3 class="panel-title">Query modules</h3>
+			<div class="panel panel-default">
+
+				<div class="panel-heading">
+                                        <h3 class="panel-title">Public Class Methods</h3>
                                 </div>
 
-                                <div class="panel-body">
-                                        <% db.execute("SELECT uuid,name,room FROM Modules;").each do |mod|
-						uuid = mod[0]
-                                                name = mod[1]
-                                                room = mod[2]%>
+				<div class="panel-body">
 
-                                                <div class="well table-responsive">
-							<table style="width: 100%; text-align: center;">
-								<tbody>
-									<tr>
-										<td>
-                                                        				<b><%= name %> in <%= room %></b>
-										</td>
-										<td>
-											<b>State: </b><span id="<%= uuid %>">Hit update to query the state</span>
-										</td>
-										<td>
-											<button class="btn btn-primary" onclick="update_state(<%= "\'"+uuid+"\'" %>)">Update</a>
-                                                                                </td>
-									</tr>
-								</tbody>
-							</table>
-                                                </div>
+				</div>
 
-                                        <% end %>
-                                </div>
+			</div>
 
-                        </div>
-                </p>
-
+		</p>
 
 	</div>
 </div>
@@ -65,7 +91,7 @@
 <script>
 	function update_state(id) {
 		NProgress.start();
-		$.get("/query_module/"+id, function(body) {
+		$.get("/QueryModule/"+id, function(body) {
 			var span = document.getElementById(id);
 			while(span.firstChild) {
 				span.removeChild( span.firstChild );
