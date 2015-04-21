@@ -12,10 +12,8 @@ Dir["./apps/*/app.rb"].each {|file| require file }
 
 class TerraMod < Sinatra::Base
 
-	def self.register_routes(app)
-		app_class = app.ancestors[0].to_s
-		app_info = settings.db.execute("SELECT dir FROM Apps WHERE object=?;", [app_class])[0]
-		app_dir = app_info[0]
+	def self.register_routes(app, app_dir)
+		app_class = app.ancestors[0]
 		app.routes.each do |hookup|
 			verb = self.method(hookup[:verb].downcase.to_sym)
                         url = hookup[:url]
@@ -37,9 +35,9 @@ class TerraMod < Sinatra::Base
 		end
 	end
 
-	def self.install(app)
+	def self.install(app, dir)
 		app.install_tables(settings.db) if app.methods.include? :install_tables
-                register_routes(app)if app.methods.include? :routes
+                register_routes(app, dir)if app.methods.include? :routes
 	end
 	
 	configure do
@@ -47,9 +45,10 @@ class TerraMod < Sinatra::Base
 		db_file = "./terramod.db"
 		if File.exists? db_file
 			set :db, SQLite3::Database.open(db_file)
-			settings.db.execute("SELECT object FROM Apps;").each do |object|
-				app = Module.const_get(object[0])
-				register_routes(app) if app.methods.include? :routes
+			settings.db.execute("SELECT object,dir FROM Apps;").each do |app_info|
+				app = Module.const_get(app_info[0])
+				dir = app_info[1]
+				register_routes(app, dir) if app.methods.include? :routes
 			end
 		else
 			set :db, SQLite3::Database.new(db_file)
@@ -83,9 +82,10 @@ class TerraMod < Sinatra::Base
 	                callbacks = []
         	        settings.db.execute("SELECT * FROM Callbacks;").each do |row|
                 	        mod = settings.db.execute("SELECT name,room FROM Modules WHERE uuid=?;", [row[0]])[0]
-                        	call = {:module => "#{mod[0]} in #{mod[0]}",
-	                                :class => row[1],
-        	                        :method => row[2]
+                        	call = {:module => "#{mod[0]} in #{mod[1]}",
+					:event => row[1],
+	                                :class => row[2],
+        	                        :method => row[3]
                 	        }
                         	callbacks << call
 	                end
@@ -123,10 +123,13 @@ class TerraMod < Sinatra::Base
 				settings.db.execute "INSERT OR REPLACE INTO Modules VALUES(?,?,?,?,?);", [module_uuid, uuid, name, room, type]
 			end
 		elsif type == "EventReport"
-			callbacks = settings.db.execute "SELECT class FROM Callbacks WHERE uuid=?;", [uuid]
+			callbacks = settings.db.execute "SELECT event,class,method FROM Callbacks WHERE uuid=?;", [uuid]
 			callbacks.each do |callback|
-				app_class = Module.const_get(callback[0])
-				app_class.callback(settings.db, uuid, data)
+				capture = /#{callback[0]}/.match data
+				if capture != nil
+					app_class = Module.const_get(callback[1])
+					app_class.method(callback[2].to_sym).(settings.db, uuid, capture)
+				end
 			end
 		end
 		status 200
@@ -169,8 +172,8 @@ class TerraMod < Sinatra::Base
 			name = app.class_variable_get(:@@name)
 			version = app.class_variable_get(:@@version)
 			description = app.class_variable_get(:@@description)
+			settings.install.(app, app_dir)
 			settings.db.execute "INSERT INTO Apps VALUES(?, ?, ?, ?, ?);", [name, version, class_name, description, app_dir]
-			settings.install.(app)
 
 			redirect to("/app_detail/#{class_name}")
 
@@ -220,10 +223,14 @@ class TerraMod < Sinatra::Base
 		count = settings.db.execute("SELECT COUNT(*) FROM Apps WHERE object=?;", [app_obj])[0][0].to_i
 		( status 404; return ) if count == 0
 		app = Module.const_get(app_obj)
+		app_dir = settings.db.execute("SELECT dir FROM Apps WHERE object=?;", [app_obj])[0][0]
 
 		erb :app_detail, :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
-					     :app => settings.db.execute("SELECT name,version,object,description FROM Apps WHERE object=?;", [app_obj])[0],
-					     :modules => settings.db.execute("SELECT * FROM Modules;")}	# maybe send the db to the application here?
+					     :app => settings.db.execute("SELECT name,version,object,description,dir FROM Apps WHERE object=?;", [app_obj])[0]} do
+			erb :options, :views => "./apps/#{app_dir}/views",
+				      :layout_options => { :views => 'views' },
+				      :locals => {:db => settings.db} if File.exists?("./apps/#{app_dir}/views/options.erb")
+		end
 
 	end
 
@@ -233,7 +240,7 @@ class TerraMod < Sinatra::Base
 		apps.each do |row|
 			object = Module.const_get(row[0])
 			if object.methods.include? :tile
-				tile = object.tile
+				tile = object.tile(settings.db)
 				tile[:object] = row[0]
 				tiles << tile
 			end

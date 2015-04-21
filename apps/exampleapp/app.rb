@@ -7,6 +7,7 @@ class ExampleApp
 	@@description	= "This application demonstrates the TerraMod framework.  The goal is to print any sensor to standard output."
 
 	def self.install_tables(db)
+		db.execute("INSERT INTO Callbacks VALUES(?, ?, ?, ?);", ["934d38cc-8fd2-4ac3-9b4d-059712a7a08b", "\\w+", "ExampleApp", "callback"])
 		# Create table(s) to store app information
 		#db.execute "CREATE TABLE DemoApp(name TEXT, uuid TEXT);"
 	end
@@ -26,15 +27,6 @@ class ExampleApp
 	end
 
 	def self.callback(db, uuid, data)
-		#component = db.execute "SELECT name FROM DemoApp WHERE uuid=?;", [uuid]
-		#component = component[0][0]
-		#details = db.execute "SELECT name,room FROM Modules WHERE uuid=?", [uuid]
-		#name = details[0][0]
-		#room = details[0][1]
-		#if component == "Door"
-		#	puts "DemoApp: #{name} in #{room} changed to state #{data}"
-		#elsif component == "PIR"
-		#	puts "DemoApp: #{data} detection on #{name} in #{room}"
-		#end
+		puts "exampleapp callback called on #{uuid} callback=#{data}"
 	end
 end

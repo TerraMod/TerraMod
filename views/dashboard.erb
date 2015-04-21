@@ -1,24 +1,24 @@
 <center><h1>Welcome Home</h1></center>
 <br />
 
-<div style="color: white; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"class="tiles">
+<div class="tiles white-text">
 
 	<% tiles.each do |tile| %>
 
 		<div class="live-tile <%= tile[:color]  %>" id="<%= tile[:object] %>" data-mode="flip">        
 
 			<div class="front">
-				<p style="text-align: center;font-size:xx-large; color: white; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"><%= tile[:front][:title] %></p>
-				<% tile[:front][:content].each do |line|%>
-					<p><%= line %></p>
+				<% if tile[:front] %>
+					<p style="text-align: center; font-size:xx-large;"><%= tile[:front][:title] %></p>
+					<%= tile[:front][:body] %>
 				<% end %>
 			</div>
 
 			<div class="back">
-				<p style="text-align: center;font-size:xx-large; color: white; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;"><%= tile[:back][:title] %></p>
-                                <% tile[:back][:content].each do |line|%>
-                                        <p><%= line %></p>
-                                <% end %>
+				<% if tile[:back] %>
+					<p style="text-align: center;font-size:xx-large;"><%= tile[:back][:title] %></p>
+        	                        <%= tile[:back][:body] %>
+				<% end %>
 			</div>
 
 			<script type="text/javascript">
@@ -44,6 +44,13 @@
 	<% end %>
 
 </div>
+
+<style>
+.white-text {
+	color: white;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+</style>
 
 <script>
 	$( ".tiles" ).sortable();

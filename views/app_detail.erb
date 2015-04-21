@@ -19,6 +19,7 @@
 						version = app[1]
 						object = app[2]
 						description = app[3]
+						app_dir = app[4]
 					%>
 					<b>Name: </b><%= name %><br />
 					<b>Version: </b><%= version %><br />
@@ -33,8 +34,8 @@
 			</div>
 		</p>
 
+		<% if File.exists?("./apps/#{app_dir}/views/options.erb") %>
 		<p>
-	
 			<div class="panel panel-default">
 
 				<div class="panel-heading">
@@ -42,13 +43,16 @@
 				</div>
 
 				<div class="panel-body">
-
+					<%= yield %>
 				</div>
 			</div>
 		</p>
+		<% end %>
 
+		<% available_methods = app.methods - Object.methods - [:install_tables, :remove_tables, :tile, :routes]
+		   if available_methods.size > 0
+		%>
 		<p>
-
                         <div class="panel panel-default">
 
                                 <div class="panel-heading">
@@ -56,10 +60,46 @@
                                 </div>
 
                                 <div class="panel-body">
-
+					<div class="well table-responsive">
+						<% available_methods.each do |func_name|
+								func = Module.const_get(object).method(func_name)
+								args = func.arity > 0 ? func.parameters.map(&:last).map(&:to_s).join(", ") : "" %>
+								<tr>
+									<td><b><%= object.to_s %>.<%= func_name.to_s %>(<%= args %>)</b></td>
+								</tr>
+						<% end %>
+					</div>
                                 </div>
                         </div>
                 </p>
+		<% end %>
+
+		<% if app.methods.include? :routes%>
+                <p>
+                        <div class="panel panel-default">
+
+                                <div class="panel-heading">
+                                        <h3 class="panel-title">Available Routes</h3>
+                                </div>
+
+                                <div class="panel-body">
+                                        <div class="well table-responsive">
+                                                <% app.routes.each do |route|
+								dest = ""
+								if route[:method] != nil
+									dest = "#{object}.#{route[:method].to_s.split("Method:")[1].split(">")[0].split(".")[1]}(#{route[:method].parameters.map(&:last).map(&:to_s).join(", ")})"
+								else
+									dest = "/apps/#{object}/views/#{route[:template]}.erb"
+								end %>
+                                                                <tr>
+                                                                        <td><b><%= route[:verb].upcase %> /<%= object %>/<%= route[:url] %> &#61;&#62; <%= dest %></b></td>
+                                                                </tr>
+                                                <% end %>
+                                        </div>
+                                </div>
+                        </div>
+                </p>
+		<% end %>
 
 	</div>
 </div>
