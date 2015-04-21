@@ -2,9 +2,21 @@ Weather uses OpenWeatherMap, and requires a city code which you can lookup <a ta
 <br /><br />
 <div class="col-lg-3">
 	<div class="input-group">
-		<input type="text" class="form-control" placeholder="city_id">
+		<input id="location-input" type="text" class="form-control" placeholder="city_id">
 		<span class="input-group-btn">
-			<button class="btn btn-default btn-primary" type="button">Update city</button>
+			<button class="btn btn-default btn-primary" type="button" onclick="set_location()">Update city</button>
 		</span>
 	</div>
 </div>
+
+
+<script>
+        function set_location() {
+		var id = document.getElementById("location-input").value;
+                NProgress.start();
+                $.get("/Weather/set_location/"+id, function(body) {
+                        NProgress.done();
+                });
+        };
+</script>
+
