@@ -82,9 +82,10 @@ class TerraMod < Sinatra::Base
 	                callbacks = []
         	        settings.db.execute("SELECT * FROM Callbacks;").each do |row|
                 	        mod = settings.db.execute("SELECT name,room FROM Modules WHERE uuid=?;", [row[0]])[0]
-                        	call = {:module => "#{mod[0]} in #{mod[0]}",
-	                                :class => row[1],
-        	                        :method => row[2]
+                        	call = {:module => "#{mod[0]} in #{mod[1]}",
+					:event => row[1],
+	                                :class => row[2],
+        	                        :method => row[3]
                 	        }
                         	callbacks << call
 	                end
@@ -122,10 +123,13 @@ class TerraMod < Sinatra::Base
 				settings.db.execute "INSERT OR REPLACE INTO Modules VALUES(?,?,?,?,?);", [module_uuid, uuid, name, room, type]
 			end
 		elsif type == "EventReport"
-			callbacks = settings.db.execute "SELECT class FROM Callbacks WHERE uuid=?;", [uuid]
+			callbacks = settings.db.execute "SELECT event,class,method FROM Callbacks WHERE uuid=?;", [uuid]
 			callbacks.each do |callback|
-				app_class = Module.const_get(callback[0])
-				app_class.callback(settings.db, uuid, data)
+				capture = /#{callback[0]}/.match data
+				if capture != nil
+					app_class = Module.const_get(callback[1])
+					app_class.method(callback[2].to_sym).(settings.db, uuid, capture)
+				end
 			end
 		end
 		status 200

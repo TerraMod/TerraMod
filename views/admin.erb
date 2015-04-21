@@ -183,9 +183,9 @@
 
                                                                 <% callbacks.each do |callback| %>
                                                                         <tr>
-                                                                                <td><%= callback[0] %></td>
-										<td>event</td>
-                                                                                <td><%= callback[1] %>.<%= callback[2] %></td>
+                                                                                <td><%= callback[:module] %></td>
+										<td><%= callback[:event] %></td>
+                                                                                <td><%= callback[:class] %>.<%= callback[:method] %>(db, uuid, event)</td>
                                                                         </tr>
                                                                 <% end %>
 
