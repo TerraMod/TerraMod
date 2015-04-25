@@ -25,7 +25,7 @@
 					<b>Version: </b><%= version %><br />
 					<b>Description: </b><%= description %><br /><br />
 					<% app = Module.const_get(object)%>
-					<% if app.methods.include?(:routes) and app.routes.map{ |route| break true if route[:url] == "dashboard"} == true %>
+					<% if  File.exists? "./apps/#{app_dir}/views/dashboard.erb" %>
 						<a href="/<%= object %>/dashboard"><button type="button" class="btn btn-default btn-primary">View Dashboard</button></a>
 					<% end %>
 					<a href="/download_zip/<%= object %>"><button type="button" class="btn btn-default btn-primary">Download</button></a>

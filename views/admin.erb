@@ -21,7 +21,7 @@
 							<tr>
 								<td><h4><%= app_count %> app<%= app_count == 1 ? "" : "s" %> installed</h4></td>
 								<td><h4><%= nexus_count %> nexus device<%= nexus_count == 1 ? "" : "s" %> detected</h4></td>
-	        		                        	<td><h4><%= module_count %> module<%= module_count == 1 ? "" : "s" %> reported</h4>
+	        		                        	<td><h4><%= module_count %> sensor<%= module_count == 1 ? "" : "s" %> reported</h4>
 							</tr>
 						</tbody>
 					</table>
@@ -39,35 +39,41 @@
                                 <div class="panel-body">
 
 					<div class="well table-responsive">
-						<table style="width: 100%;">
+						<table style="width: 100%; border-collapse: separate; border-spacing: 0px 4px;">
 							<tbody>
 								<tr>
 									<td style="text-align: left;">
-										<b>Clear Modules</b>
+										<b>Clear Sensors</b>
 									</td>
 									<td style="text-align: center;">
-										If old modules need to be removed from the database, you can clear the entire Modules table here
+										Remove all sensors for the database
 									</td>
 									<td style="text-align: right;">
-										<button type="button" class="btn btn-default btn-sm btn-danger" onclick="clear_modules()">Clear</button>
+										<button type="button" class="btn btn-default btn-xs btn-danger" onclick="clear_modules()">Clear</button>
 									</td>
 								</tr>
-							</tbody>
-						</table>
-					</div>
 
-					<div class="well table-responsive">
-						<table style="width: 100%;">
-                                                        <tbody>
+                                                                <tr>
+                                                                        <td style="text-align: left;">
+                                                                                <b>Clear Nexus</b>
+                                                                        </td>
+                                                                        <td style="text-align: center;">
+                                                                                Remove all Nexus devices and all sensors from the database
+                                                                        </td>
+                                                                        <td style="text-align: right;">
+                                                                                <button type="button" class="btn btn-default btn-xs btn-danger" onclick="clear_nexus()">Clear</button>
+                                                                        </td>
+								</tr>
+
                                                                 <tr>
                                                                         <td style="text-align: left;">
                                                                                 <b>Nexus Scan</b>
                                                                         </td>
                                                                         <td style="Text-align: center;">
-                                                                                Re-scan the Nexus devices on the network to populate the Modules table
+                                                                                Re-scan the known Nexus devices to discover sensors
                                                                         </td>
                                                                         <td style="text-align: right;">
-										<button type="button" class="btn btn-default btn-sm btn-warning" onclick="progress_scan()">Scan</button>
+										<button type="button" class="btn btn-default btn-xs btn-warning" onclick="progress_scan()">Scan</button>
                                                                         </td>
                                                                 </tr>
                                                         </tbody>
@@ -83,16 +89,11 @@
 			<div class="panel panel-default">
 
 				<div class="panel-heading">
-					<h3 class="panel-title">Add a Nexus</h3>
+					<h3 class="panel-title">Add Nexus</h3>
 				</div>
 
 				<div class="panel-body">
-					This panel will contain the menu for adding a new Nexus, including:<br /><br />
-					<ul>
-						<li>Contain a download link for the nexus installation script</li>
-						<li>Allow the user to specify which GPIO ports use which module types</li>
-						<li>Generate a configuration file for the nexus</li>
-					</ul>
+
 				</div>
 
 			</div>
@@ -102,7 +103,7 @@
 			<div class="panel panel-default">
 
                                 <div class="panel-heading">
-                                        <h3 class="panel-title">All Modules</h3>
+                                        <h3 class="panel-title">All Sensors</h3>
                                 </div>  
 
                                 <div class="panel-body">
@@ -161,7 +162,7 @@
                                                 <table style="width: 100%; text-align: center;">
                                                         <tbody>
                                                                 <tr>
-                                                                        <td><b>Module</b></td>
+                                                                        <td><b>Sensor</b></td>
 									<td><b>Event</b></td>
                                                                         <td><b>Call</b></td>
                                                                 </tr>
@@ -240,6 +241,14 @@ function clear_modules() {
 		document.write(body);
 		document.close();
 	});
+};
+
+function clear_nexus() {
+        $.get("/clear_nexus", function(body) {
+                document.open();
+                document.write(body);
+                document.close();
+        });
 };
 
 </script>

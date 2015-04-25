@@ -14,30 +14,36 @@ class TerraMod < Sinatra::Base
 
 	def self.register_routes(app, app_dir)
 		app_class = app.ancestors[0]
-		app.routes.each do |hookup|
-			verb = self.method(hookup[:verb].downcase.to_sym)
-                        url = hookup[:url]
-                        template = hookup[:template]
-			method = hookup[:method]
-			if template != nil
-	                        verb.("/#{app_class}/#{url}", &Proc.new {
-        	                        erb template, :views => "./apps/#{app_dir}/views",
-                	                              :layout_options => { :views => 'views' },
-                        	                      :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
-								  :db => settings.db,
-								  :params => params}
-	                        })
-			elsif method != nil
-				verb.("/#{app_class}/#{url}", &Proc.new {
-					method.(settings.db, params)
-				})
+		if File.exists? "./apps/#{app_dir}/views/dashboard.erb"
+			get "/#{app_class}/dashboard" do
+				erb :dashboard, :views => "./apps/#{app_dir}/views",
+                                                      :layout_options => { :views => 'views' }
+			end
+		end
+		if app.methods.include? :routes
+			app.routes.each do |hookup|
+				verb = self.method(hookup[:verb].downcase.to_sym)
+                	        url = hookup[:url]
+                        	template = hookup[:template]
+				method = hookup[:method]
+				if template != nil
+	        	                verb.("/#{app_class}/#{url}", &Proc.new {
+        	        	                erb template, :views => "./apps/#{app_dir}/views",
+                	        	                      :layout_options => { :views => 'views' },
+                        	        	              :locals => {:params => params}
+		                        })
+				elsif method != nil
+					verb.("/#{app_class}/#{url}", &Proc.new {
+						method.(settings.db, params)
+					})
+				end
 			end
 		end
 	end
 
 	def self.install(app, dir)
 		app.install_tables(settings.db) if app.methods.include? :install_tables
-                register_routes(app, dir)if app.methods.include? :routes
+                register_routes(app, dir)
 	end
 	
 	configure do
@@ -48,7 +54,7 @@ class TerraMod < Sinatra::Base
 			settings.db.execute("SELECT object,dir FROM Apps;").each do |app_info|
 				app = Module.const_get(app_info[0])
 				dir = app_info[1]
-				register_routes(app, dir) if app.methods.include? :routes
+				register_routes(app, dir)
 			end
 		else
 			set :db, SQLite3::Database.new(db_file)
@@ -81,8 +87,14 @@ class TerraMod < Sinatra::Base
 
 	                callbacks = []
         	        settings.db.execute("SELECT * FROM Callbacks;").each do |row|
-                	        mod = settings.db.execute("SELECT name,room FROM Modules WHERE uuid=?;", [row[0]])[0]
-                        	call = {:module => "#{mod[0]} in #{mod[1]}",
+				mod = settings.db.execute("SELECT name,room FROM Modules WHERE uuid=?;", [row[0]])[0]
+				if mod != nil
+					sensor = "#{mod[0]} in #{mod[1]}"
+				else
+					sensor = "not found (#{row[0]})"
+				end
+				puts mod
+                        	call = {:module => sensor,
 					:event => row[1],
 	                                :class => row[2],
         	                        :method => row[3]
@@ -90,8 +102,7 @@ class TerraMod < Sinatra::Base
                         	callbacks << call
 	                end
 
-        	        erb :admin, :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
-                	                        :app_count => settings.db.execute("SELECT count(object) FROM Apps;")[0][0],
+        	        erb :admin, :locals => {:app_count => settings.db.execute("SELECT count(object) FROM Apps;")[0][0],
                         	                :module_count => settings.db.execute("SELECT count(uuid) FROM Modules;")[0][0],
                                 	        :nexus_count => settings.db.execute("SELECT count(uuid) FROM Nexus;")[0][0],
                                         	:callbacks => callbacks,
@@ -100,8 +111,7 @@ class TerraMod < Sinatra::Base
 		end
 
 		def render_manage_apps(message=nil)
-			erb :manage_apps, :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
-                        			      :apps => settings.db.execute("SELECT name,version,object,description FROM Apps;"),
+			erb :manage_apps, :locals => {:apps => settings.db.execute("SELECT name,version,object,description FROM Apps;"),
 						      :message => message}
 		end
 
@@ -228,8 +238,7 @@ class TerraMod < Sinatra::Base
 		erb :app_detail, :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
 					     :app => settings.db.execute("SELECT name,version,object,description,dir FROM Apps WHERE object=?;", [app_obj])[0]} do
 			erb :options, :views => "./apps/#{app_dir}/views",
-				      :layout_options => { :views => 'views' },
-				      :locals => {:db => settings.db} if File.exists?("./apps/#{app_dir}/views/options.erb")
+				      :layout_options => { :views => 'views'} if File.exists?("./apps/#{app_dir}/views/options.erb")
 		end
 
 	end
@@ -245,8 +254,7 @@ class TerraMod < Sinatra::Base
 				tiles << tile
 			end
 		end
-		erb :dashboard, :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
-					    :tiles => tiles}
+		erb :dashboard, :locals => {:tiles => tiles}
 	end
 	
 	get '/manage_apps' do
@@ -259,8 +267,7 @@ class TerraMod < Sinatra::Base
 
 	get '/clear_modules' do
 
-		settings.db.execute "DROP TABLE Modules;"
-		settings.db.execute "CREATE TABLE Modules(uuid TEXT, nexus_uuid TEXT, name TEXT, room TEXT, type TEXT, UNIQUE(uuid));"
+		settings.db.execute "DELETE FROM Modules;"
 
 		render_admin({
 			:class => "alert-success",
@@ -269,6 +276,19 @@ class TerraMod < Sinatra::Base
 		})
 
 	end
+
+	get '/clear_nexus' do
+
+                settings.db.execute "DELETE FROM Modules;"
+                settings.db.execute "DELETE FROM Nexus;"
+
+                render_admin({
+                        :class => "alert-success",
+                        :title => "Cleared:",
+                        :detail => "the Nexus table has been cleared"
+                })
+
+        end
 
 	get '/nexus_scan' do
 
