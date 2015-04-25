@@ -25,7 +25,7 @@
 					<b>Version: </b><%= version %><br />
 					<b>Description: </b><%= description %><br /><br />
 					<% app = Module.const_get(object)%>
-					<% if app.methods.include?(:routes) and app.routes.map{ |route| break true if route[:url] == "dashboard"} == true %>
+					<% if  File.exists? "./apps/#{app_dir}/views/dashboard.erb" %>
 						<a href="/<%= object %>/dashboard"><button type="button" class="btn btn-default btn-primary">View Dashboard</button></a>
 					<% end %>
 					<a href="/download_zip/<%= object %>"><button type="button" class="btn btn-default btn-primary">Download</button></a>
@@ -61,13 +61,17 @@
 
                                 <div class="panel-body">
 					<div class="well table-responsive">
-						<% available_methods.each do |func_name|
+						<table>
+							<tbody>
+							<% available_methods.each do |func_name|
 								func = Module.const_get(object).method(func_name)
 								args = func.arity > 0 ? func.parameters.map(&:last).map(&:to_s).join(", ") : "" %>
 								<tr>
 									<td><b><%= object.to_s %>.<%= func_name.to_s %>(<%= args %>)</b></td>
 								</tr>
-						<% end %>
+							<% end %>
+							</tbody>
+						</table>
 					</div>
                                 </div>
                         </div>
@@ -84,7 +88,9 @@
 
                                 <div class="panel-body">
                                         <div class="well table-responsive">
-                                                <% app.routes.each do |route|
+						<table>
+							<tbody>
+	                                                <% app.routes.each do |route|
 								dest = ""
 								if route[:method] != nil
 									dest = "#{object}.#{route[:method].to_s.split("Method:")[1].split(">")[0].split(".")[1]}(#{route[:method].parameters.map(&:last).map(&:to_s).join(", ")})"
@@ -94,7 +100,9 @@
                                                                 <tr>
                                                                         <td><b><%= route[:verb].upcase %> /<%= object %>/<%= route[:url] %> &#61;&#62; <%= dest %></b></td>
                                                                 </tr>
-                                                <% end %>
+	                                                <% end %>
+							</table>
+						</table>
                                         </div>
                                 </div>
                         </div>

@@ -14,23 +14,23 @@
 				</div>
 
 				<div class="panel-body">
-					This page demonstrates how an app can add a page to the Apps list and interact with other modules on the network.
+					This page demonstrates how an app can add a dashboard and use libquerymod to interact with other sensors on the network.
 				</div>
 
 			</div>
 		</p>
 
-		<% if db.execute("SELECT COUNT(*) FROM Apps WHERE name=?;", ["libquerymod"])[0][0] != 0 %>
+		<% if settings.db.execute("SELECT COUNT(*) FROM Apps WHERE name=?;", ["libquerymod"])[0][0] != 0 %>
 	
 			<p>
 	                        <div class="panel panel-default">
 
                                 	<div class="panel-heading">
-                        	                <h3 class="panel-title">Query modules</h3>
+                        	                <h3 class="panel-title">Query sensors</h3>
                 	                </div>
 
         	                        <div class="panel-body">
-	                                        <% db.execute("SELECT uuid,name,room FROM Modules;").each do |mod|
+	                                        <% settings.db.execute("SELECT uuid,name,room FROM Modules;").each do |mod|
 							uuid = mod[0]
                                 	                name = mod[1]
                         	                        room = mod[2]%>
