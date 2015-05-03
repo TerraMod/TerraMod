@@ -93,7 +93,31 @@
 				</div>
 
 				<div class="panel-body">
-
+					<div class="well table-responsive">
+						<table width="100%">
+							<thead>
+								<tr>
+									<td><b>Class</b></td>
+									<td><b>Name</b></td>
+									<td><b>Room</b></td>
+									<td><b>Pin</b></td>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<table>
+						<tr>
+							<td><button class="col-lg-1 btn btn-default btn-primary btn-success" type="button" onclick="generate_conf()">Add Sensor</button></td>
+				        		<td>
+								<div class="col-lg-3 input-group">
+							                <input id="location-input" type="text" class="form-control" placeholder="terramod ip">
+							                <span class="input-group-btn">
+						                        	<button class="btn btn-default btn-primary" type="button" onclick="generate_conf()">Generate config</button>
+					        	        	</span>
+				       				</div>
+							</td>
+						</tr>
+					</table>
 				</div>
 
 			</div>

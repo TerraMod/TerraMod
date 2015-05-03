@@ -176,7 +176,7 @@ class TerraMod < Sinatra::Base
 			File.delete(zip_filename)
 
 			# Load app zip, lookup class name and try to install
-			require "./apps/#{app_dir}/app.rb"
+			load "./apps/#{app_dir}/app.rb"
 			class_name = (/class \w+/.match File.read("./apps/#{app_dir}/app.rb")).to_s.split(" ")[1]
 			app = Module.const_get(class_name)
 			name = app.class_variable_get(:@@name)
