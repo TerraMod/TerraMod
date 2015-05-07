@@ -49,7 +49,7 @@
 										Remove all sensors for the database
 									</td>
 									<td style="text-align: right;">
-										<button type="button" class="btn btn-default btn-xs btn-danger" onclick="clear_modules()">Clear</button>
+										<button id="clearmodules" type="button" class="btn btn-default btn-xs btn-danger">Clear</button>
 									</td>
 								</tr>
 
@@ -61,7 +61,7 @@
                                                                                 Remove all Nexus devices and all sensors from the database
                                                                         </td>
                                                                         <td style="text-align: right;">
-                                                                                <button type="button" class="btn btn-default btn-xs btn-danger" onclick="clear_nexus()">Clear</button>
+                                                                                <button id="clearnexus" type="button" class="btn btn-default btn-xs btn-danger">Clear</button>
                                                                         </td>
 								</tr>
 
@@ -73,7 +73,7 @@
                                                                                 Re-scan the known Nexus devices to discover sensors
                                                                         </td>
                                                                         <td style="text-align: right;">
-										<button type="button" class="btn btn-default btn-xs btn-warning" onclick="progress_scan()">Scan</button>
+										<button id="scannexus" type="button" class="btn btn-default btn-xs btn-warning">Scan</button>
                                                                         </td>
                                                                 </tr>
                                                         </tbody>
@@ -94,25 +94,23 @@
 
 				<div class="panel-body">
 					<div class="well table-responsive">
-						<table width="100%">
-							<thead>
-								<tr>
-									<td><b>Class</b></td>
-									<td><b>Name</b></td>
-									<td><b>Room</b></td>
-									<td><b>Pin</b></td>
-								</tr>
-							</thead>
+						<table id="newsensors" width="100%">
+							<tr>
+								<td><b>Class</b></td>
+								<td><b>Name</b></td>
+								<td><b>Room</b></td>
+								<td><b>Pin</b></td>
+							</tr>
 						</table>
 					</div>
 					<table>
 						<tr>
-							<td><button class="col-lg-1 btn btn-default btn-primary btn-success" type="button" onclick="generate_conf()">Add Sensor</button></td>
+							<td><button id="addsensor" class="btn btn-default btn-primary btn-success" type="button">Add Sensor</button></td>
 				        		<td>
-								<div class="col-lg-3 input-group">
+								<div class="input-group">
 							                <input id="location-input" type="text" class="form-control" placeholder="terramod ip">
 							                <span class="input-group-btn">
-						                        	<button class="btn btn-default btn-primary" type="button" onclick="generate_conf()">Generate config</button>
+						                        	<button id="generateconf" class="btn btn-default btn-primary" type="button">Generate config</button>
 					        	        	</span>
 				       				</div>
 							</td>
@@ -165,7 +163,6 @@
 										</td>
 	                                                                </tr>
 								<% end %>
-
 							</tbody>
 						</table>
 					</div>
@@ -249,7 +246,7 @@ function rename(uuid, name, room){
 	});
 }
 
-function progress_scan() {
+$('body').on('click', '#scannexus', function () {
 	NProgress.start();
 	$.get("/nexus_scan", function(body) {
 		NProgress.done();
@@ -257,23 +254,43 @@ function progress_scan() {
 		document.write(body);
 		document.close();
 	});
-};
+});
 
-function clear_modules() {
+$('body').on('click', '#clearmodules', function () {
 	$.get("/clear_modules", function(body) {
 		document.open();
 		document.write(body);
 		document.close();
 	});
-};
+});
 
-function clear_nexus() {
+$('body').on('click', '#clearnexus', function () {
         $.get("/clear_nexus", function(body) {
                 document.open();
                 document.write(body);
                 document.close();
         });
-};
+});
+
+$('body').on('click', '#addsensor', function () {
+	var row = '<tr>';
+	row += '<td><input type="text"></td>';
+	row += '<td><input type="text"></td>';
+	row += '<td><input type="text"></td>';
+	row += '<td><input type="text"></td>';
+	row += '</tr>';
+	$('#newsensors tr:last').after(row);
+});
+
+$('body').on('click', '#generateconf', function () {
+	var sensors = [];
+	// parse table into array of sensor hashes
+	$.ajax({
+		type : 'POST',
+		url : '/generate_config',
+		data : sensors
+	});
+});
 
 </script>
 

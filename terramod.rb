@@ -347,7 +347,10 @@ class TerraMod < Sinatra::Base
                 return resp
         end
 
-	
+	post '/generate_config' do
+		sensors = JSON.parse request.body.read
+		puts sensors
+	end
 end
 
 TerraMod.run!
