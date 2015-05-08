@@ -80,7 +80,7 @@ class Weather
 			end
 			forecast_str += "</table></center>"
 
-			return {:color => "blue",
+			return {:color => "green",
 				:front => {
 					:title => "#{weather["name"]} Weather",
 					:body => "<center>#{date}</center><br /><br />
