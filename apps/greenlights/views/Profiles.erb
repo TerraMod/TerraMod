@@ -1,0 +1,78 @@
+<div style="text-align: center;" class="panel panel-default">
+
+	<div class="panel-heading">
+		<h2>Greenlights</h2>
+	</div>
+
+	<div style="text-align: left;" class="panel-body">
+
+		<ul class="nav nav-pills">
+			<li><a href="#">Rules</a></li>
+			<li class="active"><a href="#">Profiles</a></li>
+			<li><a href="#">Groups</a></li>
+		</ul>
+		
+		<div class="well" style="padding:1%;">
+			<div style="overflow: hidden;">
+				<div style="float:left; width:33%;">
+					<h2>Profiles</h2>
+					<select multiple class="form-control">
+						<option>Default</option>
+						<option>Away</option>
+					</select>
+					<label class="btn btn-default btn-small btn-success">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true" /> New Profile
+					</label>
+				</div>
+				
+				<div style="float:left; width:32%; padding:1%">
+					<h2>Current Profile</h2>
+					
+					<select multiple class="form-control">
+						<option>Bedroom, red, 2 minutes, bedroom-motion</option>
+					</select>
+					
+					<label class="btn btn-default btn-small btn-success" style="float:left;">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true" /> Save profile
+					</label>
+					
+					<label class="btn btn-default btn-small btn-danger" style="float:left;">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true" /> Remove selected rules
+					</label>
+				</div>
+				
+				<div style="float:left; width:33%; padding: 1%">
+					<h2>Rules</h2>
+					<select multiple class="form-control">
+						<option>Kitchen, yellow, 10 minutes, kitchen-motion</option>
+						<option>Bedroom, red, 2 minutes, bedroom-motion</option>
+					</select>
+					
+					<label class="btn btn-default btn-small btn-success" style="float:left;">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true" /> Add to profile
+					</label>
+					
+					<label class="btn btn-default btn-small btn-danger" style="float:left;">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true" /> Remove from profile
+					</label>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+</div>
+
+<script>
+	function update_state(id) {
+		NProgress.start();
+		$.get("/QueryModule/"+id, function(body) {
+			var span = document.getElementById(id);
+			while(span.firstChild) {
+				span.removeChild( span.firstChild );
+		        }
+			span.appendChild(document.createTextNode(body));
+			NProgress.done();
+		});
+	};
+</script>
