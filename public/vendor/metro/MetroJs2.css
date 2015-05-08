@@ -1131,7 +1131,7 @@ html body .orange.accentBorderTop {
 .yellow .live-tile > .slide-front,
 .yellow .list-tile > div,
 .yellow .flip-list > li > div {
-  background-color: #ffffb2;
+  background-color: #ffea7f;
 }
 .yellow .accentColor,
 .yellow .accentHover:hover,
@@ -1142,22 +1142,22 @@ html body .orange.accentBorderTop {
 .yellow a.accentLink,
 .yellow a.accentLink:hover,
 .yellow a.accentLink:visited {
-  color: #ffffb2;
+  color: #ffea7f;
 }
 .yellow .accentBorder {
-  border-color: #ffffb2;
+  border-color: #ffea7f;
 }
 .yellow .accentBorderBottom {
-  border-bottom-color: #ffffb2;
+  border-bottom-color: #ffea7f;
 }
 .yellow .accentBorderLeft {
-  border-left-color: #ffffb2;
+  border-left-color: #ffea7f;
 }
 .yellow .accentBorderRight {
-  border-right-color: #ffffb2;
+  border-right-color: #ffea7f;
 }
 .yellow .accentBorderTop {
-  border-top-color: #ffffb2;
+  border-top-color: #ffea7f;
 }
 html body .yellow.accent,
 html body .yellow.live-tile > .accent,
@@ -1182,7 +1182,7 @@ html body .yellow.slide-front.accent,
 html body .yellow.slide-back.accent,
 html body .yellow.flip-front.accent,
 html body .yellow.flip-back.accent {
-  background-color: #ffffb2;
+  background-color: #ffea7f;
 }
 html body .yellow.accentColor,
 html body .yellow.accentHover:hover,
@@ -1193,22 +1193,22 @@ html body .yellow.accentLink a:visited,
 a.accentLinkhtml body .yellow,
 a.accentLinkhtml body .yellow:hover,
 a.accentLinkhtml body .yellow:visited {
-  color: #ffffb2;
+  color: #ffea7f;
 }
 html body .yellow.accentBorder {
-  border-color: #ffffb2;
+  border-color: #ffea7f;
 }
 html body .yellow.accentBorderBottom {
-  border-bottom-color: #ffffb2;
+  border-bottom-color: #ffea7f;
 }
 html body .yellow.accentBorderLeft {
-  border-left-color: #ffffb2;
+  border-left-color: #ffea7f;
 }
 html body .yellow.accentBorderRight {
-  border-right-color: #ffffb2;
+  border-right-color: #ffea7f;
 }
 html body .yellow.accentBorderTop {
-  border-top-color: #ffffb2;
+  border-top-color: #ffea7f;
 }
 .green .accent,
 .green .accentBg,
@@ -1319,7 +1319,7 @@ html body .green.accentBorderTop {
 .blue .live-tile > .slide-front,
 .blue .list-tile > div,
 .blue .flip-list > li > div {
-  background-color: #8080ff;
+  background-color: #3366cc;
 }
 .blue .accentColor,
 .blue .accentHover:hover,
@@ -1330,22 +1330,22 @@ html body .green.accentBorderTop {
 .blue a.accentLink,
 .blue a.accentLink:hover,
 .blue a.accentLink:visited {
-  color: #8080ff;
+  color: #3366cc;
 }
 .blue .accentBorder {
-  border-color: #8080ff;
+  border-color: #3366cc;
 }
 .blue .accentBorderBottom {
-  border-bottom-color: #8080ff;
+  border-bottom-color: #3366cc;
 }
 .blue .accentBorderLeft {
-  border-left-color: #8080ff;
+  border-left-color: #3366cc;
 }
 .blue .accentBorderRight {
-  border-right-color: #8080ff;
+  border-right-color: #3366cc;
 }
 .blue .accentBorderTop {
-  border-top-color: #8080ff;
+  border-top-color: #3366cc;
 }
 html body .blue.accent,
 html body .blue.live-tile > .accent,
@@ -1370,7 +1370,7 @@ html body .blue.slide-front.accent,
 html body .blue.slide-back.accent,
 html body .blue.flip-front.accent,
 html body .blue.flip-back.accent {
-  background-color: #8080ff;
+  background-color: #3366cc;
 }
 html body .blue.accentColor,
 html body .blue.accentHover:hover,
@@ -1381,22 +1381,22 @@ html body .blue.accentLink a:visited,
 a.accentLinkhtml body .blue,
 a.accentLinkhtml body .blue:hover,
 a.accentLinkhtml body .blue:visited {
-  color: #8080ff;
+  color: #3366cc;
 }
 html body .blue.accentBorder {
-  border-color: #8080ff;
+  border-color: #3366cc;
 }
 html body .blue.accentBorderBottom {
-  border-bottom-color: #8080ff;
+  border-bottom-color: #3366cc;
 }
 html body .blue.accentBorderLeft {
-  border-left-color: #8080ff;
+  border-left-color: #3366cc;
 }
 html body .blue.accentBorderRight {
-  border-right-color: #8080ff;
+  border-right-color: #3366cc;
 }
 html body .blue.accentBorderTop {
-  border-top-color: #8080ff;
+  border-top-color: #3366cc;
 }
 .purple .accent,
 .purple .accentBg,
