@@ -34,7 +34,7 @@ class TerraMod < Sinatra::Base
 		                        })
 				elsif method != nil
 					verb.("/#{app_class}/#{url}", &Proc.new {
-						method.(settings.db, params)
+						return method.(settings.db, params)
 					})
 				end
 			end
