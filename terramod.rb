@@ -351,5 +351,3 @@ class TerraMod < Sinatra::Base
 		puts sensors
 	end
 end
-
-TerraMod.run!
