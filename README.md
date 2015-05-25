@@ -5,8 +5,8 @@ TerraMod is a framework for home automation.  This is a response to the prevalen
 
   * a management and settings page integrated into the menus
   * a main dashboard integrated into the menus
-  * an optional tiles for the main landing page
-  * the ability to route any url to a method
+  * a tile on the main landing page
+  * the ability to route any url to any method
   * sensor callbacks defined by regular expressions
   * scheduled tasks via cron
 
@@ -15,20 +15,20 @@ The applcation framework is extensible to encourage hobbyists to integrate their
 Current State
 -------------
 
-During early development TerraMod is going through rapid prototying.  The third and final iteration of the framework is currently in development and is going to incorperate the following changes:
+During early development TerraMod is going through rapid prototying.  The third and final iteration of the framework is currently in development and is going to incorperate the following improvements:
 
-   * Migrate to an ORM
-   * Infer method refrences from string in App.routes
+   * Migrating to an ORM
+   * Infering method refrences from strings in routes
    * Automated gem installation on app installation
    * Framework provided job support via cron
    * Apache deployment
    * User accounts and permissions
    * App upgrading process
    * Framework upgrading process
-   * Formalize hardware interface provided by Nexus, move into framework
+   * Formalize Nexus API, add security, move into framework
    * Finish Nexus setup features
 
-Once the framework is no longer changing is large ways focus will shift to the development of hardware components and applications.
+Once the framework is no longer changing in large ways focus will shift to the development of hardware components and applications.
 
 Goals
 -----
@@ -57,7 +57,7 @@ Goals
 Nexus
 -----
 
-Nexus is a web application designed to run on Raspberry Pis and provide an API for attached hardware modules.  A full TerraMod installation will likely include a few Nexus devices across a home.  Nexus is being developed [here](https://github.com/hkparker/Nexus/).
+Nexus is a web application for Raspberry Pi that provides an API for attached hardware modules.  A full TerraMod installation will likely include a few Nexus devices across a home.  Nexus is being developed [here](https://github.com/hkparker/Nexus/).
 
 Demo
 ----
