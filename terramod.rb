@@ -65,7 +65,6 @@ class TerraMod < Sinatra::Base
 		end
 
 		set :install, self.method(:install)
-		set :port, 80
 		set :bind, "0.0.0.0"
 		
 	end
