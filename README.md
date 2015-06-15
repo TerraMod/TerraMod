@@ -18,7 +18,6 @@ Current State
 During early development TerraMod is going through rapid prototying.  The third and final iteration of the framework is currently in development and is going to incorperate the following improvements:
 
    * Migrating to an ORM
-   * Infering method refrences from strings in routes
    * Automated gem installation on app installation
    * Framework provided job support via cron
    * Apache deployment

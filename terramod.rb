@@ -22,10 +22,10 @@ class TerraMod < Sinatra::Base
 		end
 		if app.methods.include? :routes
 			app.routes.each do |hookup|
-				verb = self.method(hookup[:verb].downcase.to_sym)
+				verb = self.method(hookup[:verb])
                 	        url = hookup[:url]
                         	template = hookup[:template]
-				method = hookup[:method]
+				method = app.method(hookup[:method])
 				if template != nil
 	        	                verb.("/#{app_class}/#{url}", &Proc.new {
         	        	                erb template, :views => "./apps/#{app_dir}/views",
