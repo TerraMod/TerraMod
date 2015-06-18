@@ -7,15 +7,15 @@
 	<div style="text-align: left;" class="panel-body">
 
 		<% if defined? message and message != nil %>
-                        <div class="alert <%= message[:class] %> alert-dismissible" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <strong><%= message[:title] %></strong> <%= message[:detail] %>
-                        </div>
-                <% end %>
+			<div class="alert <%= message[:class] %> alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<strong><%= message[:title] %></strong> <%= message[:detail] %>
+			</div>
+		<% end %>
 
 		<p>
-                        <div class="panel panel-default">
-                                <div class="panel-body" style="text-align: center; background-color: #f5f5f5;">
+			<div class="panel panel-default">
+				<div class="panel-body" style="text-align: center; background-color: #f5f5f5;">
 					<table style="width: 100%; text-align: center;">
 						<tbody>
 							<tr>
@@ -25,22 +25,21 @@
 							</tr>
 						</tbody>
 					</table>
-                                </div>
-                        </div>
-                </p>
+				</div>
+			</div>
+		</p>
 
 		<p>
-                        <div class="panel panel-default">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Maintenance</h3>
+				</div>
 
-                                <div class="panel-heading">
-                                        <h3 class="panel-title">Maintenance</h3>
-                                </div>
-
-                                <div class="panel-body">
-
+				<div class="panel-body">
 					<div class="well table-responsive">
 						<table style="width: 100%; border-collapse: separate; border-spacing: 0px 4px;">
 							<tbody>
+							
 								<tr>
 									<td style="text-align: left;">
 										<b>Clear Sensors</b>
@@ -53,37 +52,37 @@
 									</td>
 								</tr>
 
-                                                                <tr>
-                                                                        <td style="text-align: left;">
-                                                                                <b>Clear Nexus</b>
-                                                                        </td>
-                                                                        <td style="text-align: center;">
-                                                                                Remove all Nexus devices and all sensors from the database
-                                                                        </td>
-                                                                        <td style="text-align: right;">
-                                                                                <button id="clearnexus" type="button" class="btn btn-default btn-xs btn-danger">Clear</button>
-                                                                        </td>
+								<tr>
+									<td style="text-align: left;">
+										<b>Clear Nexus</b>
+									</td>
+									<td style="text-align: center;">
+										Remove all Nexus devices and all sensors from the database
+									</td>
+									<td style="text-align: right;">
+										<button id="clearnexus" type="button" class="btn btn-default btn-xs btn-danger">Clear</button>
+									</td>
 								</tr>
 
-                                                                <tr>
-                                                                        <td style="text-align: left;">
-                                                                                <b>Nexus Scan</b>
-                                                                        </td>
-                                                                        <td style="Text-align: center;">
-                                                                                Re-scan the known Nexus devices to discover sensors
-                                                                        </td>
-                                                                        <td style="text-align: right;">
+								<tr>
+									<td style="text-align: left;">
+										<b>Nexus Scan</b>
+									</td>
+									<td style="Text-align: center;">
+										Re-scan the known Nexus devices to discover sensors
+									</td>
+									<td style="text-align: right;">
 										<button id="scannexus" type="button" class="btn btn-default btn-xs btn-warning">Scan</button>
-                                                                        </td>
-                                                                </tr>
-                                                        </tbody>
-                                                </table>
+									</td>
+								</tr>
+								
+							</tbody>
+						</table>
+						
 					</div>
-
-                                </div>
-
-                        </div>
-                </p>
+				</div>
+			</div>
+		</p>
 
 		<p>
 			<div class="panel panel-default">
@@ -103,34 +102,36 @@
 							</tr>
 						</table>
 					</div>
+					
 					<table>
 						<tr>
 							<td><button id="addsensor" class="btn btn-default btn-primary btn-success" type="button">Add Sensor</button></td>
 				        		<td>
 								<div class="input-group">
-							                <input id="location-input" type="text" class="form-control" placeholder="terramod ip">
-							                <span class="input-group-btn">
-						                        	<button id="generateconf" class="btn btn-default btn-primary" type="button">Generate config</button>
-					        	        	</span>
-				       				</div>
+									<input id="location-input" type="text" class="form-control" placeholder="terramod ip">
+									<span class="input-group-btn">
+										<button id="generateconf" class="btn btn-default btn-primary" type="button">Generate config</button>
+									</span>
+								</div>
 							</td>
 						</tr>
 					</table>
+					
 				</div>
-
 			</div>
 		</p>
 
 		<p>
 			<div class="panel panel-default">
 
-                                <div class="panel-heading">
-                                        <h3 class="panel-title">All Sensors</h3>
-                                </div>  
+				<div class="panel-heading">
+					<h3 class="panel-title">All Sensors</h3>
+				</div>  
 
-                                <div class="panel-body">
+				<div class="panel-body">
 					<div class="well table-responsive">
-                                        	<table style="width: 100%; text-align: center;">
+						<table style="width: 100%; text-align: center;">
+						
 							<thead>
 								<tr>
 									<td><b>Name</b></td>
@@ -144,64 +145,69 @@
 								<% modules.each do |mod| %>
 									<tr>
 
-                                	                                        <td>
+										<td>
 											<label id="<%= mod[:uuid] %>-name" uuid="<%= mod[:uuid] %>" type="name" default="<%= mod[:name] %>"><%= mod[:name] %></label>
 											<input class="clicked" type="text" />
 										</td>
 
-                        	                                                <td>
+										<td>
 											<%= mod[:type] %>
 										</td>
 
-                	                                                        <td>
+										<td>
 											<label id="<%= mod[:uuid] %>-room" uuid="<%= mod[:uuid] %>" type="room" default="<%= mod[:room] %>"><%= mod[:room] %></label>
-                                                                                        <input class="clicked" type="text" />
+											<input class="clicked" type="text" />
 										</td>
 
-        	                                                                <td>
+										<td>
 											<%= mod[:nexus_ip] %>
 										</td>
-	                                                                </tr>
+									</tr>
 								<% end %>
 							</tbody>
+							
 						</table>
+						
 					</div>
-                                </div>  
-                        </div>
+				</div>  
+			</div>
 		</p>
 
 		<p>
 
-                        <div class="panel panel-default">
+			<div class="panel panel-default">
 
-                                <div class="panel-heading">
-                                        <h3 class="panel-title">All Callbacks</h3>
-                                </div>
+				<div class="panel-heading">
+					<h3 class="panel-title">All Callbacks</h3>
+				</div>
 
-                                <div class="panel-body">
-                                        <div class="well table-responsive">
-                                                <table style="width: 100%; text-align: center;">
-                                                        <tbody>
-                                                                <tr>
-                                                                        <td><b>Sensor</b></td>
+				<div class="panel-body">
+					<div class="well table-responsive">
+						<table style="width: 100%; text-align: center;">
+						
+							<tbody>
+								<tr>
+									<td><b>Sensor</b></td>
 									<td><b>Event</b></td>
-                                                                        <td><b>Call</b></td>
-                                                                </tr>
+									<td><b>Call</b></td>
+								</tr>
 
-                                                                <% callbacks.each do |callback| %>
-                                                                        <tr>
-                                                                                <td><%= callback[:module] %></td>
+								<% callbacks.each do |callback| %>
+									<tr>
+										<td><%= callback[:module] %></td>
 										<td><%= callback[:event] %></td>
-                                                                                <td><%= callback[:class] %>.<%= callback[:method] %>(db, uuid, event)</td>
-                                                                        </tr>
-                                                                <% end %>
+										<td><%= callback[:class] %>.<%= callback[:method] %>(db, uuid, event)</td>
+									</tr>
+								<% end %>
 
-                                                        </tbody>
-                                                </table>
-                                        </div>
-                                </div>
-                        </div>
-                </p>
+							</tbody>
+						</table>
+						
+					</div>
+				</div>
+			</div>
+			
+		</p>
 
 	</div>
 </div>

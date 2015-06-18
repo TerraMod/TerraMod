@@ -39,13 +39,13 @@
 						<li class="dropdown">
 						  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<% settings.db.execute("SELECT name,object,dir FROM Apps;").each do |app|
-									name = app[0]
-									object = app[1]
-									dir = app[2]
-										if File.exists? "./apps/#{dir}/views/dashboard.erb" %>
-											<li><a href="/<%= object %>/dashboard"><%= name %></a></li>
-										<% end %>
+								<% settings.orm[:apps].each do |app_info|
+									name = app_info[:name]
+									object = app_info[:object]
+									dir = app_info[:dir]
+									if File.exists? "./apps/#{dir}/views/dashboard.erb" %>
+										<li><a href="/<%= object %>/dashboard"><%= name %></a></li>
+									<% end %>
 								<% end %>
 								<li class="divider"></li>
 								<li><a href="/manage_apps">Manage Apps</a></li>

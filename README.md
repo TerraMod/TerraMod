@@ -17,14 +17,12 @@ Current State
 
 During early development TerraMod is going through rapid prototying.  The third and final iteration of the framework is currently in development and is going to incorperate the following improvements:
 
-   * Migrating to an ORM
    * Automated gem installation on app installation
    * Framework provided job support via cron
    * Apache deployment
    * User accounts and permissions
    * App upgrading process
-   * Framework upgrading process
-   * Formalize Nexus API, add security, move into framework
+   * Formalize Nexus RPC API, add security, move into framework
    * Finish Nexus setup features
 
 Once the framework is no longer changing in large ways focus will shift to the development of hardware components and applications.
