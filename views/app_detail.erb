@@ -9,32 +9,25 @@
 		<p>
 			<div class="panel panel-default">
 
-                        	<div class="panel-heading">
-                                	<h3 class="panel-title">About App</h3>
-                		</div>
+				<div class="panel-heading">
+					<h3 class="panel-title">About App</h3>
+				</div>
 
-               			<div class="panel-body" style="text-align: left;">
-                        		<%
-						name = app[0]
-						version = app[1]
-						object = app[2]
-						description = app[3]
-						app_dir = app[4]
-					%>
-					<b>Name: </b><%= name %><br />
-					<b>Version: </b><%= version %><br />
-					<b>Description: </b><%= description %><br /><br />
-					<% app = Module.const_get(object)%>
-					<% if  File.exists? "./apps/#{app_dir}/views/dashboard.erb" %>
+				<div class="panel-body" style="text-align: left;">
+					<b>Name: </b><%= app_info[:name] %><br />
+					<b>Version: </b><%= app_info[:version] %><br />
+					<b>Description: </b><%= app_info[:description] %><br /><br />
+					<% app = Module.const_get(app_info[:object])%>
+					<% if  File.exists? "./apps/#{app_info[:dir]}/views/dashboard.erb" %>
 						<a href="/<%= object %>/dashboard"><button type="button" class="btn btn-default btn-primary">View Dashboard</button></a>
 					<% end %>
-					<a href="/download_zip/<%= object %>"><button type="button" class="btn btn-default btn-primary">Download</button></a>
-					<a href="/uninstall_app/<%= object %>"><button type="button" class="btn btn-default btn-danger">Uninstall</button></a>
-                		</div>
+					<a href="/download_zip/<%= app_info[:object] %>"><button type="button" class="btn btn-default btn-primary">Download</button></a>
+					<a href="/uninstall_app/<%= app_info[:object] %>"><button type="button" class="btn btn-default btn-danger">Uninstall</button></a>
+				</div>
 			</div>
 		</p>
 
-		<% if File.exists?("./apps/#{app_dir}/views/options.erb") %>
+		<% if File.exists?("./apps/#{app_info[:dir]}/views/options.erb") %>
 		<p>
 			<div class="panel panel-default">
 
@@ -53,18 +46,18 @@
 		   if available_methods.size > 0
 		%>
 		<p>
-                        <div class="panel panel-default">
+			<div class="panel panel-default">
 
-                                <div class="panel-heading">
-                                        <h3 class="panel-title">Available Methods</h3>
-                                </div>
+				<div class="panel-heading">
+					<h3 class="panel-title">Available Methods</h3>
+				</div>
 
-                                <div class="panel-body">
+				<div class="panel-body">
 					<div class="well table-responsive">
 						<table>
 							<tbody>
 							<% available_methods.each do |func_name|
-								func = Module.const_get(object).method(func_name)
+								func = app.method(func_name)
 								args = func.arity > 0 ? func.parameters.map(&:last).map(&:to_s).join(", ") : "" %>
 								<tr>
 									<td><b><%= object.to_s %>.<%= func_name.to_s %>(<%= args %>)</b></td>
@@ -73,40 +66,44 @@
 							</tbody>
 						</table>
 					</div>
-                                </div>
-                        </div>
-                </p>
+				</div>
+
+			</div>
+		</p>
 		<% end %>
 
 		<% if app.methods.include? :routes%>
-                <p>
-                        <div class="panel panel-default">
+			<p>
+				<div class="panel panel-default">
 
-                                <div class="panel-heading">
-                                        <h3 class="panel-title">Available Routes</h3>
-                                </div>
+					<div class="panel-heading">
+						<h3 class="panel-title">Available Routes</h3>
+					</div>
 
-                                <div class="panel-body">
-                                        <div class="well table-responsive">
-						<table>
-							<tbody>
-	                                                <% app.routes.each do |route|
-								dest = ""
-								if route[:method] != nil
-									dest = "#{object}.#{route[:method].to_s.split("Method:")[1].split(">")[0].split(".")[1]}(#{route[:method].parameters.map(&:last).map(&:to_s).join(", ")})"
-								else
-									dest = "/apps/#{object}/views/#{route[:template]}.erb"
-								end %>
-                                                                <tr>
-                                                                        <td><b><%= route[:verb].upcase %> /<%= object %>/<%= route[:url] %> &#61;&#62; <%= dest %></b></td>
-                                                                </tr>
-	                                                <% end %>
+					<div class="panel-body">
+						<div class="well table-responsive">
+							<table>
+								<tbody>
+								
+									<% app.routes.each do |route|
+										dest = ""
+										if route[:method] != nil
+											dest = "#{app_info[:object]}.#{route[:method].to_s.split("Method:")[1].split(">")[0].split(".")[1]}(#{route[:method].parameters.map(&:last).map(&:to_s).join(", ")})"
+										else
+											dest = "/apps/#{app_info[:object]}/views/#{route[:template]}.erb"
+										end %>
+										<tr>
+											<td><b><%= route[:verb].upcase %> /<%= object %>/<%= route[:url] %> &#61;&#62; <%= dest %></b></td>
+										</tr>
+									<% end %>
+									
+								</tbody>
 							</table>
-						</table>
-                                        </div>
-                                </div>
-                        </div>
-                </p>
+						</div>
+					</div>
+					
+				</div>
+			</p>
 		<% end %>
 
 	</div>

@@ -8,6 +8,7 @@ require 'net/http'
 require 'zip'
 require 'fileutils'
 require 'pathname'
+require 'tilt/erb'
 
 Dir["./apps/*/app.rb"].each {|file| require file }
 
@@ -113,7 +114,6 @@ class TerraMod < Sinatra::Base
 
 		def render_admin(message=nil)
 			erb :admin, :locals => {:app_count => settings.orm[:apps].count,
-									:module_count => settings.orm[:modules].count,
 									:nexus_count => settings.orm[:nexus].count,
 									:callbacks => settings.orm[:callbacks],
 									:modules => settings.orm[:modules],
@@ -132,13 +132,16 @@ class TerraMod < Sinatra::Base
 		type = event['type']
 		uuid = event['uuid']
 		data = event['data']
-		if type == "ModuleReport"
-			#settings.orm[:nexus].insert_ignore(:uuid => uuid, :ip => request.ip)
-			settings.orm.run "INSERT OR IGNORE INTO Nexus VALUES(?,?);", [uuid, request.ip]
-			settings.orm.run "UPDATE Nexus SET ip=? WHERE uuid=?;", [request.ip, uuid]
+		#hmac = event['hmac']
+		if type == "NexusReport"
+			port = event['port']
+			settings.orm[:nexus].replace(
+				:uuid => uuid,
+				:ip => request.ip,
+				:port => port
+			)
 			data.each do |k, v|
-				#settings.db.execute "INSERT OR REPLACE INTO Modules VALUES(?,?,?,?,?);", [module_uuid, uuid, name, room, type]
-				settings.orm[:modules].insert(	#.replace?
+				settings.orm[:modules].replace(
 					:uuid => k,
 					:nexus => uuid,
 					:name => v['name'],
@@ -198,7 +201,6 @@ class TerraMod < Sinatra::Base
 			version = app.class_variable_get(:@@version)
 			description = app.class_variable_get(:@@description)
 			settings.install.(app, app_dir)
-			#settings.db.execute "INSERT INTO Apps VALUES(?, ?, ?, ?, ?);", [name, version, class_name, description, app_dir]
 			settings.orm[:apps].insert(
 				:name => name,
 				:version => version,
@@ -223,15 +225,15 @@ class TerraMod < Sinatra::Base
 
 	get '/uninstall_app/:app' do |app_obj|
 
-		count = settings.db.execute("SELECT COUNT(*) FROM Apps WHERE object=?;", [app_obj])[0][0].to_i
-        ( status 404; return ) if count == 0
-        app = Module.const_get(app_obj)
+        ( status 404; return ) if settings.orm[:apps].where(:object => app_obj).count == 0
+        app_info = settings.orm[:apps].where(:object => app_obj).first
+        app = Module.const_get(app_info[:object])
 
 		begin
-			FileUtils.rm_rf("./apps/" + settings.db.execute("SELECT dir FROM Apps WHERE object=?", [app_obj])[0][0])
-			app.remove_tables(settings.db) if app.methods.include? :remove_tables
-			settings.db.execute "DELETE FROM Apps WHERE object=?;", [app_obj]
-			settings.db.execute "DELETE FROM Callbacks WHERE class=?;", [app_obj]
+			FileUtils.rm_rf("./apps/" + app_info[:dir])
+			app.remove_tables(settings.orm) if app.methods.include? :remove_tables
+			settings.orm[:callbacks].where(:class => app_info[:object]).delete
+			app_info.delete
 			message = {
 				:class => "alert-success",
                         	:title => "Success:",
@@ -251,16 +253,14 @@ class TerraMod < Sinatra::Base
 
 
 	get '/app_detail/:app' do |app_obj|
+		
+        ( status 404; return ) if settings.orm[:apps].where(:object => app_obj).count == 0
+        app_info = settings.orm[:apps].where(:object => app_obj).first
+        app = Module.const_get(app_info[:object])
 
-		count = settings.db.execute("SELECT COUNT(*) FROM Apps WHERE object=?;", [app_obj])[0][0].to_i
-		( status 404; return ) if count == 0
-		app = Module.const_get(app_obj)
-		app_dir = settings.db.execute("SELECT dir FROM Apps WHERE object=?;", [app_obj])[0][0]
-
-		erb :app_detail, :locals => {:app_links => settings.db.execute("SELECT name,object FROM Apps;"),
-					     :app => settings.db.execute("SELECT name,version,object,description,dir FROM Apps WHERE object=?;", [app_obj])[0]} do
-			erb :options, :views => "./apps/#{app_dir}/views",
-				      :layout_options => { :views => 'views'} if File.exists?("./apps/#{app_dir}/views/options.erb")
+		erb :app_detail, :locals => {:app_info => app_info} do
+			erb :options, :views => "./apps/#{app_info[:dir]}/views",
+						  :layout_options => { :views => 'views'} if File.exists?("./apps/#{app_info[:dir]}/views/options.erb")
 		end
 
 	end
