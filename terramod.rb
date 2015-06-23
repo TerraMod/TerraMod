@@ -44,14 +44,10 @@ class TerraMod < Sinatra::Base
 	end
 
 	def self.install(app, dir)
-		app.install_tables(settings.db) if app.methods.include? :install_tables
+		app.install_tables(settings.orm) if app.methods.include? :install_tables
 		register_routes(app, dir)
 	end
 	
-	# On startup:
-	#	create the database tables if needed
-	#	register the routes of all installed apps
-	#
 	configure do
 		
 		# Connect to the SQLite database
@@ -98,6 +94,8 @@ class TerraMod < Sinatra::Base
 			end
 		end
 		
+		# generate a secret key if one doesn't exist
+		
 		# Register the routes for each currently installed app
 		settings.orm[:apps].each do |app_info|
 			app = Module.const_get(app_info[:object])
@@ -111,7 +109,7 @@ class TerraMod < Sinatra::Base
 	end
 	
 	helpers do
-
+	
 		def render_admin(message=nil)
 			erb :admin, :locals => {:app_count => settings.orm[:apps].count,
 									:nexus_count => settings.orm[:nexus].count,
@@ -124,6 +122,13 @@ class TerraMod < Sinatra::Base
 			erb :manage_apps, :locals => {:apps => settings.orm[:apps],
 						      :message => message}
 		end
+		
+		# class methods so they are accessible from apps?  probably
+		def list_functions(module_uuid)
+		
+		end
+		
+		def call_function(module_uuid, function, arguments)
 
 	end
 	
@@ -163,6 +168,7 @@ class TerraMod < Sinatra::Base
 
 	post '/install_app' do
 
+		# offer to install gems required by the app (file, or class property)
 		# detect if app is already installed and offer an upgrade
 
 		begin
@@ -305,7 +311,7 @@ class TerraMod < Sinatra::Base
 			}
 		end
 
-		render_admin message
+		render_admin message		# render_message?
 
 	end
 
@@ -329,7 +335,7 @@ class TerraMod < Sinatra::Base
 			}
 		end
 
-		render_admin message
+		render_admin message		# render_message?
 
 	end
 
@@ -346,7 +352,7 @@ class TerraMod < Sinatra::Base
 		requests.each { |req| req.join }
 		sleep(4)
 	
-		render_admin({
+		render_admin({			# render_message?
 			:class => "alert-success",
 			:title => "Scanned:",
 			:detail => "all nexus devices asked to report modules"
@@ -375,38 +381,34 @@ class TerraMod < Sinatra::Base
 
 		send_file tmp_file, :type => 'application/zip', :disposition => 'attachment', :filename => "#{dir}.zip"
 	end
+	
+	# Generate a nexus config file specific to this TerraMod installation
+	post '/generate_config' do
+		# need to set a bind port, terramod secret, terramod IP
+		#modules = JSON.parse request.body.read
+		#puts modules
+	end
 
 	# Rename a hardware module by updating the nexus's config file
-	post '/rename' do
+	post '/rename_module' do
 		mod = JSON.parse request.body.read
 		uuid = mod['uuid']
 		name = mod['name']
 		room = mod['room']
+		#get '/rename/:module_uuid/:new_name/:new_room' do |module_uuid, new_name, new_room|
+			#begin
+				#nexus_uuid = settings.db.execute("SELECT nexus_uuid FROM Modules WHERE uuid=?;", [module_uuid])[0]
+			#rescue
+				#status 404
+				#return
+			#end
+			#if !nexus_uuid
+				#return "disconnected nexus"
+			#end
+			#nexus_ip = settings.db.execute("SELECT ip FROM Nexus WHERE uuid=?;", nexus_uuid)[0][0]
+			#resp = Net::HTTP.get(URI.parse(URI.encode("http://#{nexus_ip}/rename/#{module_uuid}/#{new_name}/#{new_room}")))
+			#return resp
+		#end
 	end
-		
-	#get '/rename/:module_uuid/:new_name/:new_room' do |module_uuid, new_name, new_room|
-		#begin
-			#nexus_uuid = settings.db.execute("SELECT nexus_uuid FROM Modules WHERE uuid=?;", [module_uuid])[0]
-		#rescue
-			#status 404
-			#return
-		#end
-		#if !nexus_uuid
-			#return "disconnected nexus"
-		#end
-		#nexus_ip = settings.db.execute("SELECT ip FROM Nexus WHERE uuid=?;", nexus_uuid)[0][0]
-		#resp = Net::HTTP.get(URI.parse(URI.encode("http://#{nexus_ip}/rename/#{module_uuid}/#{new_name}/#{new_room}")))
-		#return resp
-	#end
-
-
-
-	# Generate a nexus config file for this installation
-#	post '/generate_config' do
-#		modules = JSON.parse request.body.read
-#		puts modules
-#	end
-
-	# Query a module
-	# Set a module state
+	
 end

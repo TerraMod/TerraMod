@@ -44,7 +44,7 @@
 									object = app_info[:object]
 									dir = app_info[:dir]
 									if File.exists? "./apps/#{dir}/views/dashboard.erb" %>
-										<li><a href="/<%= object %>/dashboard"><%= name %></a></li>
+										<li><a href="/<%= object %>/dashboard"><%= name %></a></li>	<!-- replace with a span and hookup using jquery -->
 									<% end %>
 								<% end %>
 								<li class="divider"></li>
