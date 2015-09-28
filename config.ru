@@ -1,2 +1,2 @@
-require './terramod.rb'
-run TerraMod
+require_relative 'app.rb'
+run TerraMod.new

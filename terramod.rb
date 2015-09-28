@@ -11,8 +11,11 @@ require 'pathname'
 require 'tilt/erb'
 
 Dir["./apps/*/app.rb"].each {|file| require file }
+#Dir["./routes/*.rb"].each {|file| require file }
 
 class TerraMod < Sinatra::Base
+		#redirect_unauthenticated_to_signin
+		#
 
 	def self.register_routes(app, app_dir)
 		app_class = app.ancestors[0]
@@ -123,12 +126,6 @@ class TerraMod < Sinatra::Base
 						      :message => message}
 		end
 		
-		# class methods so they are accessible from apps?  probably
-		def list_functions(module_uuid)
-		
-		end
-		
-		def call_function(module_uuid, function, arguments)
 
 	end
 	
@@ -336,27 +333,6 @@ class TerraMod < Sinatra::Base
 		end
 
 		render_admin message		# render_message?
-
-	end
-
-	# Ask all nexus devices to create module reports
-	get '/nexus_scan' do
-
-		requests = []
-		settings.orm[:nexus].each do |nexus|
-			requests << Thread.new{
-							Net::HTTP.get(URI.parse("http://#{nexus[:ip]}:#{nexus[:port]}/report_modules"))
-						}
-		end
-	
-		requests.each { |req| req.join }
-		sleep(4)
-	
-		render_admin({			# render_message?
-			:class => "alert-success",
-			:title => "Scanned:",
-			:detail => "all nexus devices asked to report modules"
-		})
 
 	end
 
