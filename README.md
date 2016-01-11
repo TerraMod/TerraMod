@@ -6,50 +6,51 @@ TerraMod is a framework for home automation.  This is a response to the prevalen
   * a management and settings page integrated into the menus
   * a main dashboard integrated into the menus
   * a tile on the main landing page
-  * the ability to route any url to any method
+  * control over http routing
   * sensor callbacks defined by regular expressions
-  * scheduled tasks via cron
+  * scheduled tasks
 
 The applcation framework is extensible to encourage hobbyists to integrate their projects.  A standard set of documented hardware modules and applications is within the goal of the project as well.
 
 Current State
 -------------
 
-During early development TerraMod is going through rapid prototying.  The third and final iteration of the framework is currently in development and is going to incorperate the following improvements:
+Early implementations of TerraMod were effective but mostly proof of concepts.  The third and final implementation the framework has been started and will focus on the following improvements:
 
-   * Automated gem installation on app installation
-   * Framework provided job support via cron
-   * Apache deployment
-   * User accounts and permissions
-   * App upgrading process
-   * Formalize Nexus RPC API, add security, move into framework
-   * Finish Nexus setup features
+* Formalize frontend framework
+* Hardware behaviors and locations defined in app
+* App installation and upgrading via git
+* Automated gem installation on app installation
+* Framework provided job support
+* Authentication, users, and permissions
+* Formalize Nexus API, authenticate, move into framework
 
-Once the framework is no longer changing in large ways focus will shift to the development of hardware components and applications.
+Once the framework is no longer changing in large ways focus will shift to the development of hardware components and applications.  Lead dev is on hiatus with other projects and work, progress is expected to resume summer 2016.
 
 Goals
 -----
 
 ### Nexus modules ###
-  - [x] Motion sensor
-  - [x] Entrance sensor
-  - [ ] IR beam
-  - [ ] Light sensor
-  - [ ] Thermometer
-  - [ ] Webcam / Mic
-  - [ ] Speakers
-  - [ ] Outlet
-  - [ ] Electric strike
-  - [ ] Blinds control
-  - [ ] Wall control panel
-  - [ ] Appliance interfacing
-  - [ ] Thermostat
+- [x] Motion sensor
+- [x] Entrance sensor
+- [ ] IR beam
+- [ ] Light sensor
+- [ ] Thermometer
+- [ ] Webcam
+- [ ] Speakers
+- [ ] Outlet with control and metrics
+- [ ] Electric strike
+- [ ] Blinds control
+- [ ] Wall control panel
+- [ ] Appliance interfacing
+- [ ] Thermostat
+- [ ] Fire alarm
+- [ ] Audio inputs
 
 ### Applications ###
 
-  - [ ] Intelligent LIFX control ([GreenLights](https://github.com/Jkolber/greenlights) in development)
-  - [ ] Audio Routing
-  - [ ] Natural Langauge Processing
+- [ ] Intelligent LIFX control ([GreenLights](https://github.com/Jkolber/greenlights) in development)
+- [ ] Audio Routing
 
 Nexus
 -----
